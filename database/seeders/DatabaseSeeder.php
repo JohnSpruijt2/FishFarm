@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Root Admin',
+            'name' => 'RootAdmin',
             'email' => 'root@admin.org',
             'type' => '0',
             'admin' => true,
