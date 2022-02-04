@@ -12,11 +12,9 @@
 <script>
     import { defineComponent } from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
-    import Welcome from '@/Jetstream/Graph.vue'
     export default defineComponent({
         components: {
             AppLayout,
-            Welcome,
         },
         props: {
             data: Array,

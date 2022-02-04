@@ -4,7 +4,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\http\Controllers\GraphController;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,4 +27,5 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
+
 route::get('test', [GraphController::class, 'index']);
