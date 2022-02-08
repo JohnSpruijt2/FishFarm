@@ -19628,22 +19628,22 @@ __webpack_require__.r(__webpack_exports__);
     return {
       ponds: [{
         pondName: 1,
-        temp: 20
+        temp: Math.floor(Math.random() * 70) + 1
       }, {
         pondName: 2,
-        temp: 22
+        temp: Math.floor(Math.random() * 70) + 1
       }, {
         pondName: 3,
-        temp: 30
+        temp: Math.floor(Math.random() * 70) + 1
       }, {
         pondName: 4,
-        temp: 12
+        temp: Math.floor(Math.random() * 70) + 1
       }, {
         pondName: 5,
-        temp: 45
+        temp: Math.floor(Math.random() * 70) + 1
       }, {
         pondName: 6,
-        temp: 9
+        temp: Math.floor(Math.random() * 70) + 1
       }]
     };
   }
