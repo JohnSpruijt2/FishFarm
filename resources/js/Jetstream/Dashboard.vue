@@ -7,41 +7,15 @@
 
             <div class="mt-6 text-gray-500">
                 <div class="grid grid-cols-2 text-2xl">
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 1</p>
-                        <div class="text-right">20&#176;C</div>
-                    </div>
-
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 2</p>
-                        <div class="text-right">18&#176;C</div>
-                    </div>
-
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 3</p>
-                        <div class="text-right">22&#176;C</div>
-                    </div>
-
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 4</p>
-                        <div class="text-right">21&#176;C</div>
-                    </div>
-
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 5</p>
-                        <div class="text-right">19&#176;C</div>
-                    </div>
-
-                    <div class="p-3 m-2 border border-grey rounded">
-                        <p>Fishpond 6</p>
-                        <div class="text-right">25&#176;C</div>
+                    <div v-for="pond in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
+                        <p>{{ "Fishpond " + pond.pondName }}</p>
+                        <div class="text-right">{{ pond.temp }}&#176;C</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 <script>
     import { defineComponent } from 'vue'
     import JetApplicationLogo from '@/Jetstream/ApplicationLogo.vue'
@@ -50,5 +24,35 @@
         components: {
             JetApplicationLogo,
         },
+        data() {
+            return {
+                ponds: [{
+                    pondName: 1,
+                    temp: Math.floor(Math.random() * 70) + 1
+                },{
+                    pondName: 2,
+                    temp: Math.floor(Math.random() * 70) + 1
+                },{
+                    pondName: 3,
+                    temp: Math.floor(Math.random() * 70) + 1
+                },{
+                    pondName: 4,
+                    temp: Math.floor(Math.random() * 70) + 1
+                },{
+                    pondName: 5,
+                    temp: Math.floor(Math.random() * 70) + 1
+                },{
+                    pondName: 6,
+                    temp: Math.floor(Math.random() * 70) + 1
+                }]
+            }
+        }
     })
+
+    /**
+     * loop through element,
+     * fishpond data for:
+     *      name,
+     *      temp
+     */
 </script>

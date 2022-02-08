@@ -19623,8 +19623,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
   components: {
     JetApplicationLogo: _Jetstream_ApplicationLogo_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      ponds: [{
+        pondName: 1,
+        temp: Math.floor(Math.random() * 70) + 1
+      }, {
+        pondName: 2,
+        temp: Math.floor(Math.random() * 70) + 1
+      }, {
+        pondName: 3,
+        temp: Math.floor(Math.random() * 70) + 1
+      }, {
+        pondName: 4,
+        temp: Math.floor(Math.random() * 70) + 1
+      }, {
+        pondName: 5,
+        temp: Math.floor(Math.random() * 70) + 1
+      }, {
+        pondName: 6,
+        temp: Math.floor(Math.random() * 70) + 1
+      }]
+    };
   }
 }));
+/**
+ * loop through element,
+ * fishpond data for:
+ *      name,
+ *      temp
+ */
 
 /***/ }),
 
@@ -22246,15 +22275,32 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "p-6 sm:px-20 bg-white border-b border-gray-200"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"mt-6 text-gray-500\"><div class=\"grid grid-cols-2 text-2xl\"><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 1</p><div class=\"text-right\">20°C</div></div><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 2</p><div class=\"text-right\">18°C</div></div><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 3</p><div class=\"text-right\">22°C</div></div><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 4</p><div class=\"text-right\">21°C</div></div><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 5</p><div class=\"text-right\">19°C</div></div><div class=\"p-3 m-2 border border-grey rounded\"><p>Fishpond 6</p><div class=\"text-right\">25°C</div></div></div></div>", 1);
-
+var _hoisted_2 = {
+  "class": "mt-6 text-gray-500"
+};
+var _hoisted_3 = {
+  "class": "grid grid-cols-2 text-2xl"
+};
+var _hoisted_4 = {
+  "class": "text-right"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_application_logo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-application-logo");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_application_logo, {
     "class": "block h-12 w-auto"
-  })]), _hoisted_2])]);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.ponds, function (pond) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: pond.id,
+      "class": "p-3 m-2 border border-grey rounded"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)("Fishpond " + pond.pondName), 1
+    /* TEXT */
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.temp) + "°C", 1
+    /* TEXT */
+    )]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])])])]);
 }
 
 /***/ }),
