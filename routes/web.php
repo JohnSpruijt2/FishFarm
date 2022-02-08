@@ -28,4 +28,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-route::get('test', [GraphController::class, 'index']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/graph', [GraphController::class, 'index'])->name('graph');

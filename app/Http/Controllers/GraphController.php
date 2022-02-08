@@ -18,7 +18,7 @@ class GraphController extends Controller
             $time = str_split($key['created_at']);
             array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
         }
-        return Inertia::render('Test', [
+        return Inertia::render('Graph', [
             'data' => $data,
             'times' => $times,
             'tempratures' => $tempratures,
