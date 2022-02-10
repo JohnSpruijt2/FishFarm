@@ -10,7 +10,7 @@ class GraphController extends Controller
 {
     //
     function index() {
-        $data = Temprature::orderBy('created_at', 'asc')->get();
+        $data = Temprature::orderBy('created_at', 'asc')->take(60)->get();
         $times = [];
         $tempratures = [];
         foreach ($data as $key) {
