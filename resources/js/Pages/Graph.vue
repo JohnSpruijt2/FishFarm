@@ -36,10 +36,29 @@
         return {
       options: {
         chart: {
-          id: 'vuechart-example'
+          zoom: {
+          enabled: true,
+          type: 'xy',  
+          autoScaleYaxis: false,
+          zoomedArea: {
+            fill: {
+              color: '#90CAF9',
+              opacity: 0.4
+            },
+            stroke: {
+              color: '#0D47A1',
+              opacity: 0.4,
+              width: 1
+            }
+          }
+          }
         },
         xaxis: {
           categories: this.times
+        },
+        yaxis: {
+          min: 0,
+          max: 80
         }
       },
       series: [{
