@@ -9,8 +9,8 @@ use App\Models\Temprature;
 class GraphController extends Controller
 {
     //
-    function index() {
-        $data = Temprature::orderBy('created_at', 'asc')->take(60)->get();
+    function index(Request $request) {
+        $data = Temprature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
         $times = [];
         $tempratures = [];
         foreach ($data as $key) {
@@ -22,8 +22,6 @@ class GraphController extends Controller
             'data' => $data,
             'times' => $times,
             'tempratures' => $tempratures,
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 }

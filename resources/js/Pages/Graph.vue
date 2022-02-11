@@ -9,7 +9,6 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                  <h1 class="text-xl">Pond 1</h1>
                   <div>
                     <apexchart width="1200" type="line" :options="options" :series="series"></apexchart>
                   </div>

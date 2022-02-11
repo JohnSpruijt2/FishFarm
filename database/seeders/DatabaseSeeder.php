@@ -26,18 +26,31 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
          ]);
+         DB::table('fishponds')->insert([
+            'name'=> 'Fishpond Numbero dus' ,
+            'created_at' => now(),
+            'updated_at' => now()
+         ]);
+         DB::table('fishponds')->insert([
+            'name'=> 'Fishpond Numbero tos' ,
+            'created_at' => now(),
+            'updated_at' => now()
+         ]);
          date_default_timezone_set('Europe/Amsterdam');
-         for ($i=0; $i < 60; $i++) { 
-             $date = date("Y-m-d H:i:s");
-             $time = strtotime($date);
-             $time = $time - ($i * 60);
-             $date = date("Y-m-d H:i:s", $time);
-            DB::table('tempratures')->insert([
-             'fishpond_id' => 1,
-             'temprature' => rand(10, 50),
-             'created_at' => $date,
-             'updated_at' => $date,
-            ]);
+         for ($i = 0; $i<3; $i++) {
+            for ($i=0; $i < 60; $i++) { 
+                $date = date("Y-m-d H:i:s");
+                $time = strtotime($date);
+                $time = $time - ($i * 60);
+                $date = date("Y-m-d H:i:s", $time);
+               DB::table('tempratures')->insert([
+                'fishpond_id' => $i,
+                'temprature' => rand(10, 50),
+                'created_at' => $date,
+                'updated_at' => $date,
+               ]);
+            }
          }
+         
     }
 }
