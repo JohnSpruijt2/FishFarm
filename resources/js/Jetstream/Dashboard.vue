@@ -9,6 +9,12 @@
                 <div class="grid grid-cols-2 text-2xl">
                     <div v-for="(pond, index) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
                         <a :href="'/details/'+pond.id">{{ pond.name }}</a> <br>
+                        <div class="gauge">
+                            <div class="gauge__body">
+                                <div class="gauge__fill"></div>
+                                <div class="gauge__cover"></div>
+                            </div>
+                        </div>
                         <div class="text-right">{{ temps[index].temprature }}&#176;C</div>
                     </div>
                 </div>
