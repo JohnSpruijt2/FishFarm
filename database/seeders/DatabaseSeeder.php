@@ -37,11 +37,11 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now()
          ]);
          date_default_timezone_set('Europe/Amsterdam');
-         for ($i = 0; $i<3; $i++) {
-            for ($i=0; $i < 60; $i++) { 
+         for ($i = 1; $i<4; $i++) {
+            for ($j=0; $j < 60; $j++) { 
                 $date = date("Y-m-d H:i:s");
                 $time = strtotime($date);
-                $time = $time - ($i * 60);
+                $time = $time - ($j * 60);
                 $date = date("Y-m-d H:i:s", $time);
                DB::table('tempratures')->insert([
                 'fishpond_id' => $i,
