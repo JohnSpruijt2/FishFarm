@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 .gauge {
-    width: 7%;
+    width: 20%;
     max-width: 250px;
     font-family: "Roboto", sans-serif;
     font-size: 32px;
