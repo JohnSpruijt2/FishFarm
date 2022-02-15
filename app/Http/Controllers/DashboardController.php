@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Fishpond;
-use App\Models\Temprature;
+use App\Models\Temperature;
 
 class DashboardController extends Controller
 {
@@ -13,7 +13,7 @@ class DashboardController extends Controller
         $data = fishpond::all();
         $temps = [];
         foreach ($data as $item) {
-            $temp = Temprature::orderBy('created_at', 'DESC')->where('fishpond_id',$item->id)->take(1)->get()[0];
+            $temp = Temperature::orderBy('created_at', 'DESC')->where('fishpond_id',$item->id)->take(1)->get()[0];
             array_push($temps, $temp);
         }
         return Inertia::render('Dashboard', [

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Application;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\Temprature;
+use App\Models\Temperature;
 
 class GraphController extends Controller
 {
     //
     function index(Request $request) {
-        $data = Temprature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+        $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
         $times = [];
         $tempratures = [];
         foreach ($data as $key) {

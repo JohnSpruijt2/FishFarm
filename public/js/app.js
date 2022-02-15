@@ -19658,14 +19658,17 @@ __webpack_require__.r(__webpack_exports__);
       ponds: this.fishponds[0],
       temps: this.fishponds[1]
     };
+  },
+  mounted: function mounted() {
+    for (var i = 0; i < this.fishponds[0].length; i++) {
+      var element = this.fishponds[0][i];
+      var guageElement = document.getElementById('guage-' + element.id);
+      var value = this.fishponds[1][i].temperature / 80;
+      guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2, "turn)");
+      guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+    }
   }
 }));
-/**
- * loop through element,
- * fishpond data for:
- *      name,
- *      temp
- */
 
 /***/ }),
 
@@ -22372,15 +22375,25 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = {
-  "class": "text-right"
-};
+var _hoisted_7 = ["id"];
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "gauge__body"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "gauge__fill"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "gauge__cover text-gray"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_9 = [_hoisted_8];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_application_logo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-application-logo");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_jet_application_logo, {
     "class": "block h-12 w-auto"
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.ponds, function (pond, index) {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.ponds, function (pond) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: pond.id,
       "class": "p-3 m-2 border border-grey rounded"
@@ -22388,9 +22401,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       href: '/details/' + pond.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.name), 9
     /* TEXT, PROPS */
-    , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.temps[index].temprature) + "°C", 1
-    /* TEXT */
-    )]);
+    , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      id: 'guage-' + pond.id,
+      "class": "gauge"
+    }, _hoisted_9, 8
+    /* PROPS */
+    , _hoisted_7)]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])])]);
