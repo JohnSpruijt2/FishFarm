@@ -43,9 +43,9 @@ class DatabaseSeeder extends Seeder
                 $time = strtotime($date);
                 $time = $time - ($j * 60);
                 $date = date("Y-m-d H:i:s", $time);
-               DB::table('tempratures')->insert([
+               DB::table('temperatures')->insert([
                 'fishpond_id' => $i,
-                'temprature' => rand(10, 50),
+                'temperature' => rand(10, 50),
                 'created_at' => $date,
                 'updated_at' => $date,
                ]);

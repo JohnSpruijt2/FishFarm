@@ -6,8 +6,7 @@
     width: 20%;
     max-width: 250px;
     font-family: "Roboto", sans-serif;
-    font-size: 32px;
-    color: #004033;
+    font-size: 1.5rem;
   }
   
   .gauge__body {

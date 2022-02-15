@@ -11,10 +11,10 @@
                         <div :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
                                 <div class="gauge__fill"></div>
-                                <div class="gauge__cover"></div>
+                                <div class="gauge__cover text-gray"></div>
                             </div>
                         </div>
-                        <div class="text-right">{{ temps[index].temprature }}&#176;C</div>
+                        <div class="text-right">{{ temps[index].temperature }}&#176;C</div>
                     </div>
                 </div>
             </div>
@@ -38,29 +38,18 @@
                 temps: this.fishponds[1]
             }
         }, 
-        methods: {
-            guage: function(id) {
-                console.log(document.getElementById('guage-1'))
-                        }
-                },
         mounted() {
-           this.fishponds[0].forEach(element => {
-               var guageElement = document.getElementById('guage-'+element.id)
-               var value = 0.75
-               guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
+            for (let i = 0; i < this.fishponds[0].length; i++) {
+                const element = this.fishponds[0][i];
+                var guageElement = document.getElementById('guage-'+element.id)
+                var value = this.fishponds[1][i].temperature/80
+                guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2
                 }turn)`;
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
-                  value * 100
-                )}`;
-           });
+                  value*80
+                )}°C`;
+            }
         }
                 })
-
-    /**
-     * loop through element,
-     * fishpond data for:
-     *      name,
-     *      temp
-     */
 </script>
