@@ -1736,6 +1736,7 @@ select {
     max-width: 250px;
     font-family: "Roboto", sans-serif;
     font-size: 1.5rem;
+    float:right;
   }
 .gauge__body {
     width: 100%;
