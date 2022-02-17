@@ -29,7 +29,7 @@
         props: {
             data: Array,
             times: Array,
-            tempratures: Array,
+            temperatures: Array,
         },
         data: function() {
         return {
@@ -61,8 +61,8 @@
         }
       },
       series: [{
-        name: 'temprature',
-        data: this.tempratures
+        name: 'temperature',
+        data: this.temperatures
       }]
     }
   }

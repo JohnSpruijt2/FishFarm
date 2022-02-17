@@ -20793,7 +20793,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     data: Array,
     times: Array,
-    tempratures: Array
+    temperatures: Array
   },
   data: function data() {
     return {
@@ -20825,8 +20825,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       series: [{
-        name: 'temprature',
-        data: this.tempratures
+        name: 'temperature',
+        data: this.temperatures
       }]
     };
   }
