@@ -31,6 +31,19 @@
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
   }
+
+  .gauge__red {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: #950000;
+    opacity: 0.50;
+    transform-origin: center top;
+    transform: rotate(0.75turn);
+    transition: transform 0.2s ease-out;
+  }
   
   .gauge__cover {
     width: 75%;

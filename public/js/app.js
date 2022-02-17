@@ -19666,6 +19666,10 @@ __webpack_require__.r(__webpack_exports__);
       var value = this.fishponds[1][i].temperature / 80;
       guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2, "turn)");
       guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+
+      if (this.fishponds[1][i].temperature > 40) {
+        guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
+      }
     }
   }
 }));
@@ -22380,6 +22384,8 @@ var _hoisted_7 = ["id"];
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "gauge__body"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "gauge__red"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "gauge__fill"
 }), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "gauge__cover text-gray"

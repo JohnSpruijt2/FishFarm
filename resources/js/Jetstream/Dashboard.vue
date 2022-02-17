@@ -11,6 +11,7 @@
 
                         <div :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
+                                <div class="gauge__red"></div>
                                 <div class="gauge__fill"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
@@ -50,6 +51,9 @@
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
                   value*80
                 )}°C`;
+                if (this.fishponds[1][i].temperature > 40) {
+                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
+                }
             }
         }
                 })
