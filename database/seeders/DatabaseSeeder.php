@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        \App\Models\User::factory(10)->create();
+        //\App\Models\User::factory(10)->create();
         DB::table('fishponds')->insert([
             'name'=> 'Fishpond Numbero Uno' ,
             'created_at' => now(),
