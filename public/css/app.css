@@ -1732,8 +1732,7 @@ select {
   transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
 }
 .gauge {
-    width: 20%;
-    max-width: 250px;
+    width: 6rem;
     font-family: "Roboto", sans-serif;
     font-size: 1.5rem;
     float:right;
