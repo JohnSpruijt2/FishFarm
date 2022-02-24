@@ -19655,22 +19655,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ponds: this.fishponds[0],
-      temps: this.fishponds[1]
+      ponds: this.fishponds
     };
   },
   mounted: function mounted() {
-    for (var i = 0; i < this.fishponds[0].length; i++) {
-      var element = this.fishponds[0][i];
-      var guageElement = document.getElementById('guage-' + element.id);
-      var value = this.fishponds[1][i].temperature / 80;
+    this.fishponds.forEach(function (fishpond) {
+      var guageElement = document.getElementById('guage-' + fishpond.id);
+      var temperature = fishpond.latest_temperature.temperature;
+      var value = temperature / 80;
       guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2, "turn)");
       guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
 
-      if (this.fishponds[1][i].temperature > 40) {
+      if (temperature > 40) {
         guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
       }
-    }
+    });
   }
 }));
 

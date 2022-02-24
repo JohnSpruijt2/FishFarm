@@ -36,25 +36,24 @@
         },
         data() {
             return {
-                ponds: this.fishponds[0],
-                temps: this.fishponds[1]
+                ponds: this.fishponds,
             }
         }, 
         mounted() {
-            for (let i = 0; i < this.fishponds[0].length; i++) {
-                const element = this.fishponds[0][i];
-                var guageElement = document.getElementById('guage-'+element.id)
-                var value = this.fishponds[1][i].temperature/80
+            this.fishponds.forEach(fishpond => {
+                var guageElement = document.getElementById('guage-'+fishpond.id)
+                var temperature = fishpond.latest_temperature.temperature
+                var value = temperature/80
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2
                 }turn)`;
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
                   value*80
                 )}°C`;
-                if (this.fishponds[1][i].temperature > 40) {
+                if (temperature > 40) {
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
-            }
+            })
         }
                 })
 </script>

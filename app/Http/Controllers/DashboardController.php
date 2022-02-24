@@ -10,14 +10,9 @@ class DashboardController extends Controller
 {
     //
     function index() {
-        $data = fishpond::all();
-        $temps = [];
-        foreach ($data as $item) {
-            $temp = Temperature::orderBy('created_at', 'DESC')->where('fishpond_id',$item->id)->take(1)->get()[0];
-            array_push($temps, $temp);
-        }
+        $data = fishpond::all()->load('latestTemperature');
         return Inertia::render('Dashboard', [
-            'data' => [$data, $temps],
+            'data' => $data,
         ]);
     }
 }

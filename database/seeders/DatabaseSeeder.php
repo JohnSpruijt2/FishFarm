@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             for ($j=0; $j < 60; $j++) { 
                 $date = date("Y-m-d H:i:s");
                 $time = strtotime($date);
-                $time = $time - ($j * 60);
+                $time = $time + ($j * 60);
                 $date = date("Y-m-d H:i:s", $time);
                DB::table('temperatures')->insert([
                 'fishpond_id' => $i,
