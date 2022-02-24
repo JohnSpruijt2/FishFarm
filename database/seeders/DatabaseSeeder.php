@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        \App\Models\User::factory(10)->create();
+        //\App\Models\User::factory(10)->create();
         DB::table('fishponds')->insert([
             'name'=> 'Fishpond Numbero Uno' ,
             'created_at' => now(),
@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             for ($j=0; $j < 60; $j++) { 
                 $date = date("Y-m-d H:i:s");
                 $time = strtotime($date);
-                $time = $time - ($j * 60);
+                $time = $time + ($j * 60);
                 $date = date("Y-m-d H:i:s", $time);
                DB::table('temperatures')->insert([
                 'fishpond_id' => $i,

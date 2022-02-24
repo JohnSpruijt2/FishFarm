@@ -1733,7 +1733,6 @@ select {
 }
 .gauge {
     width: 6rem;
-
     font-family: "Roboto", sans-serif;
     font-size: 1.5rem;
     float:right;
