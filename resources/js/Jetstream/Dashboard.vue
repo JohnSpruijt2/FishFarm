@@ -18,6 +18,18 @@
                         </div>
 
                     </div>
+                    <div class="p-3 m-2 border border-grey rounded">
+                        <a href='/details/sensor'>Fishpond Sensor</a> <br>
+
+                        <div id='guage-sensor' class="gauge">
+                            <div class="gauge__body">
+                                <div class="gauge__red"></div>
+                                <div class="gauge__fill"></div>
+                                <div class="gauge__cover text-gray"></div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,11 +48,11 @@
         },
         data() {
             return {
-                ponds: this.fishponds,
+                ponds: this.fishponds[0],
             }
         }, 
         mounted() {
-            this.fishponds.forEach(fishpond => {
+            this.fishponds[0].forEach(fishpond => {
                 var guageElement = document.getElementById('guage-'+fishpond.id)
                 var temperature = fishpond.latest_temperature.temperature
                 var value = temperature/80
@@ -54,6 +66,18 @@
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
             })
+                var guageElement = document.getElementById('guage-sensor')
+                var temperature = this.fishponds[1][0].temperature
+                var value = temperature/80
+                guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
+                  value / 2
+                }turn)`;
+                guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
+                  value*80
+                )}°C`;
+                if (temperature > 40) {
+                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
+                }
         }
                 })
 </script>

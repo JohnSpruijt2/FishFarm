@@ -13,26 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('teams')->insert([
+        /*DB::table('teams')->insert([
             'user_id' => 1,
             'name' => 'test team',
             'personal_team' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        //\App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();*/
         DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Numbero Uno' ,
+            'name'=> 'Fishpond Number 1' ,
             'created_at' => now(),
             'updated_at' => now()
          ]);
          DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Numbero dus' ,
+            'name'=> 'Fishpond Number 2' ,
             'created_at' => now(),
             'updated_at' => now()
          ]);
          DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Numbero tos' ,
+            'name'=> 'Fishpond Number 3' ,
             'created_at' => now(),
             'updated_at' => now()
          ]);
@@ -51,6 +51,10 @@ class DatabaseSeeder extends Seeder
                ]);
             }
          }
-         
+         for ($j=0; $j < 60; $j++) { 
+           DB::table('tempSensor')->insert([
+            'temperature' => rand(10, 50),
+           ]);
+        }
     }
 }

@@ -19655,11 +19655,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ponds: this.fishponds
+      ponds: this.fishponds[0]
     };
   },
   mounted: function mounted() {
-    this.fishponds.forEach(function (fishpond) {
+    this.fishponds[0].forEach(function (fishpond) {
       var guageElement = document.getElementById('guage-' + fishpond.id);
       var temperature = fishpond.latest_temperature.temperature;
       var value = temperature / 80;
@@ -19670,6 +19670,15 @@ __webpack_require__.r(__webpack_exports__);
         guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
       }
     });
+    var guageElement = document.getElementById('guage-sensor');
+    var temperature = this.fishponds[1][0].temperature;
+    var value = temperature / 80;
+    guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2, "turn)");
+    guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+
+    if (temperature > 40) {
+      guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
+    }
   }
 }));
 
@@ -22393,6 +22402,9 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_9 = [_hoisted_8];
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"p-3 m-2 border border-grey rounded\"><a href=\"/details/sensor\">Fishpond Sensor</a> <br><div id=\"guage-sensor\" class=\"gauge\"><div class=\"gauge__body\"><div class=\"gauge__red\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__cover text-gray\"></div></div></div></div>", 1);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_jet_application_logo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("jet-application-logo");
 
@@ -22414,7 +22426,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_7)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])]);
+  )), _hoisted_10])])])]);
 }
 
 /***/ }),
