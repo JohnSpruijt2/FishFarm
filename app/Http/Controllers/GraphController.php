@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\Temperature;
 use App\Models\TempSensor;
+use App\Models\Fishpond;
 
 class GraphController extends Controller
 {
@@ -18,10 +19,7 @@ class GraphController extends Controller
             for ($i=60; $i > 0; $i--) { 
                 array_push($temperatures, $data[$i-1]->temperature);
             }
-            return Inertia::render('Graph', [
-                'times' => $times,
-                'temperatures' => $temperatures,
-            ]);
+            $data = 'Fishpond Sensor';
 
         } else if (is_numeric($request->id)) {
             $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
@@ -32,13 +30,13 @@ class GraphController extends Controller
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
-            return Inertia::render('Graph', [
-                'times' => $times,
-                'temperatures' => $temperatures,
-            ]);
+            $data = Fishpond::where('id',$request->id)->get();
         } else {
             return redirect('/dashboard');
         }
-        
+        return Inertia::render('Graph', [
+            'times' => $times,
+            'temperatures' => $temperatures,
+        ]);
     }
 }
