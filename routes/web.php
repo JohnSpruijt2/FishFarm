@@ -28,4 +28,4 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphController::class, 'index'])->name('graph');
+Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');

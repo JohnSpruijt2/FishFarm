@@ -13,14 +13,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        /*DB::table('teams')->insert([
+        DB::table('teams')->insert([
             'user_id' => 1,
             'name' => 'test team',
             'personal_team' => 0,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        \App\Models\User::factory(10)->create();*/
+        \App\Models\User::factory(10)->create();
         DB::table('fishponds')->insert([
             'name'=> 'Fishpond Number 1' ,
             'created_at' => now(),

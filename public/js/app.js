@@ -20807,14 +20807,13 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
-    data: Array,
-    times: Array,
-    temperatures: Array
+    name: String,
+    type: String,
+    xAxis: Array,
+    yAxis: Array
   },
   data: function data() {
-    console.log(this.data);
     return {
-      name: this.data,
       options: {
         chart: {
           zoom: {
@@ -20835,7 +20834,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         },
         xaxis: {
-          categories: this.times
+          categories: this.xAxis
         },
         yaxis: {
           min: 0,
@@ -20844,7 +20843,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       series: [{
         name: 'temperature',
-        data: this.temperatures
+        data: this.yAxis
       }]
     };
   }
@@ -22392,7 +22391,7 @@ var _hoisted_10 = {
   "class": "p-3 m-2 border border-grey rounded"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<a href=\"/details/sensor\">Fishpond Sensor</a> <br><div id=\"guage-sensor\" class=\"gauge\"><div class=\"gauge__body\"><div class=\"gauge__red\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__cover text-gray\"></div></div></div>", 4);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<a href=\"/details/sensor/temperature\">Fishpond Sensor</a> <br><div id=\"guage-sensor\" class=\"gauge\"><div class=\"gauge__body\"><div class=\"gauge__red\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__cover text-gray\"></div></div></div>", 4);
 
 var _hoisted_15 = [_hoisted_11];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -22405,7 +22404,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: pond.id,
       "class": "p-3 m-2 border border-grey rounded"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      href: '/details/' + pond.id
+      href: '/details/' + pond.id + '/temperature'
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.name), 9
     /* TEXT, PROPS */
     , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -25049,13 +25048,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+var _hoisted_1 = {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
-}, null, -1
-/* HOISTED */
-);
-
+};
 var _hoisted_2 = {
   "class": "py-12"
 };
@@ -25064,6 +25059,12 @@ var _hoisted_3 = {
 };
 var _hoisted_4 = {
   "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg"
+};
+var _hoisted_5 = {
+  "class": "font-semibold text-xl text-gray-800 leading-tight m-3",
+  style: {
+    "font-size": "2.4rem"
+  }
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_apexchart = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("apexchart");
@@ -25074,10 +25075,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "details"
   }, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_1];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.name), 1
+      /* TEXT */
+      )];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_apexchart, {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.type), 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_apexchart, {
         type: "line",
         options: _ctx.options,
         series: _ctx.series

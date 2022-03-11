@@ -12,6 +12,15 @@ class GraphController extends Controller
 {
     //
     function index(Request $request) {
+        if ($request->type = 'temperature') {
+            return $this->showTemperatureGraph($request);
+        } else {
+            return redirect('/details/'.$request->id.'/temperature');
+        }
+        
+    }
+
+    function showTemperatureGraph($request) {
         if ($request->id == 'sensor') {
             $data = TempSensor::getLast60();
             if ($data->first() == null) {
@@ -19,10 +28,11 @@ class GraphController extends Controller
             }
             $times = [];
             $temperatures = [];
-            for ($i=60; $i > 0; $i--) { 
+            
+            for ($i=count($data); $i > 0; $i--) { 
                 array_push($temperatures, $data[$i-1]->temperature);
             }
-            $data = 'Fishpond Sensor';
+            $name = 'Fishpond Sensor';
 
         } else if (is_numeric($request->id)) {
             $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
@@ -36,13 +46,15 @@ class GraphController extends Controller
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
-            $data = Fishpond::where('id',$request->id)->get();
+            $name = Fishpond::where('id',$request->id)->get()[0]->name;
         } else {
             return redirect('/dashboard');
         }
         return Inertia::render('Graph', [
-            'times' => $times,
-            'temperatures' => $temperatures,
+            'name' => $name,
+            'type' => 'temperature',
+            'xAxis' => $times,
+            'yAxis' => $temperatures,
         ]);
     }
 }
