@@ -14,6 +14,9 @@ class GraphController extends Controller
     function index(Request $request) {
         if ($request->id == 'sensor') {
             $data = TempSensor::getLast60();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
             $times = [];
             $temperatures = [];
             for ($i=60; $i > 0; $i--) { 
@@ -23,6 +26,9 @@ class GraphController extends Controller
 
         } else if (is_numeric($request->id)) {
             $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
             $times = [];
             $temperatures = [];
             foreach ($data as $key) {

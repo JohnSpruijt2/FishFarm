@@ -18,7 +18,7 @@
                         </div>
 
                     </div>
-                    <div class="p-3 m-2 border border-grey rounded">
+                    <div v-if="sensor != null" class="p-3 m-2 border border-grey rounded">
                         <a href='/details/sensor'>Fishpond Sensor</a> <br>
 
                         <div id='guage-sensor' class="gauge">
@@ -49,6 +49,7 @@
         data() {
             return {
                 ponds: this.fishponds[0],
+                sensor: this.fishponds[1]
             }
         }, 
         mounted() {
@@ -66,6 +67,7 @@
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
             })
+            if (this.fishponds[1] != null) {
                 var guageElement = document.getElementById('guage-sensor')
                 var temperature = this.fishponds[1][0].temperature
                 var value = temperature/80
@@ -78,6 +80,7 @@
                 if (temperature > 40) {
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
+            }
         }
-                })
+    })
 </script>
