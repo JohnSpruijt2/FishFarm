@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+      
         DB::table('teams')->insert([
             'user_id' => 1,
             'name' => 'test team',
@@ -21,21 +22,13 @@ class DatabaseSeeder extends Seeder
             'updated_at' => now(),
         ]);
         \App\Models\User::factory(10)->create();
-        DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Number 1' ,
-            'created_at' => now(),
-            'updated_at' => now()
-         ]);
+        for ($i=1; $i < 6; $i++) { 
          DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Number 2' ,
+            'name'=> 'Fishpond Number '.$i ,
             'created_at' => now(),
             'updated_at' => now()
          ]);
-         DB::table('fishponds')->insert([
-            'name'=> 'Fishpond Number 3' ,
-            'created_at' => now(),
-            'updated_at' => now()
-         ]);
+      }
          date_default_timezone_set('Europe/Amsterdam');
          for ($i = 1; $i<4; $i++) {
             for ($j=0; $j < 60; $j++) { 
