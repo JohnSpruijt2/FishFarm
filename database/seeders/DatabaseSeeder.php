@@ -28,22 +28,20 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
          ]);
-      }
          date_default_timezone_set('Europe/Amsterdam');
-         for ($i = 1; $i<4; $i++) {
-            for ($j=0; $j < 60; $j++) { 
-                $date = date("Y-m-d H:i:s");
-                $time = strtotime($date);
-                $time = $time + ($j * 60);
-                $date = date("Y-m-d H:i:s", $time);
-               DB::table('temperatures')->insert([
-                'fishpond_id' => $i,
-                'temperature' => rand(10, 50),
-                'created_at' => $date,
-                'updated_at' => $date,
-               ]);
-            }
-         }
+         for ($j=0; $j < 60; $j++) { 
+            $date = date("Y-m-d H:i:s");
+            $time = strtotime($date);
+            $time = $time + ($j * 60);
+            $date = date("Y-m-d H:i:s", $time);
+           DB::table('temperatures')->insert([
+            'fishpond_id' => $i,
+            'temperature' => rand(10, 50),
+            'created_at' => $date,
+            'updated_at' => $date,
+           ]);
+        }
+      }
          /*
          for ($j=0; $j < 60; $j++) { 
            DB::table('tempSensor')->insert([
