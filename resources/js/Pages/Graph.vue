@@ -2,7 +2,7 @@
     <app-layout title="details">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Graph
+
             </h2>
         </template>
 
@@ -21,7 +21,7 @@
 <script>
     import { defineComponent } from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
-
+    
     export default defineComponent({
         components: {
             AppLayout,
@@ -32,7 +32,8 @@
             temperatures: Array,
         },
         data: function() {
-        return {
+          console.log(this.data)
+        return { name: this.data,
       options: {
         chart: {
           zoom: {
@@ -47,7 +48,7 @@
             stroke: {
               color: '#0D47A1',
               opacity: 0.4,
-              width: 1
+              width: 1,
             }
           }
           }

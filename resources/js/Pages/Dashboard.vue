@@ -30,7 +30,7 @@
         },
         data() {
             return {
-                fishpondsData: this.data
+                fishpondsData: this.data,
             }
         }
     })
