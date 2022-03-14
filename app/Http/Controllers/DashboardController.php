@@ -10,6 +10,15 @@ use App\Models\TempSensor;
 class DashboardController extends Controller
 {
     //
+
+    function dump() {
+        $tables = DB::select('SHOW TABLES');
+foreach($tables as $table)
+{
+      echo $table->Tables_in_db_name;
+}
+    }
+
     function index() {
         $data = fishpond::all()->load('latestTemperature');
         $tempSensor = TempSensor::getLatest();

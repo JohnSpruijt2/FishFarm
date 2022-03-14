@@ -11,15 +11,6 @@ use App\Models\Fishpond;
 class GraphController extends Controller
 {
     //
-
-    function dump() {
-        $tables = DB::select('SHOW TABLES');
-foreach($tables as $table)
-{
-      echo $table->Tables_in_db_name;
-}
-    }
-
     function index(Request $request) {
         if ($request->type = 'temperature') {
             return $this->showTemperatureGraph($request);
