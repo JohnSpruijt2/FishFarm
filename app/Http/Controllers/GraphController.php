@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Temperature;
 use App\Models\TempSensor;
 use App\Models\Fishpond;
-use Illuminate\Support\Facades\DB;
+
 class GraphController extends Controller
 {
     //
