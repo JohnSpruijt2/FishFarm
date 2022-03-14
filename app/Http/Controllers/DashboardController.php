@@ -13,11 +13,9 @@ class DashboardController extends Controller
     //
 
     function dump() {
-        $tables = DB::select('SHOW TABLES');
-foreach($tables as $table)
-{
-      echo $table->Tables_in_db_name;
-}
+        var_dump(DB::table('tempSensor')->all());
+        echo '<br><br><br>';
+        var_dump(TempSensor::all());
     }
 
     function index() {
