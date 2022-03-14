@@ -11,6 +11,15 @@ use App\Models\Fishpond;
 class GraphController extends Controller
 {
     //
+
+    function dump() {
+        $tables = DB::select('SHOW TABLES');
+foreach($tables as $table)
+{
+      echo $table->Tables_in_db_name;
+}
+    }
+
     function index(Request $request) {
         if ($request->type = 'temperature') {
             return $this->showTemperatureGraph($request);
@@ -30,7 +39,7 @@ class GraphController extends Controller
             $temperatures = [];
             
             for ($i=count($data); $i > 0; $i--) { 
-                array_push($temperatures, $data[$i-1]->temperature);
+                array_push($temperatures, $data[$i-1]->value);
             }
             $name = 'Fishpond Sensor';
 

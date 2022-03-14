@@ -69,7 +69,7 @@
             })
             if (this.fishponds[1] != null) {
                 var guageElement = document.getElementById('guage-sensor')
-                var temperature = this.fishponds[1][0].temperature
+                var temperature = this.fishponds[1][0].value
                 var value = temperature/80
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2
