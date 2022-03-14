@@ -13,9 +13,9 @@ class DashboardController extends Controller
     //
 
     function dump() {
-        var_dump(DB::table('tempSensor')->all());
+        var_dump(DB::table('tempSensor')->get());
         echo '<br><br><br>';
-        var_dump(TempSensor::all());
+        var_dump(TempSensor::get());
     }
 
     function index() {
