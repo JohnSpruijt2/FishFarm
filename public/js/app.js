@@ -22361,7 +22361,7 @@ var _hoisted_2 = {
   "class": "mt-6 text-gray-500"
 };
 var _hoisted_3 = {
-  "class": "grid grid-cols-2 text-2xl"
+  "class": "grid grid-cols-1 sm:grid-cols-2 text-2xl"
 };
 var _hoisted_4 = ["href"];
 

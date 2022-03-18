@@ -5,7 +5,7 @@
                 <jet-application-logo class="block h-12 w-auto" />
             </div>
             <div class="mt-6 text-gray-500">
-                <div class="grid grid-cols-2 text-2xl">
+                <div class="grid grid-cols-1 sm:grid-cols-2 text-2xl">
                     <div v-for="(pond) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
                         <a :href="'/details/'+pond.id+'/temperature'">{{ pond.name }}</a> <br>
 
