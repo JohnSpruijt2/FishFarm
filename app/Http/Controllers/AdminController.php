@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Fishpond;
 
 class AdminController extends Controller
 {
@@ -15,8 +16,9 @@ class AdminController extends Controller
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
         }
+        $fishponds = Fishpond::all();
         return Inertia::render('AdminPanel', [
-
+            'fishponds' => $fishponds
         ]);
     }
 
@@ -82,5 +84,28 @@ class AdminController extends Controller
         $userId = $request->id;
         User::where('id', $userId)->delete();
         return redirect('/admin/editExistingAccounts');
+    }
+
+    function editFishpond(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $fishpond = Fishpond::where('id', $request->id)->first();
+        return Inertia::render('AdminFishpondForm', [
+            'fishpond' => $fishpond
+        ]);
+    }
+
+    function confirmEditFishpond(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $fishpond = Fishpond::where('id', $request->id)->first();
+        var_dump($request->all());
+        $fishpond->name = $request->name;
+        $fishpond->min_temp = $request->min_temp;
+        $fishpond->max_temp = $request->max_temp;
+        $fishpond->save();
+        return redirect('/admin');
     }
 }

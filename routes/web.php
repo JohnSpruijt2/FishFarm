@@ -42,3 +42,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/admin/createNewAccount',
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editExistingAccounts', [AdminController::class, 'editExistingAccounts'])->name('admin account overview');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/deletion/{id}', [AdminController::class, 'deleteAccount'])->name('admin deletion');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('edit fishponds');
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
