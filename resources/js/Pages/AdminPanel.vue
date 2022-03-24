@@ -1,0 +1,36 @@
+<template>
+    <app-layout title="details">
+        <template #header>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                Admin Panel
+            </h2>
+        </template>
+        
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div style="height: 5rem;" class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <a href="/admin/createNewAccount" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                        create new account
+                    </a> <br>
+                    <a href="/admin/editExistingAccount" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                        edit existing account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </app-layout>
+</template>
+
+<script>
+    import { defineComponent } from 'vue'
+    import AppLayout from '@/Layouts/AppLayout.vue'
+    
+    export default defineComponent({
+        components: {
+            AppLayout,
+        },
+        props: {
+            
+        },
+});
+</script>
