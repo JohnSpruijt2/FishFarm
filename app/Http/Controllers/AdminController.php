@@ -57,6 +57,8 @@ class AdminController extends Controller
                 'name' => explode(' ', $user->name, 2)[0]."'s Team",
                 'personal_team' => true,
             ]);
+            $user->current_team_id = Team::max('id');
+            $user->save();
         }
         
         return redirect('/dashboard');
