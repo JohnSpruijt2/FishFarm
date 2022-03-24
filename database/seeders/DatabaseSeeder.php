@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
          DB::table('fishponds')->insert([
             'name'=> 'Fishpond Number '.$i ,
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
+            'min_temp' => 5,
+            'max_temp' => 40
          ]);
          date_default_timezone_set('Europe/Amsterdam');
          for ($j=0; $j < 60; $j++) { 

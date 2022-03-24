@@ -17,6 +17,8 @@ class CreateFishpondsTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+            $table->integer('min_temp');
+            $table->integer('max_temp');
         });
     }
 

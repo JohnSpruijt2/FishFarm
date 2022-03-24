@@ -47,6 +47,8 @@ class GraphController extends Controller
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
             $name = Fishpond::where('id',$request->id)->get()[0]->name;
+            $minimum = Fishpond::where('id',$request->id)->get()[0]->min_temp;
+            $maximum = Fishpond::where('id',$request->id)->get()[0]->max_temp;
         } else {
             return redirect('/dashboard');
         }
@@ -55,6 +57,8 @@ class GraphController extends Controller
             'type' => 'temperature',
             'xAxis' => $times,
             'yAxis' => $temperatures,
+            'min_temp' => $minimum,
+            'max_temp' => $maximum,
         ]);
     }
 }

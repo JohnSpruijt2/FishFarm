@@ -20810,7 +20810,9 @@ __webpack_require__.r(__webpack_exports__);
     name: String,
     type: String,
     xAxis: Array,
-    yAxis: Array
+    yAxis: Array,
+    min_temp: Number,
+    max_temp: Number
   },
   data: function data() {
     return {
@@ -20836,7 +20838,7 @@ __webpack_require__.r(__webpack_exports__);
         annotations: {
           yaxis: [//sets the red maximum danger zone in the graph
           {
-            y: 40,
+            y: this.max_temp,
             y2: 80,
             borderColor: '#000',
             fillColor: '#FF0000',
@@ -20852,8 +20854,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }, //sets the orange minimum danger zone in the graph
           {
-            y: 35,
-            y2: 40,
+            y: this.max_temp - 5,
+            y2: this.max_temp,
             borderColor: '#000',
             fillColor: '#FFD700',
             opacity: 0.2,
@@ -20868,8 +20870,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }, //sets the green zone in the graph
           {
-            y: 10,
-            y2: 35,
+            y: this.min_temp + 5,
+            y2: this.max_temp - 5,
             borderColor: '#000',
             fillColor: '#32CD32',
             opacity: 0.2,
@@ -20885,7 +20887,7 @@ __webpack_require__.r(__webpack_exports__);
           }, //sets the red minimum danger zone in the graph
           {
             y: 0,
-            y2: 5,
+            y2: this.min_temp,
             borderColor: '#000',
             fillColor: '#FF0000',
             opacity: 0.2,
@@ -20900,8 +20902,8 @@ __webpack_require__.r(__webpack_exports__);
             }
           }, //sets the orange minimum danger zone in the graph
           {
-            y: 5,
-            y2: 10,
+            y: this.min_temp,
+            y2: this.min_temp + 5,
             borderColor: '#000',
             fillColor: '#FFD700',
             opacity: 0.2,
