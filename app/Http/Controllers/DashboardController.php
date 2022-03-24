@@ -3,24 +3,19 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Fishpond;
 use App\Models\Temperature;
 use App\Models\TempSensor;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     //
-
-    function dump() {
-        var_dump(DB::table('tempsensor')->get());
-        //echo '<br><br><br>';
-        //var_dump(TempSensor::get());
-    }
-
     function index() {
         $data = fishpond::all()->load('latestTemperature');
         $tempSensor = TempSensor::getLatest();
+        $isAdmin = Auth::user()->admin;
+
         if ($tempSensor->first() != null) {
             
             $data = [$data, $tempSensor];
@@ -29,6 +24,7 @@ class DashboardController extends Controller
         }
         return Inertia::render('Dashboard', [
             'data' => $data,
+            'isAdmin' => $isAdmin,
         ]);
     }
 }

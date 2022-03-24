@@ -3,6 +3,11 @@
         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
             <div>
                 <jet-application-logo class="block h-12 w-auto" />
+                <div v-if="adminStatus == 1" class="mt-8">
+                    <a :href="route('admin panel')" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                        admin panel
+                    </a>
+                </div>
             </div>
             <div class="mt-6 text-gray-500">
                 <div class="grid grid-cols-1 sm:grid-cols-2 text-2xl">
@@ -45,6 +50,7 @@
         },
         props: {
             fishponds: Array,
+            adminStatus: Number,
         },
         data() {
             return {
@@ -69,7 +75,7 @@
             })
             if (this.fishponds[1] != null) {
                 var guageElement = document.getElementById('guage-sensor')
-                var temperature = this.fishponds[1][0].value
+                var temperature = this.fishponds[1][0].temperature
                 var value = temperature/80
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2

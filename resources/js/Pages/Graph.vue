@@ -34,6 +34,8 @@
             type: String,
             xAxis: Array,
             yAxis: Array,
+            min_temp: Number,
+            max_temp: Number,
         },
         data: function() {
         return {
@@ -55,6 +57,94 @@
             }
           }
           }
+        },
+        annotations: {
+          yaxis: [
+            //sets the red maximum danger zone in the graph
+            {
+            y: this.max_temp,
+            y2: 80,
+            borderColor: '#000',
+            fillColor: '#FF0000',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'extreme warning range',
+            }
+          },
+          //sets the orange minimum danger zone in the graph
+          {
+            y: (this.max_temp - 5),
+            y2: this.max_temp,
+            borderColor: '#000',
+            fillColor: '#FFD700',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'warning range',
+            }
+          },
+          //sets the green zone in the graph
+          {
+            y: (this.min_temp + 5),
+            y2: (this.max_temp - 5),
+            borderColor: '#000',
+            fillColor: '#32CD32',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'healthy range',
+            }
+          },
+          //sets the red minimum danger zone in the graph
+          {
+            y: 0,
+            y2: this.min_temp,
+            borderColor: '#000',
+            fillColor: '#FF0000',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'extreme warning range',
+            }
+          },
+          //sets the orange minimum danger zone in the graph
+          {
+            y: this.min_temp,
+            y2: (this.min_temp + 5),
+            borderColor: '#000',
+            fillColor: '#FFD700',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'warning range',
+            }
+          }]
         },
         xaxis: {
           categories: this.xAxis
