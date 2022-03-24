@@ -56,6 +56,77 @@
           }
           }
         },
+        annotations: {
+          yaxis: [
+            //sets the red maximum danger zone in the graph
+            {
+            y: 40,
+            y2: 80,
+            borderColor: '#000',
+            fillColor: '#FF0000',
+            opacity: 0.3,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'extreme warning range',
+            }
+          },
+          //sets the orange minimum danger zone in the graph
+          {
+            y: 35,
+            y2: 40,
+            borderColor: '#000',
+            fillColor: '#FFD700',
+            opacity: 0.3,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'warning range',
+            }
+          },
+          //sets the red minimum danger zone in the graph
+          {
+            y: 0,
+            y2: 5,
+            borderColor: '#000',
+            fillColor: '#FF0000',
+            opacity: 0.3,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'extreme warning range',
+            }
+          },
+          //sets the orange minimum danger zone in the graph
+          {
+            y: 5,
+            y2: 10,
+            borderColor: '#000',
+            fillColor: '#FFD700',
+            opacity: 0.3,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'warning range',
+            }
+          }]
+        },
         xaxis: {
           categories: this.xAxis
         },
