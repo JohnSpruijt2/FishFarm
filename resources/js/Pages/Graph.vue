@@ -64,7 +64,7 @@
             y2: 80,
             borderColor: '#000',
             fillColor: '#FF0000',
-            opacity: 0.3,
+            opacity: 0.2,
             label: {
               borderColor: '#333',
               style: {
@@ -81,7 +81,7 @@
             y2: 40,
             borderColor: '#000',
             fillColor: '#FFD700',
-            opacity: 0.3,
+            opacity: 0.2,
             label: {
               borderColor: '#333',
               style: {
@@ -92,13 +92,30 @@
               text: 'warning range',
             }
           },
+          //sets the green zone in the graph
+          {
+            y: 10,
+            y2: 35,
+            borderColor: '#000',
+            fillColor: '#32CD32',
+            opacity: 0.2,
+            label: {
+              borderColor: '#333',
+              style: {
+                fontSize: '10px',
+                color: '#333',
+                background: '#FEB019',
+              },
+              text: 'healthy range',
+            }
+          },
           //sets the red minimum danger zone in the graph
           {
             y: 0,
             y2: 5,
             borderColor: '#000',
             fillColor: '#FF0000',
-            opacity: 0.3,
+            opacity: 0.2,
             label: {
               borderColor: '#333',
               style: {
@@ -115,7 +132,7 @@
             y2: 10,
             borderColor: '#000',
             fillColor: '#FFD700',
-            opacity: 0.3,
+            opacity: 0.2,
             label: {
               borderColor: '#333',
               style: {
