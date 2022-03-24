@@ -38,3 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController:
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/createNewAccount', [AdminController::class, 'register'])->name('admin register');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/createNewAccount', [AdminController::class, 'createNewAccount']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editExistingAccounts', [AdminController::class, 'editExistingAccounts'])->name('admin account overview');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/deletion/{id}', [AdminController::class, 'deleteAccount'])->name('admin deletion');

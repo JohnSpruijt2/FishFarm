@@ -30,20 +30,21 @@ class AdminController extends Controller
     }
 
     function createNewAccount(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
         $input = $request->all();
         
         if (filter_var( $input['email'], FILTER_VALIDATE_EMAIL ) == false) {
-            echo 'email';
+            return redirect('/admin/createNewAccount');
         } else if (user::where('email', $input['email'])->get()->first() != null) {
-            echo 'email';
-        } else if (ctype_alpha($input['name'] == false)) {
-            echo 'name only letter';
+            return redirect('/admin/createNewAccount');
         } else if (strlen($input['name']) < 3 || strlen($input['name']) > 30) {
-            echo 'name length';
+            return redirect('/admin/createNewAccount');
         } else if (strlen($input['password']) < 8 || strlen($input['password'] > 30)) {
-            echo 'password length';
+            return redirect('/admin/createNewAccount');
         } else if ($input['password'] != $input['password_confirmation']) {
-            echo 'password same';
+            return redirect('/admin/createNewAccount');
         } else {
             User::create([
                 'name' => $input['name'],
@@ -62,5 +63,24 @@ class AdminController extends Controller
         }
         
         return redirect('/dashboard');
+    }
+
+    function editExistingAccounts() {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $users = User::where('id', '!=', auth::user()->id)->get();
+        return Inertia::render('Auth/AdminOverview', [
+            'users' => $users
+        ]);
+    }
+
+    function deleteAccount(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $userId = $request->id;
+        User::where('id', $userId)->delete();
+        return redirect('/admin/editExistingAccounts');
     }
 }
