@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        DB::table('teams')->insert([
+        DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@mail.com',
             'admin' => true,
