@@ -1571,6 +1571,9 @@ select {
 .leading-4 {
   line-height: 1rem;
 }
+.leading-10 {
+  line-height: 2.5rem;
+}
 .tracking-widest {
   letter-spacing: 0.1em;
 }

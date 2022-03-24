@@ -8,7 +8,7 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <dashboard :fishponds="fishpondsData" :isAdmin="isAdmin"/>
+                    <dashboard :fishponds="fishpondsData" :adminStatus="isAdmin"/>
                 </div>
             </div>
         </div>
@@ -27,11 +27,10 @@
         },
         props: {
             data: Array,
-            isAdmin: Boolean,
+            isAdmin: Number,
         },
         data() {
             return {
-                isAdmin: this.isAdmin,
                 fishpondsData: this.data,
             }
         }

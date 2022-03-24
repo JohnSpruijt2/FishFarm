@@ -3,7 +3,7 @@
         <div class="p-6 sm:px-20 bg-white border-b border-gray-200">
             <div>
                 <jet-application-logo class="block h-12 w-auto" />
-                <div v-if="isAdmin == 1" class="mt-8">
+                <div v-if="adminStatus == 1" class="mt-8">
                     <a href="/admin" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                         admin panel
                     </a>
@@ -50,11 +50,10 @@
         },
         props: {
             fishponds: Array,
-            isAdmin: Boolean,
+            adminStatus: Number,
         },
         data() {
             return {
-                isAdmin: this.isAdmin,
                 ponds: this.fishponds[0],
                 sensor: this.fishponds[1]
             }

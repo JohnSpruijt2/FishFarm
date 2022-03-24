@@ -8,11 +8,11 @@
         
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div style="height: 5rem;" class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <a href="/admin/createNewAccount" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                <div style="min-height: 15rem;" class="bg-white p-6 overflow-hidden shadow-xl sm:rounded-lg">
+                    <a href="/admin/createNewAccount" class="bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                         create new account
                     </a> <br>
-                    <a href="/admin/editExistingAccount" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                    <a href="/admin/editExistingAccount" class="bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                         edit existing account
                     </a>
                 </div>
