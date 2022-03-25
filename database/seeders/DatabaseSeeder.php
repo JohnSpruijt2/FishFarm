@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         }
       }
          for ($j=0; $j < 60; $j++) { 
-           DB::table('tempSensor')->insert([
+           DB::table('tempsensor')->insert([
             'value' => rand(10, 50),
            ]);
          
