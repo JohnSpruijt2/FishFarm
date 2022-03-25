@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
-
+use Illuminate\Support\Facades\Auth;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -36,8 +36,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return array_merge(parent::share($request), [
-            //
-        ]);
+        if (Auth::user() != null) {
+            return array_merge(parent::share($request), [
+                //
+                'isAdmin' => Auth::user()->admin,
+            ]);  
+        } else {
+            return array_merge(parent::share($request), [
+                //
+                'isAdmin' => 0,
+            ]);  
+        }
+       
     }
 }
