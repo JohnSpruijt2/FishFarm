@@ -21,7 +21,22 @@ class GraphController extends Controller
     }
 
     function showTemperatureGraph($request) {
-        if (is_numeric($request->id)) {
+        if ($request->id == 'sensor') {
+            $data = TempSensor::getLast60();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
+            $times = [];
+            $temperatures = [];
+            
+            for ($i=count($data); $i > 0; $i--) { 
+                array_push($temperatures, $data[$i-1]->temperature);
+            }
+            $name = 'Fishpond Sensor';
+            $minimum = 5;
+            $maximum = 40;
+
+        } else if (is_numeric($request->id)) {
             $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
