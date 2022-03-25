@@ -21,19 +21,7 @@
                                 <div class="gauge__cover text-gray"></div>
                             </div>
                         </div>
-
-                    </div>
-                    <div v-if="sensor != null" class="p-3 m-2 border border-grey rounded">
-                        <a href='/details/sensor/temperature'>Fishpond Sensor</a> <br>
-
-                        <div id='guage-sensor' class="gauge">
-                            <div class="gauge__body">
-                                <div class="gauge__red"></div>
-                                <div class="gauge__fill"></div>
-                                <div class="gauge__cover text-gray"></div>
-                            </div>
-                        </div>
-
+                        
                     </div>
                 </div>
             </div>
@@ -54,12 +42,11 @@
         },
         data() {
             return {
-                ponds: this.fishponds[0],
-                sensor: this.fishponds[1]
+                ponds: this.fishponds,
             }
         }, 
         mounted() {
-            this.fishponds[0].forEach(fishpond => {
+            this.fishponds.forEach(fishpond => {
                 var guageElement = document.getElementById('guage-'+fishpond.id)
                 var temperature = fishpond.latest_temperature.temperature
                 var value = temperature/80
@@ -73,20 +60,6 @@
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
             })
-            if (this.fishponds[1] != null) {
-                var guageElement = document.getElementById('guage-sensor')
-                var temperature = this.fishponds[1][0].value
-                var value = temperature/80
-                guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
-                  value / 2
-                }turn)`;
-                guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
-                  value*80
-                )}°C`;
-                if (temperature > 40) {
-                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
-                }
-            }
         }
     })
 </script>
