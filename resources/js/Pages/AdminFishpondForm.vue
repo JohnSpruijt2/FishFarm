@@ -13,17 +13,17 @@
                         <input name="_token" type="hidden" :value="csrf" />
                         <div>
                             <label for="name" value="Name">name:</label>
-                            <input id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name"  />
+                            <input :value="fishpondData.name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name"  />
                         </div>
 
                         <div class="mt-4">
                             <label for="min_temp" value="min_temp">minimum temperature:</label>
-                            <input id="min_temp" name= "min_temp" type="number" min="0" max="80" class="mt-1 block w-full" required  />
+                            <input :value="fishpondData.min_temp" id="min_temp" name= "min_temp" type="number" min="0" max="80" class="mt-1 block w-full" required  />
                         </div>
 
                         <div class="mt-4">
                             <label for="max_temp" value="max_temp">maximum temperature:</label>
-                            <input id="max_temp" name="max_temp" type="number" min="0" max="80" class="mt-1 block w-full" required />
+                            <input :value="fishpondData.max_temp" id="max_temp" name="max_temp" type="number" min="0" max="80" class="mt-1 block w-full" required />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
