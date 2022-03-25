@@ -33,6 +33,8 @@ class GraphController extends Controller
                 array_push($temperatures, $data[$i-1]->temperature);
             }
             $name = 'Fishpond Sensor';
+            $minimum = 5;
+            $maximum = 40;
 
         } else if (is_numeric($request->id)) {
             $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();

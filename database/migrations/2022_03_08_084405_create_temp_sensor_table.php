@@ -13,7 +13,7 @@ class CreateTempSensorTable extends Migration
      */
     public function up()
     {
-        Schema::create('tempSensor', function (Blueprint $table) {
+        Schema::create('tempsensor', function (Blueprint $table) {
             $table->id();
             $table->integer('temperature');
         });
@@ -26,6 +26,6 @@ class CreateTempSensorTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tempSensor');
+        Schema::dropIfExists('tempsensor');
     }
 }
