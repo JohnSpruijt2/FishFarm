@@ -24533,7 +24533,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.fishpondData, function (fishpond) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
           key: fishpond.id,
-          href: '/admin/editFishpond/' + fishpond.id,
+          href: _ctx.route('edit fishponds', fishpond.id),
           style: {
             "margin": "1rem"
           },

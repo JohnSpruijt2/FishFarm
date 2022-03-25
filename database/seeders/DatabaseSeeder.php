@@ -14,15 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-      
-        /*DB::table('teams')->insert([
-            'user_id' => 1,
-            'name' => 'test team',
-            'personal_team' => 0,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-        \App\Models\User::factory(10)->create();*/
         DB::table('teams')->insert([
             'user_id' => 1,
             'name' => 'admin',
@@ -39,6 +30,15 @@ class DatabaseSeeder extends Seeder
             'remember_token' => Str::random(10),
             'current_team_id' => 1,
         ]);
+        DB::table('teams')->insert([
+            'user_id' => 2,
+            'name' => 'test team',
+            'personal_team' => 0,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        \App\Models\User::factory(10)->create();
+        
         for ($i=1; $i < 6; $i++) { 
          DB::table('fishponds')->insert([
             'name'=> 'Fishpond Number '.$i ,
