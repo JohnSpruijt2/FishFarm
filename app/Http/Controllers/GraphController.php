@@ -30,7 +30,7 @@ class GraphController extends Controller
             $temperatures = [];
             
             for ($i=count($data); $i > 0; $i--) { 
-                array_push($temperatures, $data[$i-1]->temperature);
+                array_push($temperatures, $data[$i-1]->value);
             }
             $name = 'Fishpond Sensor';
 
