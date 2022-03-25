@@ -1790,7 +1790,7 @@ select {
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
   }
-.gauge__red {
+.gauge__max {
     position: absolute;
     top: 100%;
     left: 0;
@@ -1802,6 +1802,19 @@ select {
     transform: rotate(0.75turn);
     transition: transform 0.2s ease-out;
   }
+.gauge__min {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: #950000;
+    opacity: 0.70;
+    transform-origin: center top;
+    transform: rotate(0.75turn);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+  }
 .gauge__cover {
     width: 75%;
     height: 150%;
@@ -1811,6 +1824,7 @@ select {
     top: 25%;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 2;
   
     /* Text */
     display: flex;

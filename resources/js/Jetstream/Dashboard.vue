@@ -18,7 +18,8 @@
 
                         <div :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
-                                <div class="gauge__red"></div>
+                                <div class="gauge__max"></div>
+                                <div class="gauge__min"></div>
                                 <div class="gauge__fill"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
@@ -28,7 +29,7 @@
                         <a href='/details/sensor/temperature'>Fishpond Sensor</a> <br>
                         <div id='guage-sensor' class="gauge">
                             <div class="gauge__body">
-                                <div class="gauge__red"></div>
+                                <div class="gauge__max"></div>
                                 <div class="gauge__fill"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
@@ -62,13 +63,25 @@
                 var guageElement = document.getElementById('guage-'+fishpond.id)
                 var temperature = fishpond.latest_temperature.temperature
                 var value = temperature/80
+                var minimum = fishpond.min_temp/80
+                var maximum = 1 - (fishpond.max_temp/80)
+
+                guageElement.querySelector(".gauge__max").style.transform = `rotate(${
+                  maximum / 2 * -1
+                }turn)`;
+                guageElement.querySelector(".gauge__min").style.transform = `rotate(${
+                  minimum / 2
+                }turn)`;
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2
                 }turn)`;
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
                   value*80
                 )}°C`;
-                if (temperature > 40) {
+                if (temperature > fishpond.max_temp) {
+                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
+                }
+                if (temperature < fishpond.min_temp) {
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
                 }
             })
