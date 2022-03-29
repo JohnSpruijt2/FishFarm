@@ -48,14 +48,43 @@ class DatabaseSeeder extends Seeder
             'max_temp' => 40
          ]);
          date_default_timezone_set('Europe/Amsterdam');
+         $temperature = rand(10, 50);
          for ($j=0; $j < 60; $j++) { 
+            if ($temperature >= 60) {
+                $temperature = $temperature - 10;
+            } else if ($temperature <= 5) {
+                $temperature = $temperature + 10;
+            } else {
+                $temperature = $temperature + rand(-5, 5);
+            }
+            
             $date = date("Y-m-d H:i:s");
             $time = strtotime($date);
             $time = $time + ($j * 60);
             $date = date("Y-m-d H:i:s", $time);
            DB::table('temperatures')->insert([
             'fishpond_id' => $i,
-            'temperature' => rand(10, 50),
+            'temperature' => $temperature,
+            'created_at' => $date,
+            'updated_at' => $date,
+           ]);
+        }
+        $oxygen = rand(3, 8);
+         for ($j=0; $j < 60; $j++) { 
+            if ($oxygen >= 15) {
+                $oxygen = $oxygen - 5;
+            } else if ($oxygen <= 2) {
+                $oxygen = $oxygen + 4;
+            } else {
+                $oxygen = $oxygen + rand(-2, 2);
+            }
+            $date = date("Y-m-d H:i:s");
+            $time = strtotime($date);
+            $time = $time + ($j * 60);
+            $date = date("Y-m-d H:i:s", $time);
+           DB::table('oxygen')->insert([
+            'fishpond_id' => $i,
+            'oxygen_level' => $oxygen,
             'created_at' => $date,
             'updated_at' => $date,
            ]);

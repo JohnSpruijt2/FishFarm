@@ -12,12 +12,20 @@ class GraphController extends Controller
 {
     //
     function index(Request $request) {
+        $data = [];
         if ($request->type = 'temperature') {
-            return $this->showTemperatureGraph($request);
+            array_push($data, $this->showTemperatureGraph($request));
+        } else if ($request->type = 'oxygen') {
+            array_push($data, $this->showOxygenGraph($request));
         } else {
             return redirect('/details/'.$request->id.'/temperature');
         }
-        
+
+        $name = Fishpond::where('id',$request->id)->get()[0]->name;
+        return Inertia::render('Graph', [
+            'name' => $name,
+            'graphs' => $data,
+        ]);
     }
 
     function showTemperatureGraph($request) {
@@ -48,19 +56,27 @@ class GraphController extends Controller
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
-            $name = Fishpond::where('id',$request->id)->get()[0]->name;
+            
             $minimum = Fishpond::where('id',$request->id)->get()[0]->min_temp;
             $maximum = Fishpond::where('id',$request->id)->get()[0]->max_temp;
         } else {
             return redirect('/dashboard');
         }
-        return Inertia::render('Graph', [
-            'name' => $name,
+        return [
             'type' => 'temperature',
             'xAxis' => $times,
             'yAxis' => $temperatures,
-            'min_temp' => $minimum,
-            'max_temp' => $maximum,
-        ]);
+            'min' => $minimum,
+            'max' => $maximum,
+            'offset' => 5,
+            'yMin' => 0,
+            'yMax' => 80
+        ];
+    }
+
+    function showOxygenGraph($request) {
+        if (is_numeric($request->id)) {
+            
+        }
     }
 }

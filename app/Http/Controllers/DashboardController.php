@@ -14,7 +14,6 @@ class DashboardController extends Controller
     function index() {
         $data = fishpond::all()->load('latestTemperature');
         $tempSensor = TempSensor::getLatest();
-        $isAdmin = Auth::user()->admin;
 
         if ($tempSensor->first() != null) {
             
@@ -24,7 +23,6 @@ class DashboardController extends Controller
         }
         return Inertia::render('Dashboard', [
             'data' => $data,
-            'isAdmin' => $isAdmin,
         ]);
     }
 }

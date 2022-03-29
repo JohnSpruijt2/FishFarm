@@ -41,7 +41,6 @@
         },
         props: {
             fishponds: Array,
-            adminStatus: Number,
         },
         data() {
             return {
