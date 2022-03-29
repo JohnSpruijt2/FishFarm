@@ -10,7 +10,9 @@
                         <div :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
                                 <div class="gauge__max"></div>
+                                <div class="gauge__max__warning"></div>
                                 <div class="gauge__min"></div>
+                                <div class="gauge__min__warning"></div>
                                 <div class="gauge__fill"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
@@ -60,8 +62,14 @@
                 guageElement.querySelector(".gauge__max").style.transform = `rotate(${
                   maximum / 2 * -1
                 }turn)`;
+                guageElement.querySelector(".gauge__max__warning").style.transform = `rotate(${
+                  (maximum + 0.0625) / 2 * -1
+                }turn)`;
                 guageElement.querySelector(".gauge__min").style.transform = `rotate(${
                   minimum / 2
+                }turn)`;
+                guageElement.querySelector(".gauge__min__warning").style.transform = `rotate(${
+                  (minimum + 0.0625) / 2
                 }turn)`;
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
                   value / 2
@@ -69,11 +77,12 @@
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
                   value*80
                 )}°C`;
-                if (temperature > fishpond.max_temp) {
+                if (temperature < fishpond.min_temp || temperature > fishpond.max_temp) {
                     guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
-                }
-                if (temperature < fishpond.min_temp) {
-                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
+                    guageElement.querySelector(".gauge__cover").style.color = '#ff0000'
+                } else if (temperature > fishpond.max_temp - 5 || temperature < fishpond.min_temp + 5) {
+                    guageElement.querySelector(".gauge__fill").style.background = '#FFA500'
+                    guageElement.querySelector(".gauge__cover").style.color = '#FFA500'
                 }
             })
             if (this.fishponds[1] != null) {
