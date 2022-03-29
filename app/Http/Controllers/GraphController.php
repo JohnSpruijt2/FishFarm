@@ -23,9 +23,9 @@ class GraphController extends Controller
             return redirect('/details/'.$request->id.'/oxygen');
         }
 
-        $name = Fishpond::where('id',$request->id)->get()[0]->name;
+        $fishpond = Fishpond::where('id',$request->id)->get()[0];
         return Inertia::render('Graph', [
-            'name' => $name,
+            'fishpond' => $fishpond,
             'graphs' => $data,
         ]);
     }
