@@ -104,10 +104,6 @@ class AdminController extends Controller
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishpond->name = $request->name;
         $fishpond->save();
-        $dangerzone = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dangerzoneType)->first();
-        $dangerzone->min = $request->min;
-        $dangerzone->max = $request->max;
-        $fishpond->save();
         return redirect('/admin');
     }
 
@@ -121,5 +117,17 @@ class AdminController extends Controller
             'name' => $name,
             'data' => $data,
         ]);
+    }
+    
+    function confirmEditDangerzones(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $dangerzone = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dataType)->first();
+        var_dump($dangerzone);
+        $dangerzone->min = $request->min;
+        $dangerzone->max = $request->max;
+        $dangerzone->save();
+        return redirect('/admin');
     }
 }

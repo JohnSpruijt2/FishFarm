@@ -33,6 +33,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardCon
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
 
+
+
+/* Admin routing */
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/createNewAccount', [AdminController::class, 'register'])->name('admin register');
@@ -48,3 +51,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}',
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'confirmEditDangerzones']);

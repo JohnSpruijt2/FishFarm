@@ -19,6 +19,7 @@ class CreateDangerzonesTable extends Migration
             $table->string('data_type');
             $table->integer('min');
             $table->integer('max');
+            $table->timestamps();
         });
     }
 
