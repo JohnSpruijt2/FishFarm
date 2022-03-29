@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Fishpond;
+use App\Models\Dangerzone;
 
 class AdminController extends Controller
 {
@@ -101,11 +102,24 @@ class AdminController extends Controller
             return redirect('/dashboard');
         }
         $fishpond = Fishpond::where('id', $request->id)->first();
-        var_dump($request->all());
         $fishpond->name = $request->name;
-        $fishpond->min_temp = $request->min_temp;
-        $fishpond->max_temp = $request->max_temp;
+        $fishpond->save();
+        $dangerzone = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dangerzoneType)->first();
+        $dangerzone->min = $request->min;
+        $dangerzone->max = $request->max;
         $fishpond->save();
         return redirect('/admin');
+    }
+
+    function editDangerzones(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $name = Fishpond::where('id', $request->id)->first()->name;
+        $data = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dataType)->first();
+        return Inertia::render('AdminDangerzoneForm', [
+            'name' => $name,
+            'data' => $data,
+        ]);
     }
 }

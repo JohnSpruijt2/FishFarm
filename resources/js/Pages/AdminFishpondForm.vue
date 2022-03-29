@@ -16,22 +16,27 @@
                             <input :value="fishpondData.name" id="name" name="name" type="text" class="mt-1 block w-full" required autofocus autocomplete="name"  />
                         </div>
 
-                        <div class="mt-4">
-                            <label for="min_temp" value="min_temp">minimum temperature:</label>
-                            <input :value="fishpondData.min_temp" id="min_temp" name= "min_temp" type="number" min="0" max="80" class="mt-1 block w-full" required  />
-                        </div>
-
-                        <div class="mt-4">
-                            <label for="max_temp" value="max_temp">maximum temperature:</label>
-                            <input :value="fishpondData.max_temp" id="max_temp" name="max_temp" type="number" min="0" max="80" class="mt-1 block w-full" required />
-                        </div>
-
                         <div class="flex items-center justify-end mt-4">
                             <button class="ml-4">
-                                Submit
+                                Change Name
                             </button>
                         </div>
                     </form>
+                    <h1 class="font-semibold text-xl text-gray-800 leading-tight">Dangerzones: </h1>
+                    <div class="mt-8">
+                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'temperature'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                            edit temperature
+                        </a>
+                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'oxygen'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                            edit oxygen
+                        </a>
+                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'clarity'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                            edit clarity
+                        </a>
+                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'level'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                            edit level
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

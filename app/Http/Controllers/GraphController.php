@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Temperature;
 use App\Models\TempSensor;
 use App\Models\Fishpond;
+use App\Models\Oxygen;
+use App\Models\Dangerzone;
 
 class GraphController extends Controller
 {
@@ -57,8 +59,8 @@ class GraphController extends Controller
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
             
-            $minimum = Fishpond::where('id',$request->id)->get()[0]->min_temp;
-            $maximum = Fishpond::where('id',$request->id)->get()[0]->max_temp;
+            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->min;
+            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->max;
         } else {
             return redirect('/dashboard');
         }
@@ -76,7 +78,22 @@ class GraphController extends Controller
 
     function showOxygenGraph($request) {
         if (is_numeric($request->id)) {
+            $data = Oxygen::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
+            $times = [];
+            $oxygenLevels = [];
+            foreach ($data as $key) {
+                array_push($oxygenLevels, $key['temperature']);
+                $time = str_split($key['created_at']);
+                array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
+            }
             
+            $minimum = Fishpond::where('id',$request->id)->get()[0]->min;
+            $maximum = Fishpond::where('id',$request->id)->get()[0]->max;
+        } else {
+            return redirect('/dashboard');
         }
     }
 }

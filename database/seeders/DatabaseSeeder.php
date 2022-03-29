@@ -44,9 +44,31 @@ class DatabaseSeeder extends Seeder
             'name'=> 'Fishpond Number '.$i ,
             'created_at' => now(),
             'updated_at' => now(),
-            'min_temp' => 5,
-            'max_temp' => 40
          ]);
+         DB::table('dangerzones')->insert([
+             'fishpond_id' => $i,
+             'data_type' => 'temperature',
+             'min' => 5,
+             'max' => 40,
+         ]);
+         DB::table('dangerzones')->insert([
+            'fishpond_id' => $i,
+            'data_type' => 'oxygen',
+            'min' => 2,
+            'max' => 10,
+        ]);
+        DB::table('dangerzones')->insert([
+            'fishpond_id' => $i,
+            'data_type' => 'level',
+            'min' => 5,
+            'max' => 40,
+        ]);
+        DB::table('dangerzones')->insert([
+            'fishpond_id' => $i,
+            'data_type' => 'clarity',
+            'min' => 5,
+            'max' => 40,
+        ]);
          date_default_timezone_set('Europe/Amsterdam');
          $temperature = rand(10, 50);
          for ($j=0; $j < 60; $j++) { 

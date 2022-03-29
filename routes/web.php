@@ -43,6 +43,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editExistingAccount
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/deletion/{id}', [AdminController::class, 'deleteAccount'])->name('admin deletion');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('edit fishponds');
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('admin edit fishponds');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
