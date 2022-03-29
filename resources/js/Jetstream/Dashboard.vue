@@ -4,18 +4,18 @@
             <div class="mt-6 text-gray-500">
                 <div class="grid grid-cols-1 sm:grid-cols-2 text-2xl">
                     <!--Fish ponds sensors-->
-                    <a :href="'/details/'+pond.id+'/temperature'" v-for="(pond) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
-                        <a :href="'/details/'+pond.id+'/temperature'">{{ pond.name }}</a> <br>
+                    <div v-for="(pond) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
+                        <a :href="'/details/'+pond.id">{{ pond.name }}</a> <br>
 
-                        <div :id="'guage-'+pond.id" class="gauge">
+                        <a :href="'/details/'+pond.id+'/temperature'" :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
                                 <div class="gauge__max"></div>
                                 <div class="gauge__min"></div>
                                 <div class="gauge__fill"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <a href='/details/sensor/temperature' v-if="sensor != null" class="p-3 m-2 border border-grey rounded">
                         <a href='/details/sensor/temperature'>Fishpond Sensor</a> <br>
                         <div id='guage-sensor' class="gauge">

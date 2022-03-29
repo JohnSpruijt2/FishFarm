@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Temperature;
 use App\Models\TempSensor;
 use App\Models\Fishpond;
-use App\Models\Oxygen;
+use App\Models\OxygenLevel;
 use App\Models\Dangerzone;
 
 class GraphController extends Controller
@@ -15,12 +15,12 @@ class GraphController extends Controller
     //
     function index(Request $request) {
         $data = [];
-        if ($request->type = 'temperature') {
+        if ($request->type == 'temperature') {
             array_push($data, $this->showTemperatureGraph($request));
-        } else if ($request->type = 'oxygen') {
+        } else if ($request->type == 'oxygen') {
             array_push($data, $this->showOxygenGraph($request));
         } else {
-            return redirect('/details/'.$request->id.'/temperature');
+            return redirect('/details/'.$request->id.'/oxygen');
         }
 
         $name = Fishpond::where('id',$request->id)->get()[0]->name;
@@ -78,22 +78,32 @@ class GraphController extends Controller
 
     function showOxygenGraph($request) {
         if (is_numeric($request->id)) {
-            $data = Oxygen::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = OxygenLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
             $times = [];
             $oxygenLevels = [];
             foreach ($data as $key) {
-                array_push($oxygenLevels, $key['temperature']);
+                array_push($oxygenLevels, $key['oxygen_level']);
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
             
-            $minimum = Fishpond::where('id',$request->id)->get()[0]->min;
-            $maximum = Fishpond::where('id',$request->id)->get()[0]->max;
+            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->min;
+            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->max;
         } else {
             return redirect('/dashboard');
         }
+        return [
+            'type' => 'oxygen',
+            'xAxis' => $times,
+            'yAxis' => $oxygenLevels,
+            'min' => $minimum,
+            'max' => $maximum,
+            'offset' => 2,
+            'yMin' => 0,
+            'yMax' => 20
+        ];
     }
 }

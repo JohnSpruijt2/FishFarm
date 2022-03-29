@@ -112,7 +112,7 @@ class DatabaseSeeder extends Seeder
             $time = strtotime($date);
             $time = $time + ($j * 60);
             $date = date("Y-m-d H:i:s", $time);
-           DB::table('oxygen')->insert([
+           DB::table('oxygen_levels')->insert([
             'fishpond_id' => $i,
             'oxygen_level' => $oxygen,
             'created_at' => $date,
