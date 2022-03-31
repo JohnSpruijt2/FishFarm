@@ -24708,11 +24708,16 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_8 = ["href"];
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, "Edit fishponds", -1
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+  "class": "text-2xl"
+}, "Edit fishponds", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = ["href"];
+var _hoisted_10 = {
+  "class": "grid grid-cols-2 sm:grid-cols-4 text-xl"
+};
+var _hoisted_11 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
@@ -24733,7 +24738,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit existing account ", 8
       /* PROPS */
-      , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.fishpondData, function (fishpond) {
+      , _hoisted_8), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.fishpondData, function (fishpond) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
           key: fishpond.id,
           href: _ctx.route('admin edit fishponds', fishpond.id),
@@ -24743,7 +24748,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fishpond.name), 9
         /* TEXT, PROPS */
-        , _hoisted_10);
+        , _hoisted_11);
       }), 128
       /* KEYED_FRAGMENT */
       ))])])])])];
