@@ -65,7 +65,7 @@ class GraphController extends Controller
             return redirect('/dashboard');
         }
         return [
-            'type' => 'temperature',
+            'type' => 'temperature in celcius',
             'xAxis' => $times,
             'yAxis' => $temperatures,
             'min' => $minimum,
@@ -96,7 +96,7 @@ class GraphController extends Controller
             return redirect('/dashboard');
         }
         return [
-            'type' => 'oxygen',
+            'type' => 'oxygen in mg/L',
             'xAxis' => $times,
             'yAxis' => $oxygenLevels,
             'min' => $minimum,
