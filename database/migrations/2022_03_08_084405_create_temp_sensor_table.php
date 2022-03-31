@@ -13,10 +13,10 @@ class CreateTempSensorTable extends Migration
      */
     public function up()
     {
-        Schema::create('tempsensor', function (Blueprint $table) {
+        /*Schema::create('tempsensor', function (Blueprint $table) {
             $table->id();
             $table->integer('temperature');
-        });
+        });*/
     }
 
     /**

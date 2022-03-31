@@ -14,7 +14,7 @@ class FishpondSeeder extends Seeder
     public function run()
     {
         //
-        for ($i=1; $i < 6; $i++) { 
+        for ($i=1; $i < 7; $i++) { 
             DB::table('fishponds')->insert([
                'name'=> 'Fishpond Number '.$i ,
                'created_at' => now(),

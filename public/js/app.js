@@ -19656,14 +19656,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ponds: this.fishponds[0],
-      sensor: this.fishponds[1]
+      ponds: this.fishponds
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    this.fishponds[0].forEach(function (fishpond) {
+    console.log(this.fishponds[0]);
+    this.fishponds.forEach(function (fishpond) {
       var guageElement = document.getElementById('guage-' + fishpond.id);
       var temperature = fishpond.latest_temperature.temperature;
       var value = temperature / 80;
@@ -19692,18 +19692,6 @@ __webpack_require__.r(__webpack_exports__);
         guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
       }
     });
-
-    if (this.fishponds[1] != null) {
-      var guageElement = document.getElementById('guage-sensor');
-      var temperature = this.fishponds[1][0].temperature;
-      var value = temperature / 80;
-      guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2, "turn)");
-      guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
-
-      if (temperature > 40) {
-        guageElement.querySelector(".gauge__fill").style.background = '#ff0000';
-      }
-    }
   }
 }));
 
@@ -22722,15 +22710,6 @@ var _hoisted_7 = ["href", "id"];
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"gauge__body\"><div class=\"gauge__max\"></div><div class=\"gauge__min\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__cover text-gray\"></div></div>", 1);
 
 var _hoisted_9 = [_hoisted_8];
-var _hoisted_10 = {
-  key: 0,
-  href: "/details/sensor/temperature",
-  "class": "p-3 m-2 border border-grey rounded"
-};
-
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<a href=\"/details/sensor/temperature\">Fishpond Sensor</a> <br><div id=\"guage-sensor\" class=\"gauge\"><div class=\"gauge__body\"><div class=\"gauge__max\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__cover text-gray\"></div></div></div>", 4);
-
-var _hoisted_15 = [_hoisted_11];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("Fish ponds sensors"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.ponds, function (pond) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -22749,7 +22728,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_7)]);
   }), 128
   /* KEYED_FRAGMENT */
-  )), _ctx.sensor != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_10, _hoisted_15)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])]);
+  ))])])])]);
 }
 
 /***/ }),

@@ -16,4 +16,12 @@ class Fishpond extends Model
     public function latestTemperature() {
         return $this->hasOne(Temperature::class)->latest();
     }
+
+    public function oxygenLevels() {
+        return $this->hasMany(OxygenLevel::class);
+    }
+
+    public function latestOxygenLevel() {
+        return $this->hasOne(Temperature::class)->latest();
+    }
 }

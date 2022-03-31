@@ -13,16 +13,9 @@ class DashboardController extends Controller
 {
     //
     function index() {
-        $data = fishpond::all()->load('latestTemperature');
+        $data = fishpond::all()->load('latestTemperature')->load('latestOxygenLevel');
         $temperatureDangerzone = Dangerzone::where('data_type', 'temperature')->get();
-        $tempSensor = TempSensor::getLatest();
 
-        if ($tempSensor->first() != null) {
-            
-            $data = [$data, $tempSensor];
-        } else {
-            $data = [$data, null];
-        }
         return Inertia::render('Dashboard', [
             'data' => $data,
             'temperatureDangerzone' => $temperatureDangerzone,
