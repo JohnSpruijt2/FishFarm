@@ -38,20 +38,22 @@ class FishpondSeeder extends Seeder
            ]);
            DB::table('dangerzones')->insert([
                'fishpond_id' => $i,
-               'data_type' => 'level',
-               'min' => 5,
-               'max' => 40,
+               'data_type' => 'turbidity',
+               'min' => -0.5,
+               'max' => 5,
                'created_at' => now(),
                'updated_at' => now(),
            ]);
            DB::table('dangerzones')->insert([
                'fishpond_id' => $i,
-               'data_type' => 'clarity',
-               'min' => 5,
-               'max' => 40,
+               'data_type' => 'level',
+               'min' => 55,
+               'max' => 90,
                'created_at' => now(),
                'updated_at' => now(),
            ]);
+
+
             date_default_timezone_set('Europe/Amsterdam');
             $temperature = rand(10, 50);
             for ($j=0; $j < 60; $j++) { 
@@ -74,6 +76,7 @@ class FishpondSeeder extends Seeder
                'updated_at' => $date,
               ]);
            }
+
            $oxygen = rand(3, 8);
             for ($j=0; $j < 60; $j++) { 
                if ($oxygen >= 15) {
@@ -94,14 +97,16 @@ class FishpondSeeder extends Seeder
                'updated_at' => $date,
               ]);
            }
+
+
            $turbidity = rand(1, 65)/10;
             for ($j=0; $j < 60; $j++) { 
                if ($turbidity >= 15) {
-                   $turbidity = $turbidity - 0.5;
+                   $turbidity = $turbidity - 0.8;
                } else if ($turbidity <= 0.2) {
                    $turbidity = $turbidity + 0.4;
                } else {
-                   $turbidity = $turbidity + rand(-0.2, 0.2);
+                   $turbidity = $turbidity + (rand(-2, 2)/10);
                }
                $date = date("Y-m-d H:i:s");
                $time = strtotime($date);
@@ -110,6 +115,27 @@ class FishpondSeeder extends Seeder
               DB::table('turbidity_levels')->insert([
                'fishpond_id' => $i,
                'ntu' => $turbidity,
+               'created_at' => $date,
+               'updated_at' => $date,
+              ]);
+           }
+
+           $waterLevel = rand(50, 90);
+            for ($j=0; $j < 60; $j++) { 
+               if ($waterLevel >= 90) {
+                   $waterLevel = $waterLevel - 5;
+               } else if ($waterLevel <= 50) {
+                   $waterLevel = $waterLevel + 10;
+               } else {
+                   $waterLevel = $waterLevel + (rand(-5, 5));
+               }
+               $date = date("Y-m-d H:i:s");
+               $time = strtotime($date);
+               $time = $time + ($j * 60);
+               $date = date("Y-m-d H:i:s", $time);
+              DB::table('water_levels')->insert([
+               'fishpond_id' => $i,
+               'cm' => $waterLevel,
                'created_at' => $date,
                'updated_at' => $date,
               ]);

@@ -18,12 +18,12 @@ class DatabaseSeeder extends Seeder
             FishpondSeeder::class,
             UserSeeder::class,
         ]);
-         for ($j=0; $j < 60; $j++) { 
+         /*for ($j=0; $j < 60; $j++) { 
            DB::table('tempsensor')->insert([
             'temperature' => rand(10, 50),
            ]);
          
-        }
+        }*/
         
     }
 }

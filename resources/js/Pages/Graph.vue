@@ -16,12 +16,12 @@
                         <a :href="route('graph', {id: fishpond.id ,type: 'oxygen'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                             show oxygen
                         </a>
-                        <!--<a :href="route('graph', {id: fishpond.id ,type: 'clarity'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                        <a :href="route('graph', {id: fishpond.id ,type: 'turbidity'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                             show clarity
                         </a>
                         <a :href="route('graph', {id: fishpond.id ,type: 'level'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                             show level
-                        </a> -->
+                        </a>
                     </div>
                   <div v-for="(graph) in graphs" :key="graph['type']">
                     <GraphComponent :type="graph['type']" :xAxis="graph['xAxis']" :yAxis="graph['yAxis']" :min="graph['min']" :max="graph['max']" :offset="graph['offset']" :yMin="graph['yMin']" :yMax="graph['yMax']"/>

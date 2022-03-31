@@ -8,6 +8,8 @@ use App\Models\Temperature;
 use App\Models\TempSensor;
 use App\Models\Fishpond;
 use App\Models\OxygenLevel;
+use App\Models\TurbidityLevel;
+use App\Models\WaterLevel;
 use App\Models\Dangerzone;
 
 class GraphController extends Controller
@@ -19,6 +21,10 @@ class GraphController extends Controller
             array_push($data, $this->showTemperatureGraph($request));
         } else if ($request->type == 'oxygen') {
             array_push($data, $this->showOxygenGraph($request));
+        } else if ($request->type == 'turbidity') {
+            array_push($data, $this->showTurbidityGraph($request));
+        } else if ($request->type == 'level') {
+            array_push($data, $this->showWaterLevelGraph($request));
         } else {
             return redirect('/details/'.$request->id.'/oxygen');
         }
@@ -104,6 +110,68 @@ class GraphController extends Controller
             'offset' => 2,
             'yMin' => 0,
             'yMax' => 20
+        ];
+    }
+
+    function showTurbidityGraph($request) {
+        if (is_numeric($request->id)) {
+            $data = TurbidityLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
+            $times = [];
+            $TurbidityLevels = [];
+            foreach ($data as $key) {
+                array_push($TurbidityLevels, $key['ntu']);
+                $time = str_split($key['created_at']);
+                array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
+            }
+            
+            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->min;
+            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->max;
+        } else {
+            return redirect('/dashboard');
+        }
+        return [
+            'type' => 'turbidity in NTU',
+            'xAxis' => $times,
+            'yAxis' => $TurbidityLevels,
+            'min' => $minimum,
+            'max' => $maximum,
+            'offset' => 0.5,
+            'yMin' => 0,
+            'yMax' => 10
+        ];
+    }
+
+    function showWaterLevelGraph($request) {
+        if (is_numeric($request->id)) {
+            $data = WaterLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            if ($data->first() == null) {
+                return redirect('/dashboard');
+            }
+            $times = [];
+            $waterLevels = [];
+            foreach ($data as $key) {
+                array_push($waterLevels, $key['cm']);
+                $time = str_split($key['created_at']);
+                array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
+            }
+            
+            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->min;
+            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->max;
+        } else {
+            return redirect('/dashboard');
+        }
+        return [
+            'type' => 'water level in CM',
+            'xAxis' => $times,
+            'yAxis' => $waterLevels,
+            'min' => $minimum,
+            'max' => $maximum,
+            'offset' => 10,
+            'yMin' => 40,
+            'yMax' => 100
         ];
     }
 }
