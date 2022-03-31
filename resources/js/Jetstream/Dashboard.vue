@@ -7,6 +7,18 @@
                     <div v-for="(pond) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
                         <a :href="'/details/'+pond.id">{{ pond.name }}</a> <br>
 
+                        <a :href="'details/'+pond.id+'/oxygen'" class="dashboardLatests">
+                            {{pond.latest_oxygen_level.oxygen_level}} mg/L
+                        </a>
+
+                        <a :href="'details/'+pond.id+'/turbidity'" class="dashboardLatests">
+                            {{pond.latest_turbidity_level.ntu}} NTU
+                        </a>
+
+                        <a :href="'details/'+pond.id+'/level'" class="dashboardLatests">
+                            {{pond.latest_water_level.cm}} cm
+                        </a>
+
                         <a :href="'/details/'+pond.id+'/temperature'" :id="'guage-'+pond.id" class="gauge">
                             <div class="gauge__body">
                                 <div class="gauge__max"></div>
@@ -45,7 +57,7 @@
                 var value = temperature/80
                 var minDanger;
                 var maxDanger;
-                this.fishpond.dangerzone.forEach(dangerzone => {
+                fishpond.dangerzone.forEach(dangerzone => {
                     if (dangerzone.data_type == 'temperature') {
                         minDanger = dangerzone.min;
                         maxDanger = dangerzone.max;
