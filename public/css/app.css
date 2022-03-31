@@ -1204,6 +1204,9 @@ select {
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
 .flex-row {
   flex-direction: row;
 }
@@ -1857,6 +1860,10 @@ select {
     padding-bottom: 25%;
     box-sizing: border-box;
   }
+.dashboardLatests {
+    margin: 0.5rem;
+    line-height: 3rem;
+  }
 .hover\:border-gray-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
@@ -2156,6 +2163,10 @@ select {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .sm\:items-start {
     align-items: flex-start;
   }
@@ -2280,4 +2291,3 @@ select {
     padding-right: 2rem;
   }
 }
-  

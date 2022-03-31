@@ -7,24 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Fishpond;
 use App\Models\Temperature;
 use App\Models\TempSensor;
+use App\Models\Dangerzone;
 
 class DashboardController extends Controller
 {
     //
     function index() {
-        $data = fishpond::all()->load('latestTemperature');
-        $tempSensor = TempSensor::getLatest();
-        $isAdmin = Auth::user()->admin;
+        $data = fishpond::all()->load('dangerzone')->load('latestTemperature')->load('latestOxygenLevel')->load('latestTurbidityLevel')->load('latestWaterLevel');
 
-        if ($tempSensor->first() != null) {
-            
-            $data = [$data, $tempSensor];
-        } else {
-            $data = [$data, null];
-        }
         return Inertia::render('Dashboard', [
             'data' => $data,
-            'isAdmin' => $isAdmin,
         ]);
     }
 }

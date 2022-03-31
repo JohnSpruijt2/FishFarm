@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFishpondsTable extends Migration
+class CreateDangerzonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateFishpondsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fishponds', function (Blueprint $table) {
+        Schema::create('dangerzones', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('fishpond_id');
+            $table->string('data_type');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateFishpondsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fishponds');
+        Schema::dropIfExists('dangerzones');
     }
 }
