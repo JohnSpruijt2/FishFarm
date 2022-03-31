@@ -13,12 +13,10 @@ class DashboardController extends Controller
 {
     //
     function index() {
-        $data = fishpond::all()->load('latestTemperature')->load('latestOxygenLevel');
-        $temperatureDangerzone = Dangerzone::where('data_type', 'temperature')->get();
+        $data = fishpond::all()->load('dangerzone')->load('latestTemperature')->load('latestOxygenLevel')->load('latestTurbidityLevel')->load('latestWaterLevel');
 
         return Inertia::render('Dashboard', [
             'data' => $data,
-            'temperatureDangerzone' => $temperatureDangerzone,
         ]);
     }
 }

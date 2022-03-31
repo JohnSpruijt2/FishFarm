@@ -31,7 +31,6 @@
         },
         props: {
             fishponds: Array,
-            tempDangerzone: Array,
         },
         data() {
             return {
@@ -46,8 +45,8 @@
                 var value = temperature/80
                 var minDanger;
                 var maxDanger;
-                this.tempDangerzone.forEach(dangerzone => {
-                    if (dangerzone.fishpond_id == fishpond.id) {
+                this.fishpond.dangerzone.forEach(dangerzone => {
+                    if (dangerzone.data_type == 'temperature') {
                         minDanger = dangerzone.min;
                         maxDanger = dangerzone.max;
                     }
