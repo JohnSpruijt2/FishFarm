@@ -24792,7 +24792,7 @@ var _hoisted_4 = {
   "class": "p-6 white overflow-hidden shadow-xl sm:rounded-lg"
 };
 var _hoisted_5 = {
-  "class": "grid grid-cols-1 sm:grid-cols-2 text-2xl"
+  "class": "grid grid-cols-1 text-2xl"
 };
 var _hoisted_6 = {
   style: {
@@ -24825,6 +24825,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* TEXT */
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
           href: '/admin/deletion/' + user.id,
+          style: {
+            "float": "right"
+          },
           "class": "bg-red-500 leading-10 hover:bg-red-700 text-black font-bold py-2 px-4 border border-red-700 rounded"
         }, "Delete", 8
         /* PROPS */
