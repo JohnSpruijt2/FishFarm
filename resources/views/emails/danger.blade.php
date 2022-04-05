@@ -1,4 +1,4 @@
-<h1>DANGER</h1>
+<h1>{{$warningType}} DANGER</h1>
 @if ($type == 'temperature')
 <h1>{{$data->name}} is at {{$data->latestTemperature->temperature}} degrees celcius</h1>
 @elseif ($type == 'oxygen')

@@ -12,16 +12,22 @@ class DangerWarning extends Mailable
     use Queueable, SerializesModels;
     protected $type;
     protected $data;
+    protected $warningType;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data, $type)
+    public function __construct($data, $type, $crit=null)
     {
         //
         $this->type = $type;
         $this->data = $data;
+        if ($crit != null) {
+            $this->warningType = 'critical';
+        } else {
+            $this->warningType = '';
+        }
     }
 
     /**
@@ -33,7 +39,8 @@ class DangerWarning extends Mailable
     {
         return $this->view('emails.danger')->with([
             'type' => $this->type,
-            'data' => $this->data
+            'data' => $this->data,
+            'warningType' => $this->warningType,
         ]);
     }
 }
