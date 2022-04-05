@@ -26,6 +26,7 @@
                                 <div class="gauge__min"></div>
                                 <div class="gauge__min__warning"></div>
                                 <div class="gauge__fill"></div>
+                                <div class="gauge__fill2"></div>
                                 <div class="gauge__cover text-gray"></div>
                             </div>
                         </a>
@@ -80,16 +81,19 @@
                   (minimum + 0.0625) / 2
                 }turn)`;
                 guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
-                  value / 2
+                  (value / 2) - 2
+                }turn)`;
+                guageElement.querySelector(".gauge__fill2").style.transform = `rotate(${
+                  (value / 2) - 2
                 }turn)`;
                 guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
                   value*80
                 )}°C`;
                 if (temperature < minDanger || temperature > maxDanger) {
-                    guageElement.querySelector(".gauge__fill").style.background = '#ff0000'
+                    guageElement.querySelector(".gauge__fill2").style.background = '#ff0000'
                     guageElement.querySelector(".gauge__cover").style.color = '#ff0000'
                 } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
-                    guageElement.querySelector(".gauge__fill").style.background = '#FFA500'
+                    guageElement.querySelector(".gauge__fill2").style.background = '#FFA500'
                     guageElement.querySelector(".gauge__cover").style.color = '#FFA500'
                 }
             })

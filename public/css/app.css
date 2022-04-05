@@ -1791,10 +1791,22 @@ select {
     top: 100%;
     left: 0;
     width: inherit;
-    height: 100%;
-    background: #009578;
-    opacity: 0.7;
+    height: 15%;
+    background: black;
     transform-origin: center top;
+    transform: rotate(0.25turn);
+    transition: transform 0.2s ease-out;
+    z-index: 4;
+  }
+.gauge__fill2 {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: green;
+    transform-origin: center top;
+    opacity: 0.7;
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
     z-index: 3;
