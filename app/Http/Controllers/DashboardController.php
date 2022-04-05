@@ -7,15 +7,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DangerWarning;
 use App\Models\Fishpond;
-use App\Models\Temperature;
-use App\Models\TempSensor;
-use App\Models\Dangerzone;
 
 class DashboardController extends Controller
 {
     //
     function index(Request $request) {
-        $data = fishpond::all()->load('dangerzone')->load('latestTemperature')->load('latestOxygenLevel')->load('latestTurbidityLevel')->load('latestWaterLevel');
+        $data = fishpond::all()->load('dangerzones')->load('latestTemperature')->load('latestOxygenLevel')->load('latestTurbidityLevel')->load('latestWaterLevel');
         /*foreach ($data as $key) {
             foreach ($key->dangerzone as $dangerzone) {
                 if ($dangerzone->data_type == 'temperature') {

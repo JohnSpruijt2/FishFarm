@@ -69,7 +69,7 @@ class FishpondSeeder extends Seeder
                $time = strtotime($date);
                $time = $time + ($j * 60);
                $date = date("Y-m-d H:i:s", $time);
-              DB::table('temperatures')->insert([
+              DB::table('temperature_logs')->insert([
                'fishpond_id' => $i,
                'temperature' => $temperature,
                'created_at' => $date,
@@ -90,7 +90,7 @@ class FishpondSeeder extends Seeder
                $time = strtotime($date);
                $time = $time + ($j * 60);
                $date = date("Y-m-d H:i:s", $time);
-              DB::table('oxygen_levels')->insert([
+              DB::table('oxygen_level_logs')->insert([
                'fishpond_id' => $i,
                'oxygen_level' => $oxygen,
                'created_at' => $date,
@@ -112,7 +112,7 @@ class FishpondSeeder extends Seeder
                $time = strtotime($date);
                $time = $time + ($j * 60);
                $date = date("Y-m-d H:i:s", $time);
-              DB::table('turbidity_levels')->insert([
+              DB::table('turbidity_level_logs')->insert([
                'fishpond_id' => $i,
                'ntu' => $turbidity,
                'created_at' => $date,
@@ -133,7 +133,7 @@ class FishpondSeeder extends Seeder
                $time = strtotime($date);
                $time = $time + ($j * 60);
                $date = date("Y-m-d H:i:s", $time);
-              DB::table('water_levels')->insert([
+              DB::table('water_level_logs')->insert([
                'fishpond_id' => $i,
                'cm' => $waterLevel,
                'created_at' => $date,

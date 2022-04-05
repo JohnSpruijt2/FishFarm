@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTurbidityLevelsTable extends Migration
+class CreateOxygenLevelLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTurbidityLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('turbidity_levels', function (Blueprint $table) {
+        Schema::create('oxygen_level_logs', function (Blueprint $table) {
             $table->id();
             $table->integer('fishpond_id');
-            $table->float('ntu');
+            $table->integer('oxygen_level');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateTurbidityLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('turbidity_levels');
+        Schema::dropIfExists('oxygen_level_logs');
     }
 }

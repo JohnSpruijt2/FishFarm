@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Application;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\Temperature;
+use App\Models\TemperatureLog;
 use App\Models\TempSensor;
 use App\Models\Fishpond;
-use App\Models\OxygenLevel;
-use App\Models\TurbidityLevel;
-use App\Models\WaterLevel;
+use App\Models\OxygenLevelLog;
+use App\Models\TurbidityLevelLog;
+use App\Models\WaterLevelLog;
 use App\Models\Dangerzone;
 
 class GraphController extends Controller
@@ -38,7 +38,7 @@ class GraphController extends Controller
 
     function showTemperatureGraph($request) {
         if (is_numeric($request->id)) {
-            $data = Temperature::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = TemperatureLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
@@ -69,7 +69,7 @@ class GraphController extends Controller
 
     function showOxygenGraph($request) {
         if (is_numeric($request->id)) {
-            $data = OxygenLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = OxygenLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
@@ -100,7 +100,7 @@ class GraphController extends Controller
 
     function showTurbidityGraph($request) {
         if (is_numeric($request->id)) {
-            $data = TurbidityLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = TurbidityLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
@@ -131,7 +131,7 @@ class GraphController extends Controller
 
     function showWaterLevelGraph($request) {
         if (is_numeric($request->id)) {
-            $data = WaterLevel::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = WaterLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }

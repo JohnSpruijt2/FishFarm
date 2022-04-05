@@ -58,7 +58,7 @@
                 var value = temperature/80
                 var minDanger;
                 var maxDanger;
-                fishpond.dangerzone.forEach(dangerzone => {
+                fishpond.dangerzones.forEach(dangerzone => {
                     if (dangerzone.data_type == 'temperature') {
                         minDanger = dangerzone.min;
                         maxDanger = dangerzone.max;

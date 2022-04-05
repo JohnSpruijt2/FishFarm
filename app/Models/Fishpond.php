@@ -10,44 +10,44 @@ class Fishpond extends Model
     use HasFactory;
 
     //dangerzone relations
-    public function dangerzone() {
+    public function dangerzones() {
         return $this->hasMany(Dangerzone::class);
     }
 
 
     //temperature relations
     public function temperatures() {
-        return $this->hasMany(Temperature::class);
+        return $this->hasMany(TemperatureLog::class);
     }
 
     public function latestTemperature() {
-        return $this->hasOne(Temperature::class)->latest();
+        return $this->hasOne(TemperatureLog::class)->latest();
     }
 
     //oxygen level relations
     public function oxygenLevels() {
-        return $this->hasMany(OxygenLevel::class);
+        return $this->hasMany(OxygenLevelLog::class);
     }
 
     public function latestOxygenLevel() {
-        return $this->hasOne(OxygenLevel::class)->latest();
+        return $this->hasOne(OxygenLevelLog::class)->latest();
     }
 
     //turbidity level relations
     public function turbidityLevels() {
-        return $this->hasMany(TurbidityLevel::class);
+        return $this->hasMany(TurbidityLevelLog::class);
     }
 
     public function latestTurbidityLevel() {
-        return $this->hasOne(TurbidityLevel::class)->latest();
+        return $this->hasOne(TurbidityLevelLog::class)->latest();
     }
 
     //water level relations
     public function waterLevels() {
-        return $this->hasMany(WaterLevel::class);
+        return $this->hasMany(WaterLevelLog::class);
     }
     
     public function latestWaterLevel() {
-        return $this->hasOne(WaterLevel::class)->latest();
+        return $this->hasOne(WaterLevelLog::class)->latest();
     }
 }
