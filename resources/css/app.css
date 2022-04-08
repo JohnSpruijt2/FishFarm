@@ -24,24 +24,77 @@
     top: 100%;
     left: 0;
     width: inherit;
-    height: 100%;
-    background: #009578;
+    height: 15%;
+    background: black;
     transform-origin: center top;
     transform: rotate(0.25turn);
     transition: transform 0.2s ease-out;
+    z-index: 4;
   }
 
-  .gauge__red {
+  .gauge__fill2 {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: green;
+    transform-origin: center top;
+    opacity: 0.7;
+    transform: rotate(0.25turn);
+    transition: transform 0.2s ease-out;
+    z-index: 3;
+  }
+
+  .gauge__max {
     position: absolute;
     top: 100%;
     left: 0;
     width: inherit;
     height: 100%;
     background: #950000;
-    opacity: 0.50;
     transform-origin: center top;
     transform: rotate(0.75turn);
     transition: transform 0.2s ease-out;
+    z-index: 1;
+  }
+
+  .gauge__max__warning {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: #FFA500;
+    transform-origin: center top;
+    transform: rotate(0.75turn);
+    transition: transform 0.2s ease-out;
+  }
+
+  .gauge__min {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: #950000;
+    transform-origin: center top;
+    transform: rotate(0.75turn);
+    transition: transform 0.2s ease-out;
+    z-index: 2;
+  }
+
+  .gauge__min__warning {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: inherit;
+    height: 100%;
+    background: #FFA500;
+    transform-origin: center top;
+    transform: rotate(0.75turn);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
   }
   
   .gauge__cover {
@@ -53,6 +106,7 @@
     top: 25%;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 4;
   
     /* Text */
     display: flex;
@@ -62,3 +116,7 @@
     box-sizing: border-box;
   }
   
+  .dashboardLatests {
+    margin: 0.5rem;
+    line-height: 3rem;
+  }

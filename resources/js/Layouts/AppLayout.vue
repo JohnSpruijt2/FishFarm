@@ -23,6 +23,11 @@
                                     Dashboard
                                 </jet-nav-link>
                             </div>
+                            <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('admin panel')" :active="route().current('admin panel')">
+                                    Admin Panel
+                                </jet-nav-link>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -240,8 +245,14 @@
     import JetNavLink from '@/Jetstream/NavLink.vue'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import { computed } from 'vue'
+    import { usePage } from '@inertiajs/inertia-vue3'
 
     export default defineComponent({
+        setup() {
+          const isAdmin = computed(() => usePage().props.value.isAdmin)
+          return { isAdmin }
+        },
         props: {
             title: String,
         },

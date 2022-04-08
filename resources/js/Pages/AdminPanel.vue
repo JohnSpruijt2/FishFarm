@@ -15,9 +15,9 @@
                     <a :href="route('admin account overview')" class="bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                         edit existing account
                     </a>
-                    <div>
-                        <h1>Edit fishponds</h1>
-                        <a v-for="(fishpond) in fishpondData" :key="fishpond.id" :href="'/admin/editFishpond/'+fishpond.id" style="margin: 1rem;" class="bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">{{fishpond.name}}</a>
+                    <h1 class="text-2xl">Edit fishponds</h1>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 text-xl">
+                        <a v-for="(fishpond) in fishpondData" :key="fishpond.id" :href="route('admin edit fishponds', fishpond.id)" style="margin: 1rem;" class="bg-blue-500 leading-10 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">{{fishpond.name}}</a>
                     </div>
                 </div>
             </div>

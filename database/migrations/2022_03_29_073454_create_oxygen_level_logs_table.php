@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFishpondsTable extends Migration
+class CreateOxygenLevelLogsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateFishpondsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fishponds', function (Blueprint $table) {
+        Schema::create('oxygen_level_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('fishpond_id');
+            $table->integer('oxygen_level');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateFishpondsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fishponds');
+        Schema::dropIfExists('oxygen_level_logs');
     }
 }

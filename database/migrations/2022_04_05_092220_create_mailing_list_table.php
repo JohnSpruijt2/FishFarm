@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFishpondsTable extends Migration
+class CreateMailingListTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateFishpondsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fishponds', function (Blueprint $table) {
+        Schema::create('mailing_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('user_id');
+            $table->integer('fishpond_id');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateFishpondsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fishponds');
+        Schema::dropIfExists('mailing_lists');
     }
 }
