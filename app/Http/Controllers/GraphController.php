@@ -10,7 +10,7 @@ use App\Models\SensorDataLog;
 
 class GraphController extends Controller
 {
-    //
+    // determines which type of graph should be displayed, then requests data from show functions and renderes the page.
     function index(Request $request) {
         $data = [];
         if ($request->type == 'temperature') {
@@ -32,6 +32,7 @@ class GraphController extends Controller
         ]);
     }
 
+    // Returns the temperature graph data.
     function showTemperatureGraph($request) {
         if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'temperature')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
@@ -63,6 +64,7 @@ class GraphController extends Controller
         ];
     }
 
+    // Returns the oxygen graph data.
     function showOxygenGraph($request) {
         if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'oxygen')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
@@ -94,6 +96,7 @@ class GraphController extends Controller
         ];
     }
 
+    // Returns the turbidity graph data.
     function showTurbidityGraph($request) {
         if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'turbidity')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
@@ -125,6 +128,7 @@ class GraphController extends Controller
         ];
     }
 
+    // Returns the water level graph data.
     function showWaterLevelGraph($request) {
         if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'waterLevel')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();

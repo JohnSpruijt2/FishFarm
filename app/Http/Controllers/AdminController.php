@@ -12,7 +12,7 @@ use App\Models\Dangerzone;
 
 class AdminController extends Controller
 {
-    //
+    // Renders the adminPanel.
     function index() {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -23,6 +23,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Renders admin register page.
     function register() {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -32,6 +33,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Creates new account recieved from Admin register page form through Post method.
     function createNewAccount(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -68,6 +70,7 @@ class AdminController extends Controller
         return redirect('/dashboard');
     }
 
+    // renders Admin edit existing accounts page while excluding the current admin to avoid accidental deletal
     function editExistingAccounts() {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -78,6 +81,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Deletes account if admin 
     function deleteAccount(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -87,6 +91,7 @@ class AdminController extends Controller
         return redirect('/admin/editExistingAccounts');
     }
 
+    // Renders edit fishpond overview
     function editFishpond(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -97,6 +102,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // Edits the fishpond with data from Post form
     function confirmEditFishpond(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -107,6 +113,7 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
+    // Renders the admin edit dangerzones page
     function editDangerzones(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -119,6 +126,7 @@ class AdminController extends Controller
         ]);
     }
     
+    // Edits dangerzones with data from post form
     function confirmEditDangerzones(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
