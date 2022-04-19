@@ -21197,7 +21197,9 @@ __webpack_require__.r(__webpack_exports__);
     graphs: Array
   },
   data: function data() {
-    return {};
+    return {
+      name: this.fishpond.name
+    };
   }
 }));
 

@@ -12,14 +12,29 @@ class GraphController extends Controller
 {
     // determines which type of graph should be displayed, then requests data from show functions and renderes the page.
     function index(Request $request) {
+        if (is_numeric($request->id) == false) {
+            return redirect('/dashboard');
+        }
         $data = [];
         if ($request->type == 'temperature') {
+            if (SensorDataLog::where('type', 'temperature')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->first() == null) {
+                return redirect('/details/'.$request->id.'/oxygen');
+            }
             array_push($data, $this->showTemperatureGraph($request));
         } else if ($request->type == 'oxygen') {
+            if (SensorDataLog::where('type', 'oxygen')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->first() == null) {
+                return redirect('/details/'.$request->id.'/turbidity');
+            }
             array_push($data, $this->showOxygenGraph($request));
         } else if ($request->type == 'turbidity') {
+            if (SensorDataLog::where('type', 'turbidity')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->first() == null) {
+                return redirect('/details/'.$request->id.'/waterLevel');
+            }
             array_push($data, $this->showTurbidityGraph($request));
         } else if ($request->type == 'level') {
+            if (SensorDataLog::where('type', 'waterLevel')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->first() == null) {
+                return redirect('/dashboard');
+            }
             array_push($data, $this->showWaterLevelGraph($request));
         } else {
             return redirect('/details/'.$request->id.'/temperature');
@@ -34,11 +49,7 @@ class GraphController extends Controller
 
     // Returns the temperature graph data.
     function showTemperatureGraph($request) {
-        if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'temperature')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
-            if ($data->first() == null) {
-                return redirect('/dashboard');
-            }
             $times = [];
             $temperatures = [];
             foreach ($data as $key) {
@@ -49,9 +60,6 @@ class GraphController extends Controller
             
             $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->min;
             $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->max;
-        } else {
-            return redirect('/dashboard');
-        }
         return [
             'type' => 'temperature in celcius',
             'xAxis' => $times,
@@ -66,11 +74,7 @@ class GraphController extends Controller
 
     // Returns the oxygen graph data.
     function showOxygenGraph($request) {
-        if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'oxygen')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
-            if ($data->first() == null) {
-                return redirect('/dashboard');
-            }
             $times = [];
             $oxygenLevels = [];
             foreach ($data as $key) {
@@ -81,9 +85,6 @@ class GraphController extends Controller
             
             $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->min;
             $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->max;
-        } else {
-            return redirect('/dashboard');
-        }
         return [
             'type' => 'oxygen in mg/L',
             'xAxis' => $times,
@@ -98,11 +99,7 @@ class GraphController extends Controller
 
     // Returns the turbidity graph data.
     function showTurbidityGraph($request) {
-        if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'turbidity')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
-            if ($data->first() == null) {
-                return redirect('/dashboard');
-            }
             $times = [];
             $TurbidityLevels = [];
             foreach ($data as $key) {
@@ -113,9 +110,6 @@ class GraphController extends Controller
             
             $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->min;
             $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->max;
-        } else {
-            return redirect('/dashboard');
-        }
         return [
             'type' => 'turbidity in NTU',
             'xAxis' => $times,
@@ -130,11 +124,7 @@ class GraphController extends Controller
 
     // Returns the water level graph data.
     function showWaterLevelGraph($request) {
-        if (is_numeric($request->id)) {
             $data = SensorDataLog::where('type', 'waterLevel')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
-            if ($data->first() == null) {
-                return redirect('/dashboard');
-            }
             $times = [];
             $waterLevels = [];
             foreach ($data as $key) {
@@ -145,9 +135,6 @@ class GraphController extends Controller
             
             $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->min;
             $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->max;
-        } else {
-            return redirect('/dashboard');
-        }
         return [
             'type' => 'water level in CM',
             'xAxis' => $times,
