@@ -19661,7 +19661,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.fishponds.forEach(function (fishpond) {
       var guageElement = document.getElementById('guage-' + fishpond.id);
-      var temperature = fishpond.latest_temperature.temperature;
+      var temperature = fishpond.latest_temperature.value;
       var value = temperature / 80;
       var minDanger;
       var maxDanger;
@@ -22721,17 +22721,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/oxygen',
       "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_oxygen_level.oxygen_level) + " mg/L ", 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_oxygen_level.value) + " mg/L ", 9
     /* TEXT, PROPS */
     , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/turbidity',
       "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_turbidity_level.ntu) + " NTU ", 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_turbidity_level.value) + " NTU ", 9
     /* TEXT, PROPS */
     , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/level',
       "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_water_level.cm) + " cm ", 9
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_water_level.value) + " cm ", 9
     /* TEXT, PROPS */
     , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: '/details/' + pond.id + '/temperature',

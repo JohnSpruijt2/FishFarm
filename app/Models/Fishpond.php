@@ -14,40 +14,44 @@ class Fishpond extends Model
         return $this->hasMany(Dangerzone::class);
     }
 
+    //Sensor data Log relations
+    public function SensorDataLogs() {
+        return $this->hasMany(SensorDataLog::class);
+    }
 
     //temperature relations
     public function temperatures() {
-        return $this->hasMany(TemperatureLog::class);
+        return $this->hasMany(SensorDataLog::class)->where('type', 'temperature');
     }
 
     public function latestTemperature() {
-        return $this->hasOne(TemperatureLog::class)->latest();
+        return $this->hasOne(SensorDataLog::class)->where('type', 'temperature')->latest();
     }
 
     //oxygen level relations
     public function oxygenLevels() {
-        return $this->hasMany(OxygenLevelLog::class);
+        return $this->hasMany(SensorDataLog::class)->where('type', 'oxygen');
     }
 
     public function latestOxygenLevel() {
-        return $this->hasOne(OxygenLevelLog::class)->latest();
+        return $this->hasOne(SensorDataLog::class)->where('type', 'oxygen')->latest();
     }
 
     //turbidity level relations
     public function turbidityLevels() {
-        return $this->hasMany(TurbidityLevelLog::class);
+        return $this->hasMany(SensorDataLog::class)->where('type', 'turbidity');
     }
 
     public function latestTurbidityLevel() {
-        return $this->hasOne(TurbidityLevelLog::class)->latest();
+        return $this->hasOne(SensorDataLog::class)->where('type', 'turbidity')->latest();
     }
 
     //water level relations
     public function waterLevels() {
-        return $this->hasMany(WaterLevelLog::class);
+        return $this->hasMany(SensorDataLog::class)->where('type', 'waterLevel');
     }
     
     public function latestWaterLevel() {
-        return $this->hasOne(WaterLevelLog::class)->latest();
+        return $this->hasOne(SensorDataLog::class)->where('type', 'waterLevel')->latest();
     }
 }

@@ -8,15 +8,15 @@
                         <a :href="'/details/'+pond.id">{{ pond.name }}</a> <br>
 
                         <a :href="'details/'+pond.id+'/oxygen'" class="dashboardLatests">
-                            {{pond.latest_oxygen_level.oxygen_level}} mg/L
+                            {{pond.latest_oxygen_level.value}} mg/L
                         </a>
 
                         <a :href="'details/'+pond.id+'/turbidity'" class="dashboardLatests">
-                            {{pond.latest_turbidity_level.ntu}} NTU
+                            {{pond.latest_turbidity_level.value}} NTU
                         </a>
 
                         <a :href="'details/'+pond.id+'/level'" class="dashboardLatests">
-                            {{pond.latest_water_level.cm}} cm
+                            {{pond.latest_water_level.value}} cm
                         </a>
 
                         <a :href="'/details/'+pond.id+'/temperature'" :id="'guage-'+pond.id" class="gauge">
@@ -55,7 +55,7 @@
         mounted() {
             this.fishponds.forEach(fishpond => {
                 var guageElement = document.getElementById('guage-'+fishpond.id)
-                var temperature = fishpond.latest_temperature.temperature
+                var temperature = fishpond.latest_temperature.value
                 var value = temperature/80
                 var minDanger;
                 var maxDanger;

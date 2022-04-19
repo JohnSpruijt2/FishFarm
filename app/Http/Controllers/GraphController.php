@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Application;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use App\Models\TemperatureLog;
-use App\Models\TempSensor;
 use App\Models\Fishpond;
-use App\Models\OxygenLevelLog;
-use App\Models\TurbidityLevelLog;
-use App\Models\WaterLevelLog;
 use App\Models\Dangerzone;
+use App\Models\SensorDataLog;
 
 class GraphController extends Controller
 {
@@ -26,7 +22,7 @@ class GraphController extends Controller
         } else if ($request->type == 'level') {
             array_push($data, $this->showWaterLevelGraph($request));
         } else {
-            return redirect('/details/'.$request->id.'/oxygen');
+            return redirect('/details/'.$request->id.'/temperature');
         }
 
         $fishpond = Fishpond::where('id',$request->id)->get()[0];
@@ -38,14 +34,14 @@ class GraphController extends Controller
 
     function showTemperatureGraph($request) {
         if (is_numeric($request->id)) {
-            $data = TemperatureLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = SensorDataLog::where('type', 'temperature')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
             $times = [];
             $temperatures = [];
             foreach ($data as $key) {
-                array_push($temperatures, $key['temperature']);
+                array_push($temperatures, $key['value']);
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
@@ -69,14 +65,14 @@ class GraphController extends Controller
 
     function showOxygenGraph($request) {
         if (is_numeric($request->id)) {
-            $data = OxygenLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = SensorDataLog::where('type', 'oxygen')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
             $times = [];
             $oxygenLevels = [];
             foreach ($data as $key) {
-                array_push($oxygenLevels, $key['oxygen_level']);
+                array_push($oxygenLevels, $key['value']);
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
@@ -100,14 +96,14 @@ class GraphController extends Controller
 
     function showTurbidityGraph($request) {
         if (is_numeric($request->id)) {
-            $data = TurbidityLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = SensorDataLog::where('type', 'turbidity')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
             $times = [];
             $TurbidityLevels = [];
             foreach ($data as $key) {
-                array_push($TurbidityLevels, $key['ntu']);
+                array_push($TurbidityLevels, $key['value']);
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
@@ -131,14 +127,14 @@ class GraphController extends Controller
 
     function showWaterLevelGraph($request) {
         if (is_numeric($request->id)) {
-            $data = WaterLevelLog::orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
+            $data = SensorDataLog::where('type', 'waterLevel')->orderBy('created_at', 'asc')->where('fishpond_id',$request->id)->take(60)->get();
             if ($data->first() == null) {
                 return redirect('/dashboard');
             }
             $times = [];
             $waterLevels = [];
             foreach ($data as $key) {
-                array_push($waterLevels, $key['cm']);
+                array_push($waterLevels, $key['value']);
                 $time = str_split($key['created_at']);
                 array_push($times, $time[11].$time[12].$time[13].$time[14].$time[15]);
             }
