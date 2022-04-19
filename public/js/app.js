@@ -19660,33 +19660,55 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fishponds.forEach(function (fishpond) {
-      var guageElement = document.getElementById('guage-' + fishpond.id);
-      var temperature = fishpond.latest_temperature.value;
-      var value = temperature / 80;
-      var minDanger;
-      var maxDanger;
-      fishpond.dangerzones.forEach(function (dangerzone) {
-        if (dangerzone.data_type == 'temperature') {
-          minDanger = dangerzone.min;
-          maxDanger = dangerzone.max;
-        }
-      });
-      var minimum = minDanger / 80;
-      var maximum = 1 - maxDanger / 80;
-      guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
-      guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
-      guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
-      guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
-      guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-      guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-      guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+      if (fishpond.latest_oxygen_level == null) {
+        document.getElementById('oxygen-' + fishpond.id).remove();
+      } else {
+        document.getElementById('oxygen-' + fishpond.id).innerText = fishpond.latest_oxygen_level.value + ' mg/L';
+      }
 
-      if (temperature < minDanger || temperature > maxDanger) {
-        guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
-        guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
-      } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
-        guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
-        guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
+      if (fishpond.latest_turbidity_level == null) {
+        document.getElementById('turbidity-' + fishpond.id).remove();
+      } else {
+        document.getElementById('turbidity-' + fishpond.id).innerText = fishpond.latest_turbidity_level.value + ' NTU';
+      }
+
+      if (fishpond.latest_water_level == null) {
+        document.getElementById('waterLevel-' + fishpond.id).remove();
+      } else {
+        document.getElementById('waterLevel-' + fishpond.id).innerText = fishpond.latest_water_level.value + ' cm';
+      }
+
+      if (fishpond.latest_temperature == null) {
+        document.getElementById('guage-' + fishpond.id).remove();
+      } else {
+        var guageElement = document.getElementById('guage-' + fishpond.id);
+        var temperature = fishpond.latest_temperature.value;
+        var value = temperature / 80;
+        var minDanger;
+        var maxDanger;
+        fishpond.dangerzones.forEach(function (dangerzone) {
+          if (dangerzone.data_type == 'temperature') {
+            minDanger = dangerzone.min;
+            maxDanger = dangerzone.max;
+          }
+        });
+        var minimum = minDanger / 80;
+        var maximum = 1 - maxDanger / 80;
+        guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
+        guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
+        guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
+        guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
+        guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+        guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+        guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+
+        if (temperature < minDanger || temperature > maxDanger) {
+          guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
+          guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
+        } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
+          guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
+          guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
+        }
       }
     });
   }
@@ -22701,9 +22723,9 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = ["href"];
-var _hoisted_8 = ["href"];
-var _hoisted_9 = ["href"];
+var _hoisted_7 = ["href", "id"];
+var _hoisted_8 = ["href", "id"];
+var _hoisted_9 = ["href", "id"];
 var _hoisted_10 = ["href", "id"];
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"gauge__body\"><div class=\"gauge__max\"></div><div class=\"gauge__max__warning\"></div><div class=\"gauge__min\"></div><div class=\"gauge__min__warning\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__fill2\"></div><div class=\"gauge__cover text-gray\"></div></div>", 1);
@@ -22720,19 +22742,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT, PROPS */
     , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/oxygen',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_oxygen_level.value) + " mg/L ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'oxygen-' + pond.id
+    }, null, 8
+    /* PROPS */
     , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/turbidity',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_turbidity_level.value) + " NTU ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'turbidity-' + pond.id
+    }, null, 8
+    /* PROPS */
     , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/level',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_water_level.value) + " cm ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'waterLevel-' + pond.id
+    }, null, 8
+    /* PROPS */
     , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: '/details/' + pond.id + '/temperature',
       id: 'guage-' + pond.id,
