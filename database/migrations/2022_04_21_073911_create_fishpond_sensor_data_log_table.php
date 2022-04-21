@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSensorDataLogsTable extends Migration
+class CreateFishpondSensorDataLogTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateSensorDataLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sensor_data_logs', function (Blueprint $table) {
+        Schema::create('fishpond_sensor_data_log', function (Blueprint $table) {
             $table->id();
+            $table->integer('fishpond_id');
             $table->integer('sensor_id');
-            $table->string('type')->nullable();
-            $table->float('value');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateSensorDataLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sensor_data_logs');
+        Schema::dropIfExists('fishpond_sensor_data_log');
     }
 }

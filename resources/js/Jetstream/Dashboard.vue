@@ -7,19 +7,19 @@
                     <div v-for="(pond) in ponds" :key="pond.id" class="p-3 m-2 border border-grey rounded">
                         <a :href="'/details/'+pond.id">{{ pond.name }}</a> <br>
 
-                        <a :href="'details/'+pond.id+'/oxygen'" class="dashboardLatests" :id="'oxygen-'+pond.id">
+                        <a :href="'details/'+pond.id+'/oxygen'" class="dashboardLatests" :id="'oxygen-'+pond.id" style="visibility: hidden;">
                             
                         </a>
 
-                        <a :href="'details/'+pond.id+'/turbidity'" class="dashboardLatests" :id="'turbidity-'+pond.id">
+                        <a :href="'details/'+pond.id+'/turbidity'" class="dashboardLatests" :id="'turbidity-'+pond.id" style="visibility: hidden;">
                             
                         </a>
 
-                        <a :href="'details/'+pond.id+'/level'" class="dashboardLatests" :id="'waterLevel-'+pond.id">
+                        <a :href="'details/'+pond.id+'/level'" class="dashboardLatests" :id="'waterLevel-'+pond.id" style="visibility: hidden;">
                             
                         </a>
 
-                        <a :href="'/details/'+pond.id+'/temperature'" :id="'guage-'+pond.id" class="gauge">
+                        <a :href="'/details/'+pond.id+'/temperature'" :id="'guage-'+pond.id" class="gauge" style="visibility: hidden;">
                             <div class="gauge__body">
                                 <div class="gauge__max"></div>
                                 <div class="gauge__max__warning"></div>
@@ -54,70 +54,68 @@
         }, 
         mounted() {
             this.fishponds.forEach(fishpond => {
-                if (fishpond.latest_oxygen_level == null) {
-                    document.getElementById('oxygen-'+fishpond.id).remove()
-                } else {
-                    document.getElementById('oxygen-'+fishpond.id).innerText = fishpond.latest_oxygen_level.value+' mg/L'
-                }
+                fishpond.sensors.forEach(sensor => {
+                    if (sensor != null) {
+                        if (sensor.value != null) {
+                            if (sensor.value.type == 'oxygen') {
+                                document.getElementById('oxygen-'+fishpond.id).style.visibility = 'visible';
+                                document.getElementById('oxygen-'+fishpond.id).innerText = sensor.value.value+' mg/L'
+                            } else if (sensor.value.type == 'turbidity') {
+                                document.getElementById('turbidity-'+fishpond.id).style.visibility = 'visible';
+                                document.getElementById('turbidity-'+fishpond.id).innerText = sensor.value.value+' NTU'
+                            } else if (sensor.value.type == "waterLevel") {
+                                document.getElementById('waterLevel-'+fishpond.id).style.visibility = 'visible';
+                                document.getElementById('waterLevel-'+fishpond.id).innerText = sensor.value.value+' cm'
+                            } else if (sensor.value.type == 'temperature') {
+                                document.getElementById('guage-'+fishpond.id).style.visibility = 'visible';
+                                var guageElement = document.getElementById('guage-'+fishpond.id)
+                                var temperature = sensor.value.value
+                                var value = temperature/80
+                                var minDanger;
+                                var maxDanger;
+                                fishpond.dangerzones.forEach(dangerzone => {
+                                    if (dangerzone.data_type == 'temperature') {
+                                        minDanger = dangerzone.min;
+                                        maxDanger = dangerzone.max;
+                                    }
+                                })
+                                var minimum = minDanger/80
+                                var maximum = 1 - (maxDanger/80)
 
-                if (fishpond.latest_turbidity_level == null) {
-                    document.getElementById('turbidity-'+fishpond.id).remove()
-                } else {
-                    document.getElementById('turbidity-'+fishpond.id).innerText = fishpond.latest_turbidity_level.value+' NTU'
-                }
-
-                if (fishpond.latest_water_level == null) {
-                    document.getElementById('waterLevel-'+fishpond.id).remove()
-                } else {
-                    document.getElementById('waterLevel-'+fishpond.id).innerText = fishpond.latest_water_level.value+' cm'
-                }
-
-                if (fishpond.latest_temperature == null) {
-                    document.getElementById('guage-'+fishpond.id).remove()
-                } else {
-                    var guageElement = document.getElementById('guage-'+fishpond.id)
-                    var temperature = fishpond.latest_temperature.value
-                    var value = temperature/80
-                    var minDanger;
-                    var maxDanger;
-                    fishpond.dangerzones.forEach(dangerzone => {
-                        if (dangerzone.data_type == 'temperature') {
-                            minDanger = dangerzone.min;
-                            maxDanger = dangerzone.max;
+                                guageElement.querySelector(".gauge__max").style.transform = `rotate(${
+                                  maximum / 2 * -1
+                                }turn)`;
+                                guageElement.querySelector(".gauge__max__warning").style.transform = `rotate(${
+                                  (maximum + 0.0625) / 2 * -1
+                                }turn)`;
+                                guageElement.querySelector(".gauge__min").style.transform = `rotate(${
+                                  minimum / 2
+                                }turn)`;
+                                guageElement.querySelector(".gauge__min__warning").style.transform = `rotate(${
+                                  (minimum + 0.0625) / 2
+                                }turn)`;
+                                guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
+                                  (value / 2) - 2
+                                }turn)`;
+                                guageElement.querySelector(".gauge__fill2").style.transform = `rotate(${
+                                  (value / 2) - 2
+                                }turn)`;
+                                guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
+                                  value*80
+                                )}°C`;
+                                if (temperature < minDanger || temperature > maxDanger) {
+                                    guageElement.querySelector(".gauge__fill2").style.background = '#ff0000'
+                                    guageElement.querySelector(".gauge__cover").style.color = '#ff0000'
+                                } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
+                                    guageElement.querySelector(".gauge__fill2").style.background = '#FFA500'
+                                    guageElement.querySelector(".gauge__cover").style.color = '#FFA500'
+                                }
+                            }
                         }
-                    })
-                    var minimum = minDanger/80
-                    var maximum = 1 - (maxDanger/80)
-
-                    guageElement.querySelector(".gauge__max").style.transform = `rotate(${
-                      maximum / 2 * -1
-                    }turn)`;
-                    guageElement.querySelector(".gauge__max__warning").style.transform = `rotate(${
-                      (maximum + 0.0625) / 2 * -1
-                    }turn)`;
-                    guageElement.querySelector(".gauge__min").style.transform = `rotate(${
-                      minimum / 2
-                    }turn)`;
-                    guageElement.querySelector(".gauge__min__warning").style.transform = `rotate(${
-                      (minimum + 0.0625) / 2
-                    }turn)`;
-                    guageElement.querySelector(".gauge__fill").style.transform = `rotate(${
-                      (value / 2) - 2
-                    }turn)`;
-                    guageElement.querySelector(".gauge__fill2").style.transform = `rotate(${
-                      (value / 2) - 2
-                    }turn)`;
-                    guageElement.querySelector(".gauge__cover").textContent = `${Math.round(
-                      value*80
-                    )}°C`;
-                    if (temperature < minDanger || temperature > maxDanger) {
-                        guageElement.querySelector(".gauge__fill2").style.background = '#ff0000'
-                        guageElement.querySelector(".gauge__cover").style.color = '#ff0000'
-                    } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
-                        guageElement.querySelector(".gauge__fill2").style.background = '#FFA500'
-                        guageElement.querySelector(".gauge__cover").style.color = '#FFA500'
                     }
-                }
+                })
+
+                    
                 
             })
         }

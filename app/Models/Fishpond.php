@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use App\Models\FishpondSensorDataLog;
 
 class Fishpond extends Model
 {
@@ -15,43 +17,47 @@ class Fishpond extends Model
     }
 
     //Sensor data Log relations
-    public function SensorDataLogs() {
-        return $this->hasMany(SensorDataLog::class);
+    public function sensorDataLogs() {
+        return $this->belongsToMany(SensorDataLog::class, 'fishpond_sensor_data_log', 'fishpond_id', 'sensor');
     }
 
-    //temperature relations
-    public function temperatures() {
-        return $this->hasMany(SensorDataLog::class)->where('type', 'temperature');
+    public function allFishpondsLatestData() {
+        $fishponds = Fishpond::all();
+        foreach ($fishponds as $fishpond) {
+            $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
+            foreach ($sensors as $sensor) {
+                $value = DB::table('sensor_data_logs')->where('sensor_id', $sensor->sensor_id)->orderBy('created_at', 'desc')->take(1)->get();
+                $sensor->{"value"} = $value[0];
+            }
+            $fishpond->{"sensors"} = $sensors;
+        }
+        
+        return $fishponds;
     }
 
-    public function latestTemperature() {
-        return $this->hasOne(SensorDataLog::class)->where('type', 'temperature')->latest();
+    public function allFishpondsAllData() {
+        $fishponds = Fishpond::all();
+        foreach ($fishponds as $fishpond) {
+            $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
+            foreach ($sensors as $sensor) {
+                $values = DB::table('sensor_data_logs')->where('sensor_id', $sensor->sensor_id)->get();
+                $sensor->{"values"} = $values;
+            }
+            $fishpond->{"sensors"} = $sensors;
+        }
+        
+        return $fishponds;
     }
 
-    //oxygen level relations
-    public function oxygenLevels() {
-        return $this->hasMany(SensorDataLog::class)->where('type', 'oxygen');
-    }
-
-    public function latestOxygenLevel() {
-        return $this->hasOne(SensorDataLog::class)->where('type', 'oxygen')->latest();
-    }
-
-    //turbidity level relations
-    public function turbidityLevels() {
-        return $this->hasMany(SensorDataLog::class)->where('type', 'turbidity');
-    }
-
-    public function latestTurbidityLevel() {
-        return $this->hasOne(SensorDataLog::class)->where('type', 'turbidity')->latest();
-    }
-
-    //water level relations
-    public function waterLevels() {
-        return $this->hasMany(SensorDataLog::class)->where('type', 'waterLevel');
-    }
-    
-    public function latestWaterLevel() {
-        return $this->hasOne(SensorDataLog::class)->where('type', 'waterLevel')->latest();
+    public function fishpondAllData($id) {
+        $fishpond = Fishpond::where('id', $id)->first();
+        $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
+            foreach ($sensors as $sensor) {
+                $values = DB::table('sensor_data_logs')->where('sensor_id', $sensor->sensor_id)->get();
+                $sensor->{"values"} = $values;
+            }
+            $fishpond->{"sensors"} = $sensors;
+        
+        return $fishpond;
     }
 }

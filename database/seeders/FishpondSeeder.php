@@ -72,13 +72,16 @@ class FishpondSeeder extends Seeder
                $date = date("Y-m-d H:i:s", $time);
               DB::table('sensor_data_logs')->insert([
                'sensor_id' => $k,
-               'fishpond_id' => $i,
                'type' => 'temperature',
                'value' => $temperature,
                'created_at' => $date,
                'updated_at' => $date,
               ]);
            }
+           DB::table('fishpond_sensor_data_log')->insert([
+               'sensor_id' => $k,
+               'fishpond_id' => $i,
+           ]);
            $k++;
 
            $oxygen = rand(3, 8);
@@ -96,13 +99,16 @@ class FishpondSeeder extends Seeder
                $date = date("Y-m-d H:i:s", $time);
                DB::table('sensor_data_logs')->insert([
                 'sensor_id' => $k,
-                'fishpond_id' => $i,
                 'type' => 'oxygen',
                 'value' => $oxygen,
                 'created_at' => $date,
                 'updated_at' => $date,
                ]);
            }
+           DB::table('fishpond_sensor_data_log')->insert([
+            'sensor_id' => $k,
+            'fishpond_id' => $i,
+            ]);
            $k++;
 
            $turbidity = rand(1, 65)/10;
@@ -120,13 +126,16 @@ class FishpondSeeder extends Seeder
                $date = date("Y-m-d H:i:s", $time);
                DB::table('sensor_data_logs')->insert([
                 'sensor_id' => $k,
-                'fishpond_id' => $i,
                 'type' => 'turbidity',
                 'value' => $turbidity,
                 'created_at' => $date,
                 'updated_at' => $date,
                ]);
            }
+           DB::table('fishpond_sensor_data_log')->insert([
+            'sensor_id' => $k,
+            'fishpond_id' => $i,
+            ]);
            $k++;
 
            $waterLevel = rand(50, 90);
@@ -144,13 +153,16 @@ class FishpondSeeder extends Seeder
                $date = date("Y-m-d H:i:s", $time);
                DB::table('sensor_data_logs')->insert([
                 'sensor_id' => $k,
-                'fishpond_id' => $i,
                 'type' => 'waterLevel',
                 'value' => $waterLevel,
                 'created_at' => $date,
                 'updated_at' => $date,
                ]);
            }
+           DB::table('fishpond_sensor_data_log')->insert([
+            'sensor_id' => $k,
+            'fishpond_id' => $i,
+            ]);
            $k++;
          }
     }

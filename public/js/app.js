@@ -19659,57 +19659,54 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    console.log(this.fishponds);
     this.fishponds.forEach(function (fishpond) {
-      if (fishpond.latest_oxygen_level == null) {
-        document.getElementById('oxygen-' + fishpond.id).remove();
-      } else {
-        document.getElementById('oxygen-' + fishpond.id).innerText = fishpond.latest_oxygen_level.value + ' mg/L';
-      }
+      fishpond.sensors.forEach(function (sensor) {
+        if (sensor != null) {
+          if (sensor.value != null) {
+            if (sensor.value.type == 'oxygen') {
+              document.getElementById('oxygen-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('oxygen-' + fishpond.id).innerText = sensor.value.value + ' mg/L';
+            } else if (sensor.value.type == 'turbidity') {
+              document.getElementById('turbidity-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('turbidity-' + fishpond.id).innerText = sensor.value.value + ' NTU';
+            } else if (sensor.value.type == "waterLevel") {
+              document.getElementById('waterLevel-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('waterLevel-' + fishpond.id).innerText = sensor.value.value + ' cm';
+            } else if (sensor.value.type == 'temperature') {
+              document.getElementById('guage-' + fishpond.id).style.visibility = 'visible';
+              var guageElement = document.getElementById('guage-' + fishpond.id);
+              var temperature = sensor.value.value;
+              var value = temperature / 80;
+              var minDanger;
+              var maxDanger;
+              fishpond.dangerzones.forEach(function (dangerzone) {
+                if (dangerzone.data_type == 'temperature') {
+                  minDanger = dangerzone.min;
+                  maxDanger = dangerzone.max;
+                }
+              });
+              var minimum = minDanger / 80;
+              var maximum = 1 - maxDanger / 80;
+              guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
+              guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
+              guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
+              guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
+              guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+              guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+              guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
 
-      if (fishpond.latest_turbidity_level == null) {
-        document.getElementById('turbidity-' + fishpond.id).remove();
-      } else {
-        document.getElementById('turbidity-' + fishpond.id).innerText = fishpond.latest_turbidity_level.value + ' NTU';
-      }
-
-      if (fishpond.latest_water_level == null) {
-        document.getElementById('waterLevel-' + fishpond.id).remove();
-      } else {
-        document.getElementById('waterLevel-' + fishpond.id).innerText = fishpond.latest_water_level.value + ' cm';
-      }
-
-      if (fishpond.latest_temperature == null) {
-        document.getElementById('guage-' + fishpond.id).remove();
-      } else {
-        var guageElement = document.getElementById('guage-' + fishpond.id);
-        var temperature = fishpond.latest_temperature.value;
-        var value = temperature / 80;
-        var minDanger;
-        var maxDanger;
-        fishpond.dangerzones.forEach(function (dangerzone) {
-          if (dangerzone.data_type == 'temperature') {
-            minDanger = dangerzone.min;
-            maxDanger = dangerzone.max;
+              if (temperature < minDanger || temperature > maxDanger) {
+                guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
+                guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
+              } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
+                guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
+                guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
+              }
+            }
           }
-        });
-        var minimum = minDanger / 80;
-        var maximum = 1 - maxDanger / 80;
-        guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
-        guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
-        guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
-        guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
-        guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-        guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-        guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
-
-        if (temperature < minDanger || temperature > maxDanger) {
-          guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
-          guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
-        } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
-          guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
-          guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
         }
-      }
+      });
     });
   }
 }));
@@ -22080,6 +22077,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Dashboard.vue */ "./resources/js/Jetstream/Dashboard.vue");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  components: {
+    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Dashboard: _Jetstream_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  props: {
+    data: Object
+  },
+  mounted: function mounted() {
+    console.log(this.data);
+  }
+}));
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=script&lang=js":
 /*!********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=script&lang=js ***!
@@ -22745,25 +22774,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/oxygen',
       "class": "dashboardLatests",
-      id: 'oxygen-' + pond.id
+      id: 'oxygen-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
     }, null, 8
     /* PROPS */
     , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/turbidity',
       "class": "dashboardLatests",
-      id: 'turbidity-' + pond.id
+      id: 'turbidity-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
     }, null, 8
     /* PROPS */
     , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/level',
       "class": "dashboardLatests",
-      id: 'waterLevel-' + pond.id
+      id: 'waterLevel-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
     }, null, 8
     /* PROPS */
     , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: '/details/' + pond.id + '/temperature',
       id: 'guage-' + pond.id,
-      "class": "gauge"
+      "class": "gauge",
+      style: {
+        "visibility": "hidden"
+      }
     }, _hoisted_12, 8
     /* PROPS */
     , _hoisted_10)]);
@@ -28356,6 +28397,56 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , _hoisted_4)])])])], 64
   /* STABLE_FRAGMENT */
   );
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12 ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "font-semibold text-xl text-gray-800 leading-tight"
+}, " Testing ", -1
+/* HOISTED */
+);
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "py-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg"
+})])], -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
+    title: "Dashboard"
+  }, {
+    header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_1];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_2];
+    }),
+    _: 1
+    /* STABLE */
+
+  });
 }
 
 /***/ }),
@@ -54488,6 +54579,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Testing.vue":
+/*!****************************************!*\
+  !*** ./resources/js/Pages/Testing.vue ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Testing.vue?vue&type=template&id=3e5bfb12 */ "./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12");
+/* harmony import */ var _Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Testing.vue?vue&type=script&lang=js */ "./resources/js/Pages/Testing.vue?vue&type=script&lang=js");
+/* harmony import */ var C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/Testing.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Welcome.vue":
 /*!****************************************!*\
   !*** ./resources/js/Pages/Welcome.vue ***!
@@ -55379,6 +55498,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TermsOfService.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/TermsOfService.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Testing.vue?vue&type=script&lang=js":
+/*!****************************************************************!*\
+  !*** ./resources/js/Pages/Testing.vue?vue&type=script&lang=js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Testing.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -56343,6 +56478,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12":
+/*!**********************************************************************!*\
+  !*** ./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12 ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Testing.vue?vue&type=template&id=3e5bfb12 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12");
+
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Welcome.vue?vue&type=template&id=317d1a6e&scoped=true":
 /*!**********************************************************************************!*\
   !*** ./resources/js/Pages/Welcome.vue?vue&type=template&id=317d1a6e&scoped=true ***!
@@ -57186,6 +57337,7 @@ var map = {
 	"./Teams/Partials/UpdateTeamNameForm.vue": "./resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue",
 	"./Teams/Show.vue": "./resources/js/Pages/Teams/Show.vue",
 	"./TermsOfService.vue": "./resources/js/Pages/TermsOfService.vue",
+	"./Testing.vue": "./resources/js/Pages/Testing.vue",
 	"./Welcome.vue": "./resources/js/Pages/Welcome.vue"
 };
 
