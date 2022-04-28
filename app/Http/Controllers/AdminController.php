@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Fishpond;
 use App\Models\Dangerzone;
+use App\Models\FishpondSensorDataLog;
 
 class AdminController extends Controller
 {
@@ -136,6 +137,92 @@ class AdminController extends Controller
         $dangerzone->min = $request->min;
         $dangerzone->max = $request->max;
         $dangerzone->save();
+        return redirect('/admin');
+    }
+
+    function editSensors(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $currentFishpond = fishpond::fishpondLatestData($request->id);
+        $UnassignedSensors = FishpondSensorDataLog::getUnassignedSensors();
+        $UnassignedTemperatureSensors = [];
+        $UnassignedOxygenSensors = [];
+        $UnassignedTurbiditySensors = [];
+        $UnassignedWaterLevelSensors = [];
+        if ($UnassignedSensors->first != null) {
+            foreach ($UnassignedSensors as $sensor) {
+                if ($sensor->value->type == 'temperature') {
+                    array_push($UnassignedTemperatureSensors, $sensor);
+                } else if ($sensor->value->type == 'oxygen') {
+                    array_push($UnassignedOxygenSensors, $sensor);
+                } else if ($sensor->value->type == 'turbidity') {
+                    array_push($UnassignedTurbiditySensors, $sensor);
+                } else if ($sensor->value->type == 'waterLevel') {
+                    array_push($UnassignedWaterLevelSensors, $sensor);
+                }
+            }
+        }
+        return Inertia::render('AdminFishpondSensor', [
+            'fishpond' => $currentFishpond,
+            'UnassignedSensors' => $UnassignedSensors,
+            'UnassignedTemperatureSensors' => $UnassignedTemperatureSensors,
+            'UnassignedOxygenSensors' => $UnassignedOxygenSensors,
+            'UnassignedTurbiditySensors' => $UnassignedTurbiditySensors,
+            'UnassignedWaterLevelSensors' => $UnassignedWaterLevelSensors,
+        ]);
+    }
+
+    function confirmEditSensors(Request $request) {
+        if (auth::user()->admin != 1) {
+            return redirect('/dashboard');
+        }
+        $currentFishpond = Fishpond::fishpondLatestData($request->id);
+        //$sensors = FishpondSensorDataLog::where('fishpond_id', $request->id)->get();
+        $temperature = false; $oxygen = false; $turbidity = false; $waterLevel = false;
+        foreach ($currentFishpond->sensors as $sensor) {
+            if ($sensor->value->type == 'temperature') {
+                if ($request->temperature != null) {
+                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->temperature, $request->id);
+                } else {
+                    FishpondSensorDataLog::updateNull($sensor->id);
+                }
+                $temperature = true;
+            } else if ($sensor->value->type == 'oxygen') {
+                if ($request->oxygen != null) {
+                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->oxygen, $request->id);
+                } else {
+                    FishpondSensorDataLog::updateNull($sensor->id);
+                }
+                $oxygen = true;
+            } else if ($sensor->value->type == 'turbidity') {
+                if ($request->turbidity != null) {
+                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->turbidity, $request->id);
+                } else {
+                    FishpondSensorDataLog::updateNull($sensor->id);
+                }
+                $turbidity = true;
+            } else if ($sensor->value->type == 'waterLevel') {
+                if ($request->waterLevel != null) {
+                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->waterLevel, $request->id);
+                } else {
+                    FishpondSensorDataLog::updateNull($sensor->id);
+                }
+                $waterLevel = true;
+            }
+        }
+        if ($temperature == false) {
+            FishpondSensorDataLog::updateFresh($request->temperature, $request->id);
+        }
+        if ($oxygen == false) {
+            FishpondSensorDataLog::updateFresh($request->oxygen, $request->id);
+        }
+        if ($turbidity == false) {
+            FishpondSensorDataLog::updateFresh($request->turbidity, $request->id);
+        } 
+        if ($waterLevel == false) {
+            FishpondSensorDataLog::updateFresh($request->waterLevel, $request->id);
+        }
         return redirect('/admin');
     }
 }

@@ -35,6 +35,19 @@ class Fishpond extends Model
         return $fishponds;
     }
 
+    public function fishpondLatestData($id) {
+        $fishpond = Fishpond::where('id', $id)->first();
+        $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
+        foreach ($sensors as $sensor) {
+            $value = DB::table('sensor_data_logs')->where('sensor_id', $sensor->sensor_id)->orderBy('created_at', 'desc')->take(1)->get();
+            $sensor->{"value"} = $value[0];
+        }
+        $fishpond->{"sensors"} = $sensors;
+        
+        
+        return $fishpond;
+    }
+
     public function allFishpondsAllData() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {

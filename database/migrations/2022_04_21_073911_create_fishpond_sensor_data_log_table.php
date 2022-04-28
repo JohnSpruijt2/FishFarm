@@ -15,7 +15,7 @@ class CreateFishpondSensorDataLogTable extends Migration
     {
         Schema::create('fishpond_sensor_data_log', function (Blueprint $table) {
             $table->id();
-            $table->integer('fishpond_id');
+            $table->integer('fishpond_id')->nullable();;
             $table->integer('sensor_id');
             $table->timestamps();
         });

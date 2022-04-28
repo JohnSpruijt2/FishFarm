@@ -22,6 +22,9 @@
                             </button>
                         </div>
                     </form>
+                    <a :href="route('admin edit sensors', {id: fishpondData.id})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
+                            edit Sensors
+                    </a>
                     <h1 class="font-semibold text-xl text-gray-800 leading-tight">Dangerzones: </h1>
                     <div class="mt-8">
                         <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'temperature'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
