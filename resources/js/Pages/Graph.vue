@@ -48,7 +48,7 @@
         },
         data: function() {
           return {
-
+              name: this.fishpond.name
           }
         },
     });

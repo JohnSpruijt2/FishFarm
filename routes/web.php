@@ -54,3 +54,7 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}'
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'confirmEditDangerzones']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpondSensors/{id}', [AdminController::class, 'editSensors'])->name('admin edit sensors');
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpondSensors/{id}', [AdminController::class, 'confirmEditSensors']);

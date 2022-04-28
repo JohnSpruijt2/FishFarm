@@ -12,9 +12,9 @@ use App\Models\User;
 
 class DashboardController extends Controller
 {
-    //
+    // Loads all the fishponds with dangerzones and latest data for each data type.
     function index(Request $request) {
-        $data = fishpond::all()->load('dangerzones')->load('latestTemperature')->load('latestOxygenLevel')->load('latestTurbidityLevel')->load('latestWaterLevel');
+        $data = fishpond::allFishpondsLatestData()->load('dangerzones');
         //$this->mailerLoop($data);
         return Inertia::render('Dashboard', [
             'data' => $data,
@@ -25,44 +25,44 @@ class DashboardController extends Controller
          foreach ($data as $key) {
             foreach ($key->dangerzones as $dangerzone) {
                 if ($dangerzone->data_type == 'temperature') {
-                    if ($key->latestTemperature->temperature > $dangerzone->max) {
+                    if ($key->latestTemperature->value > $dangerzone->max) {
                         $this->mailerSendout($key, 'temperature', 'çritical');
-                    } else if ($key->latestTemperature->temperature < $dangerzone->min){
+                    } else if ($key->latestTemperature->value < $dangerzone->min){
                         $this->mailerSendout($key, 'temperature', 'çritical');
-                    } else if ($key->latestTemperature->temperature > $dangerzone->max-5) {
+                    } else if ($key->latestTemperature->value > $dangerzone->max-5) {
                         $this->mailerSendout($key, 'temperature');
-                    } else if ($key->latestTemperature->temperature < $dangerzone->min+5) {
+                    } else if ($key->latestTemperature->value < $dangerzone->min+5) {
                         $this->mailerSendout($key, 'temperature');
                     }
                 } else if ($dangerzone->data_type == 'oxygen') {
-                    if ($key->latestOxygenLevel->oxygen_level > $dangerzone->max) {
+                    if ($key->latestOxygenLevel->value > $dangerzone->max) {
                         $this->mailerSendout($key, 'oxygen', 'çritical');
-                    } else if ($key->latestOxygenLevel->oxygen_level < $dangerzone->min){
+                    } else if ($key->latestOxygenLevel->value < $dangerzone->min){
                         $this->mailerSendout($key, 'oxygen', 'çritical');
-                    } else if ($key->latestOxygenLevel->oxygen_level > $dangerzone->max-2){
+                    } else if ($key->latestOxygenLevel->value > $dangerzone->max-2){
                         $this->mailerSendout($key, 'oxygen');
-                    } else if ($key->latestOxygenLevel->oxygen_level < $dangerzone->min+2){
+                    } else if ($key->latestOxygenLevel->value < $dangerzone->min+2){
                         $this->mailerSendout($key, 'oxygen');
                     }
                 } else if ($dangerzone->data_type == 'turbidity') {
-                    if ($key->latestTurbidityLevel->ntu > $dangerzone->max) {
+                    if ($key->latestTurbidityLevel->value > $dangerzone->max) {
                         $this->mailerSendout($key, 'turbidity', 'çritical');
-                    } else if ($key->latestTurbidityLevel->ntu < $dangerzone->min){
+                    } else if ($key->latestTurbidityLevel->value < $dangerzone->min){
                         $this->mailerSendout($key, 'turbidity', 'çritical');
-                    } else if ($key->latestTurbidityLevel->ntu > $dangerzone->max-0.5){
+                    } else if ($key->latestTurbidityLevel->value > $dangerzone->max-0.5){
                         $this->mailerSendout($key, 'turbidity');
-                    } else if ($key->latestTurbidityLevel->ntu < $dangerzone->min+0.5){
+                    } else if ($key->latestTurbidityLevel->value < $dangerzone->min+0.5){
                         $this->mailerSendout($key, 'turbidity');
                     }
                 } else if ($dangerzone->data_type == 'level') {
-                    if ($key->latestWaterLevel->cm > $dangerzone->max) {
+                    if ($key->latestWaterLevel->value > $dangerzone->max) {
                         $this->mailerSendout($key, 'level', 'çritical');
-                    } else if ($key->latestWaterLevel->cm < $dangerzone->min){
+                    } else if ($key->latestWaterLevel->value < $dangerzone->min){
                         $this->mailerSendout($key, 'level', 'çritical');
-                    } else if ($key->latestWaterLevel->cm > $dangerzone->max-10){
+                    } else if ($key->latestWaterLevel->value > $dangerzone->max-10){
                         $this->mailerSendout($key, 'level');
                     }
-                     else if ($key->latestWaterLevel->cm < $dangerzone->min+10){
+                     else if ($key->latestWaterLevel->value < $dangerzone->min+10){
                         $this->mailerSendout($key, 'level');
                     }
                 }

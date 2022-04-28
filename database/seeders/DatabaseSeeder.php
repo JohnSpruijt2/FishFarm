@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             FishpondSeeder::class,
             UserSeeder::class,
+            SensorDataLogSeeder::class,
         ]);
         for ($i=0; $i < 6; $i++) {
             DB::table('mailing_lists')->insert([
