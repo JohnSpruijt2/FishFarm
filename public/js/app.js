@@ -19678,16 +19678,18 @@ __webpack_require__.r(__webpack_exports__);
               } else if (dangerzone.data_type == 'oxygen') {
                 oxygenMinDanger = dangerzone.min;
                 oxygenMaxDanger = dangerzone.max;
-              } else if (dangerzone.data_type == 'turbidty') {
+              } else if (dangerzone.data_type == 'turbidity') {
                 turbidityMinDanger = dangerzone.min;
                 turbidityMaxDanger = dangerzone.max;
-              } else if (dangerzone.data_type == 'waterLevel') {
+              } else if (dangerzone.data_type == 'level') {
                 waterLevelMinDanger = dangerzone.min;
                 waterLevelMaxDanger = dangerzone.max;
               }
             });
 
             if (sensor.value.type == 'oxygen') {
+              console.log('oxy');
+
               if (sensor.value.value < oxygenMinDanger || sensor.value.value > oxygenMaxDanger) {
                 document.getElementById('oxygen-' + fishpond.id).style.color = '#ff0000';
               } else if (sensor.value.value > oxygenMaxDanger - 2 || sensor.value.value < oxygenMinDanger + 2) {
@@ -19697,6 +19699,8 @@ __webpack_require__.r(__webpack_exports__);
               document.getElementById('oxygen-' + fishpond.id).style.visibility = 'visible';
               document.getElementById('oxygen-' + fishpond.id).innerText = sensor.value.value + ' mg/L';
             } else if (sensor.value.type == 'turbidity') {
+              console.log(turbidityMinDanger + '  ' + sensor.value.value);
+
               if (sensor.value.value < turbidityMinDanger || sensor.value.value > turbidityMaxDanger) {
                 document.getElementById('turbidity-' + fishpond.id).style.color = '#ff0000';
               } else if (sensor.value.value > turbidityMaxDanger - 0.5 || sensor.value.value < turbidityMinDanger + 0.5) {
@@ -19706,6 +19710,8 @@ __webpack_require__.r(__webpack_exports__);
               document.getElementById('turbidity-' + fishpond.id).style.visibility = 'visible';
               document.getElementById('turbidity-' + fishpond.id).innerText = sensor.value.value + ' NTU';
             } else if (sensor.value.type == "waterLevel") {
+              console.log('lev');
+
               if (sensor.value.value < waterLevelMinDanger || sensor.value.value > waterLevelMaxDanger) {
                 document.getElementById('waterLevel-' + fishpond.id).style.color = '#ff0000';
               } else if (sensor.value.value > waterLevelMaxDanger - 10 || sensor.value.value < waterLevelMinDanger + 10) {
