@@ -72,11 +72,11 @@
                                     } else if (dangerzone.data_type == 'oxygen') {
                                         oxygenMinDanger = dangerzone.min;
                                         oxygenMaxDanger = dangerzone.max;
-                                    } else if (dangerzone.data_type == 'turbidty') {
+                                    } else if (dangerzone.data_type == 'turbidity') {
                                         turbidityMinDanger = dangerzone.min;
                                         turbidityMaxDanger = dangerzone.max;
                                     }
-                                     else if (dangerzone.data_type == 'waterLevel') {
+                                     else if (dangerzone.data_type == 'level') {
                                         waterLevelMinDanger = dangerzone.min;
                                         waterLevelMaxDanger = dangerzone.max;
                                     }

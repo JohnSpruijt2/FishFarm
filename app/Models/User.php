@@ -59,7 +59,7 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function userWallets() {
+    public function userWallet() {
         return $this->hasOne(UserWallet::class);
     }
 }
