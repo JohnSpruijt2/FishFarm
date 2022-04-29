@@ -19688,6 +19688,8 @@ __webpack_require__.r(__webpack_exports__);
             });
 
             if (sensor.value.type == 'oxygen') {
+              console.log('oxy');
+
               if (sensor.value.value < oxygenMinDanger || sensor.value.value > oxygenMaxDanger) {
                 document.getElementById('oxygen-' + fishpond.id).style.color = '#ff0000';
               } else if (sensor.value.value > oxygenMaxDanger - 2 || sensor.value.value < oxygenMinDanger + 2) {
