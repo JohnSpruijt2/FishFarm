@@ -17,7 +17,7 @@
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
-                            <button class="ml-4">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                                 Change Name
                             </button>
                         </div>
@@ -25,20 +25,19 @@
                     <a :href="route('admin edit sensors', {id: fishpondData.id})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
                             edit Sensors
                     </a>
-                    <h1 class="font-semibold text-xl text-gray-800 leading-tight">Dangerzones: </h1>
+                    <h1 class="font-semibold text-xl text-gray-800 leading-tight">Fish Type: </h1>
                     <div class="mt-8">
-                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'temperature'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
-                            edit temperature
-                        </a>
-                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'oxygen'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
-                            edit oxygen
-                        </a>
-                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'clarity'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
-                            edit clarity
-                        </a>
-                        <a :href="route('admin edit dangerzone', {id: fishpondData.id ,dataType: 'level'})" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded">
-                            edit level
-                        </a>
+                        <form :action="'/admin/updateFishType/'+fishpondData.id" method="post">
+                            <input name="_token" type="hidden" :value="csrf" />
+                            <select name="fishType" id="fishType">
+                                <template v-for="(fish) in fishes" v-bind:key="fish.id">
+                                    <option v-if="fishpondData.fish_id == fish.id" :value="fish.id" selected>{{fish.name}} (current)</option>
+                                    <option v-else :value="fish.id">{{fish.name}}</option>
+                                </template>
+                                
+                            </select> <br>
+                            <input class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded" type="submit" value="Update Fish Type">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -57,6 +56,7 @@
         },
         props: {
             fishpond: Object,
+            fishes: Array,
         },
         data() {
             return {

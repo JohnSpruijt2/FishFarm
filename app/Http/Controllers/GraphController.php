@@ -41,7 +41,7 @@ class GraphController extends Controller
 
     // Returns the temperature graph data.
     function showTemperatureGraph($request) {
-            $fishpond = fishpond::fishpondAllData($request->id)->load('dangerzones');
+            $fishpond = fishpond::fishpondAllDataWithDangerzones($request->id);
             $times = [];
             $temperatures = [];
             foreach ($fishpond->sensors as $sensor) {
@@ -55,9 +55,12 @@ class GraphController extends Controller
                     }
                 }
             }
-            
-            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->min;
-            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'temperature')->first()->max;
+            foreach ($fishpond->dangerzones as $dangerzone ) {
+                if ($dangerzone->data_type == 'temperature') {
+                    $minimum = $dangerzone->min;
+                    $maximum = $dangerzone->max;
+                }
+            }
         return [
             'type' => 'temperature in celcius',
             'xAxis' => $times,
@@ -72,7 +75,7 @@ class GraphController extends Controller
 
     // Returns the oxygen graph data.
     function showOxygenGraph($request) {
-        $fishpond = fishpond::fishpondAllData($request->id)->load('dangerzones');
+        $fishpond = fishpond::fishpondAllDataWithDangerzones($request->id);
         $times = [];
         $oxygen = [];
         foreach ($fishpond->sensors as $sensor) {
@@ -87,8 +90,12 @@ class GraphController extends Controller
             }
         }
             
-            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->min;
-            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'oxygen')->first()->max;
+        foreach ($fishpond->dangerzones as $dangerzone ) {
+            if ($dangerzone->data_type == 'oxygen') {
+                $minimum = $dangerzone->min;
+                $maximum = $dangerzone->max;
+            }
+        }
         return [
             'type' => 'oxygen in mg/L',
             'xAxis' => $times,
@@ -103,7 +110,7 @@ class GraphController extends Controller
 
     // Returns the turbidity graph data.
     function showTurbidityGraph($request) {
-        $fishpond = fishpond::fishpondAllData($request->id)->load('dangerzones');
+        $fishpond = fishpond::fishpondAllDataWithDangerzones($request->id);
         $times = [];
         $turbidity = [];
         foreach ($fishpond->sensors as $sensor) {
@@ -117,8 +124,12 @@ class GraphController extends Controller
                 }
             }
         }
-            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->min;
-            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'turbidity')->first()->max;
+        foreach ($fishpond->dangerzones as $dangerzone ) {
+            if ($dangerzone->data_type == 'turbidity') {
+                $minimum = $dangerzone->min;
+                $maximum = $dangerzone->max;
+            }
+        }
         return [
             'type' => 'turbidity in NTU',
             'xAxis' => $times,
@@ -133,7 +144,7 @@ class GraphController extends Controller
 
     // Returns the water level graph data.
     function showWaterLevelGraph($request) {
-        $fishpond = fishpond::fishpondAllData($request->id)->load('dangerzones');
+        $fishpond = fishpond::fishpondAllDataWithDangerzones($request->id);
         $times = [];
         $waterLevel = [];
         foreach ($fishpond->sensors as $sensor) {
@@ -147,8 +158,12 @@ class GraphController extends Controller
                 }
             }
         }
-            $minimum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->min;
-            $maximum = Dangerzone::where('fishpond_id',$request->id)->where('data_type', 'level')->first()->max;
+        foreach ($fishpond->dangerzones as $dangerzone ) {
+            if ($dangerzone->data_type == 'level') {
+                $minimum = $dangerzone->min;
+                $maximum = $dangerzone->max;
+            }
+        }
         return [
             'type' => 'water level in CM',
             'xAxis' => $times,
