@@ -8,10 +8,10 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4" style="min-height: 30rem;">
-                    <h1 class="text-4xl">Your remaining credits are : {{userInfo.user_wallet.credits}}</h1>
-                    <template  v-if="userInfo.user_wallet.last_payment_date != null">
+                    <h1 class="text-4xl">Your remaining credits are : {{userInfo.wallet.credits}}</h1>
+                    <template  v-if="userInfo.wallet.last_payment_date != null">
                     <h1 class="text-2xl">Last Payment details:</h1>
-                    <p class="text-xl">Last payment of {{userInfo.user_wallet.last_payment_amount}} on {{userInfo.user_wallet.last_payment_date}}</p>
+                    <p class="text-xl">Last payment of {{userInfo.user_wallet.last_payment_amount}} on {{userInfo.wallet.last_payment_date}}</p>
                     </template>
                 </div>
             </div>

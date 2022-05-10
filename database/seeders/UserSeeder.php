@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        DB::table('user_wallets')->insert([
+        DB::table('wallets')->insert([
             'user_id' => 1,
             'credits' => 500,
             'created_at' => now(),
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
         ]);
         \App\Models\User::factory(10)->create();
         for ($i=2; $i < 12; $i++) { 
-            DB::table('user_wallets')->insert([
+            DB::table('wallets')->insert([
                 'user_id' => $i,
                 'created_at' => now(),
                 'updated_at' => now(),

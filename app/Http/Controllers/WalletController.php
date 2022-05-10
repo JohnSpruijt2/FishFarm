@@ -10,7 +10,7 @@ class WalletController extends Controller
 {
     //
     function index() {
-        $userInfo = User::where('id', Auth::user()->id)->first()->load('userWallet');
+        $userInfo = User::where('id', Auth::user()->id)->first()->load('Wallet');
         return Inertia::render('Wallet', [
             'userInfo' => $userInfo,
         ]);
