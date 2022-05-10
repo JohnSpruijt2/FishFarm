@@ -17,8 +17,8 @@ class CreateDangerzonesTable extends Migration
             $table->id();
             $table->integer('fishpond_id');
             $table->string('data_type');
-            $table->float('min');
-            $table->float('max');
+            $table->integer('min');
+            $table->integer('max');
             $table->timestamps();
         });
     }
