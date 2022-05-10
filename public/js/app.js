@@ -19660,34 +19660,92 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.fishponds.forEach(function (fishpond) {
-      var guageElement = document.getElementById('guage-' + fishpond.id);
-      var temperature = fishpond.latest_temperature.temperature;
-      var value = temperature / 80;
-      var minDanger;
-      var maxDanger;
-      fishpond.dangerzones.forEach(function (dangerzone) {
-        if (dangerzone.data_type == 'temperature') {
-          minDanger = dangerzone.min;
-          maxDanger = dangerzone.max;
+      fishpond.sensors.forEach(function (sensor) {
+        if (sensor != null) {
+          if (sensor.value != null) {
+            var temperatureMinDanger;
+            var temperatureMaxDanger;
+            var oxygenMinDanger;
+            var oxygenMaxDanger;
+            var turbidityMinDanger;
+            var turbidityMaxDanger;
+            var waterLevelMinDanger;
+            var waterLevelMaxDanger;
+            fishpond.dangerzones.forEach(function (dangerzone) {
+              if (dangerzone.data_type == 'temperature') {
+                temperatureMinDanger = dangerzone.min;
+                temperatureMaxDanger = dangerzone.max;
+              } else if (dangerzone.data_type == 'oxygen') {
+                oxygenMinDanger = dangerzone.min;
+                oxygenMaxDanger = dangerzone.max;
+              } else if (dangerzone.data_type == 'turbidity') {
+                turbidityMinDanger = dangerzone.min;
+                turbidityMaxDanger = dangerzone.max;
+              } else if (dangerzone.data_type == 'level') {
+                waterLevelMinDanger = dangerzone.min;
+                waterLevelMaxDanger = dangerzone.max;
+              }
+            });
+
+            if (sensor.value.type == 'oxygen') {
+              console.log('oxy');
+
+              if (sensor.value.value < oxygenMinDanger || sensor.value.value > oxygenMaxDanger) {
+                document.getElementById('oxygen-' + fishpond.id).style.color = '#ff0000';
+              } else if (sensor.value.value > oxygenMaxDanger - 2 || sensor.value.value < oxygenMinDanger + 2) {
+                document.getElementById('oxygen-' + fishpond.id).style.color = '#FFA500';
+              }
+
+              document.getElementById('oxygen-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('oxygen-' + fishpond.id).innerText = sensor.value.value + ' mg/L';
+            } else if (sensor.value.type == 'turbidity') {
+              console.log(turbidityMinDanger + '  ' + sensor.value.value);
+
+              if (sensor.value.value < turbidityMinDanger || sensor.value.value > turbidityMaxDanger) {
+                document.getElementById('turbidity-' + fishpond.id).style.color = '#ff0000';
+              } else if (sensor.value.value > turbidityMaxDanger - 0.5 || sensor.value.value < turbidityMinDanger + 0.5) {
+                document.getElementById('turbidity-' + fishpond.id).style.color = '#FFA500';
+              }
+
+              document.getElementById('turbidity-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('turbidity-' + fishpond.id).innerText = sensor.value.value + ' NTU';
+            } else if (sensor.value.type == "waterLevel") {
+              console.log('lev');
+
+              if (sensor.value.value < waterLevelMinDanger || sensor.value.value > waterLevelMaxDanger) {
+                document.getElementById('waterLevel-' + fishpond.id).style.color = '#ff0000';
+              } else if (sensor.value.value > waterLevelMaxDanger - 10 || sensor.value.value < waterLevelMinDanger + 10) {
+                document.getElementById('waterLevel-' + fishpond.id).style.color = '#FFA500';
+              }
+
+              document.getElementById('waterLevel-' + fishpond.id).style.visibility = 'visible';
+              document.getElementById('waterLevel-' + fishpond.id).innerText = sensor.value.value + ' cm';
+            } else if (sensor.value.type == 'temperature') {
+              document.getElementById('guage-' + fishpond.id).style.visibility = 'visible';
+              var guageElement = document.getElementById('guage-' + fishpond.id);
+              var temperature = sensor.value.value;
+              var value = temperature / 80;
+              var minimum = temperatureMinDanger / 80;
+              var maximum = 1 - temperatureMaxDanger / 80;
+              guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
+              guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
+              guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
+              guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
+              guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+              guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
+              guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
+
+              if (temperature < temperatureMinDanger || temperature > temperatureMaxDanger) {
+                guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
+                guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
+              } else if (temperature > temperatureMaxDanger - 5 || temperature < temperatureMinDanger + 5) {
+                guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
+                guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
+              }
+            }
+          }
         }
       });
-      var minimum = minDanger / 80;
-      var maximum = 1 - maxDanger / 80;
-      guageElement.querySelector(".gauge__max").style.transform = "rotate(".concat(maximum / 2 * -1, "turn)");
-      guageElement.querySelector(".gauge__max__warning").style.transform = "rotate(".concat((maximum + 0.0625) / 2 * -1, "turn)");
-      guageElement.querySelector(".gauge__min").style.transform = "rotate(".concat(minimum / 2, "turn)");
-      guageElement.querySelector(".gauge__min__warning").style.transform = "rotate(".concat((minimum + 0.0625) / 2, "turn)");
-      guageElement.querySelector(".gauge__fill").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-      guageElement.querySelector(".gauge__fill2").style.transform = "rotate(".concat(value / 2 - 2, "turn)");
-      guageElement.querySelector(".gauge__cover").textContent = "".concat(Math.round(value * 80), "\xB0C");
-
-      if (temperature < minDanger || temperature > maxDanger) {
-        guageElement.querySelector(".gauge__fill2").style.background = '#ff0000';
-        guageElement.querySelector(".gauge__cover").style.color = '#ff0000';
-      } else if (temperature > maxDanger - 5 || temperature < minDanger + 5) {
-        guageElement.querySelector(".gauge__fill2").style.background = '#FFA500';
-        guageElement.querySelector(".gauge__cover").style.color = '#FFA500';
-      }
     });
   }
 }));
@@ -20536,6 +20594,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  components: {
+    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: {
+    fishpond: Object,
+    UnassignedSensors: Array,
+    UnassignedTemperatureSensors: Array,
+    UnassignedOxygenSensors: Array,
+    UnassignedTurbiditySensors: Array,
+    UnassignedWaterLevelSensors: Array
+  },
+  data: function data() {
+    var temperatureSensorId = null;
+    var oxygenSensorId = null;
+    var turbiditySensorId = null;
+    var waterLevelSensorId = null;
+    this.fishpond.sensors.forEach(function (sensor) {
+      if (sensor.value.type == 'temperature') {
+        temperatureSensorId = sensor.sensor_id;
+      } else if (sensor.value.type == 'oxygen') {
+        oxygenSensorId = sensor.sensor_id;
+      } else if (sensor.value.type == 'turbidity') {
+        turbiditySensorId = sensor.sensor_id;
+      } else if (sensor.value.type == 'waterLevel') {
+        waterLevelSensorId = sensor.sensor_id;
+      }
+    });
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+      fishpondData: this.fishpond,
+      temperatureSensorId: temperatureSensorId,
+      oxygenSensorId: oxygenSensorId,
+      turbiditySensorId: turbiditySensorId,
+      waterLevelSensorId: waterLevelSensorId
+    };
+  },
+  mounted: function mounted() {
+    console.log(this.fishpond);
+  }
+}));
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminPanel.vue?vue&type=script&lang=js":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminPanel.vue?vue&type=script&lang=js ***!
@@ -21175,7 +21292,9 @@ __webpack_require__.r(__webpack_exports__);
     graphs: Array
   },
   data: function data() {
-    return {};
+    return {
+      name: this.fishpond.name
+    };
   }
 }));
 
@@ -22056,6 +22175,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+/* harmony import */ var _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/AppLayout.vue */ "./resources/js/Layouts/AppLayout.vue");
+/* harmony import */ var _Jetstream_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Jetstream/Dashboard.vue */ "./resources/js/Jetstream/Dashboard.vue");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({
+  components: {
+    AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Dashboard: _Jetstream_Dashboard_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  props: {
+    data: Object
+  },
+  mounted: function mounted() {
+    console.log(this.data);
+  }
+}));
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=script&lang=js":
 /*!********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=script&lang=js ***!
@@ -22701,9 +22852,9 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_7 = ["href"];
-var _hoisted_8 = ["href"];
-var _hoisted_9 = ["href"];
+var _hoisted_7 = ["href", "id"];
+var _hoisted_8 = ["href", "id"];
+var _hoisted_9 = ["href", "id"];
 var _hoisted_10 = ["href", "id"];
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"gauge__body\"><div class=\"gauge__max\"></div><div class=\"gauge__max__warning\"></div><div class=\"gauge__min\"></div><div class=\"gauge__min__warning\"></div><div class=\"gauge__fill\"></div><div class=\"gauge__fill2\"></div><div class=\"gauge__cover text-gray\"></div></div>", 1);
@@ -22720,23 +22871,38 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT, PROPS */
     , _hoisted_4), _hoisted_5, _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/oxygen',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_oxygen_level.oxygen_level) + " mg/L ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'oxygen-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
+    }, null, 8
+    /* PROPS */
     , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/turbidity',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_turbidity_level.ntu) + " NTU ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'turbidity-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
+    }, null, 8
+    /* PROPS */
     , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: 'details/' + pond.id + '/level',
-      "class": "dashboardLatests"
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pond.latest_water_level.cm) + " cm ", 9
-    /* TEXT, PROPS */
+      "class": "dashboardLatests",
+      id: 'waterLevel-' + pond.id,
+      style: {
+        "visibility": "hidden"
+      }
+    }, null, 8
+    /* PROPS */
     , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: '/details/' + pond.id + '/temperature',
       id: 'guage-' + pond.id,
-      "class": "gauge"
+      "class": "gauge",
+      style: {
+        "visibility": "hidden"
+      }
     }, _hoisted_12, 8
     /* PROPS */
     , _hoisted_10)]);
@@ -24586,19 +24752,21 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+var _hoisted_10 = ["href"];
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
 }, "Dangerzones: ", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
+var _hoisted_12 = {
   "class": "mt-8"
 };
-var _hoisted_12 = ["href"];
 var _hoisted_13 = ["href"];
 var _hoisted_14 = ["href"];
 var _hoisted_15 = ["href"];
+var _hoisted_16 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
@@ -24626,7 +24794,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         autocomplete: "name"
       }, null, 8
       /* PROPS */
-      , _hoisted_8)]), _hoisted_9]), _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      , _hoisted_8)]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        href: _ctx.route('admin edit sensors', {
+          id: _ctx.fishpondData.id
+        }),
+        "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
+      }, " edit Sensors ", 8
+      /* PROPS */
+      , _hoisted_10), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('admin edit dangerzone', {
           id: _ctx.fishpondData.id,
           dataType: 'temperature'
@@ -24634,7 +24809,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit temperature ", 8
       /* PROPS */
-      , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('admin edit dangerzone', {
           id: _ctx.fishpondData.id,
           dataType: 'oxygen'
@@ -24642,7 +24817,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit oxygen ", 8
       /* PROPS */
-      , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      , _hoisted_14), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('admin edit dangerzone', {
           id: _ctx.fishpondData.id,
           dataType: 'clarity'
@@ -24650,7 +24825,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit clarity ", 8
       /* PROPS */
-      , _hoisted_14), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      , _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('admin edit dangerzone', {
           id: _ctx.fishpondData.id,
           dataType: 'level'
@@ -24658,7 +24833,268 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit level ", 8
       /* PROPS */
-      , _hoisted_15)])])])])];
+      , _hoisted_16)])])])])];
+    }),
+    _: 1
+    /* STABLE */
+
+  });
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706":
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706 ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "font-semibold text-xl text-gray-800 leading-tight"
+}, " Admin Fishpond Sensors Edit ", -1
+/* HOISTED */
+);
+
+var _hoisted_2 = {
+  "class": "py-12"
+};
+var _hoisted_3 = {
+  "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
+};
+var _hoisted_4 = {
+  style: {
+    "min-height": "15rem"
+  },
+  "class": "bg-white p-6 overflow-hidden shadow-xl sm:rounded-lg"
+};
+var _hoisted_5 = {
+  method: "POST"
+};
+var _hoisted_6 = ["value"];
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "temperature",
+  value: "temperature"
+}, "temperature sensor id:", -1
+/* HOISTED */
+);
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
+  name: "temperature",
+  id: "temperature"
+};
+var _hoisted_10 = {
+  key: 0,
+  value: "null"
+};
+var _hoisted_11 = ["value"];
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "null"
+}, " no sensor ", -1
+/* HOISTED */
+);
+
+var _hoisted_13 = ["value"];
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "oxygen",
+  value: "oxygen"
+}, "oxygen sensor id:", -1
+/* HOISTED */
+);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  name: "oxygen",
+  id: "oxygen"
+};
+var _hoisted_17 = {
+  key: 0,
+  value: "null"
+};
+var _hoisted_18 = ["value"];
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "null"
+}, " no sensor ", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = ["value"];
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "turbidity",
+  value: "turbidity"
+}, "clarity sensor id:", -1
+/* HOISTED */
+);
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_23 = {
+  name: "turbidity",
+  id: "turbidity"
+};
+var _hoisted_24 = {
+  key: 0,
+  value: "null"
+};
+var _hoisted_25 = ["value"];
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "null"
+}, " no sensor ", -1
+/* HOISTED */
+);
+
+var _hoisted_27 = ["value"];
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "waterLevel",
+  value: "waterLevel"
+}, "water level sensor id:", -1
+/* HOISTED */
+);
+
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_30 = {
+  name: "waterLevel",
+  id: "waterLevel"
+};
+var _hoisted_31 = {
+  key: 0,
+  value: "null"
+};
+var _hoisted_32 = ["value"];
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "null"
+}, " no sensor ", -1
+/* HOISTED */
+);
+
+var _hoisted_34 = ["value"];
+
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "flex items-center justify-end mt-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "ml-4"
+}, " update sensors ")], -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
+    title: "details"
+  }, {
+    header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_1];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.fishpond.name), 1
+      /* TEXT */
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        name: "_token",
+        type: "hidden",
+        value: _ctx.csrf
+      }, null, 8
+      /* PROPS */
+      , _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_9, [_ctx.temperatureSensorId == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_10, "no sensor (current)")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+        value: _ctx.temperatureSensorId,
+        selected: ""
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.temperatureSensorId) + " (current)", 9
+      /* TEXT, PROPS */
+      , _hoisted_11), _hoisted_12], 64
+      /* STABLE_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.UnassignedTemperatureSensors, function (sensor) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: sensor.sensor_id,
+          value: sensor.sensor_id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sensor.sensor_id), 9
+        /* TEXT, PROPS */
+        , _hoisted_13);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_14, _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_16, [_ctx.oxygenSensorId == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_17, "no sensor (current)")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+        value: _ctx.oxygenSensorId,
+        selected: ""
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.oxygenSensorId) + " (current)", 9
+      /* TEXT, PROPS */
+      , _hoisted_18), _hoisted_19], 64
+      /* STABLE_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.UnassignedOxygenSensors, function (sensor) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: sensor.sensor_id,
+          value: sensor.sensor_id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sensor.sensor_id), 9
+        /* TEXT, PROPS */
+        , _hoisted_20);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_21, _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_23, [_ctx.turbiditySensorId == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_24, "no sensor (current)")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+        value: _ctx.turbiditySensorId,
+        selected: ""
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.turbiditySensorId) + " (current)", 9
+      /* TEXT, PROPS */
+      , _hoisted_25), _hoisted_26], 64
+      /* STABLE_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.UnassignedTurbiditySensors, function (sensor) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: sensor.sensor_id,
+          value: sensor.sensor_id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sensor.sensor_id), 9
+        /* TEXT, PROPS */
+        , _hoisted_27);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [_hoisted_28, _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_30, [_ctx.waterLevelSensorId == null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_31, "no sensor (current)")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+        key: 1
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+        value: _ctx.waterLevelSensorId,
+        selected: ""
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.waterLevelSensorId) + " (current)", 9
+      /* TEXT, PROPS */
+      , _hoisted_32), _hoisted_33], 64
+      /* STABLE_FRAGMENT */
+      )), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.UnassignedWaterLevelSensors, function (sensor) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: sensor.sensor_id,
+          value: sensor.sensor_id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(sensor.sensor_id), 9
+        /* TEXT, PROPS */
+        , _hoisted_34);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])]), _hoisted_35])])])])];
     }),
     _: 1
     /* STABLE */
@@ -28333,6 +28769,56 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12 ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+  "class": "font-semibold text-xl text-gray-800 leading-tight"
+}, " Testing ", -1
+/* HOISTED */
+);
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "py-12"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg"
+})])], -1
+/* HOISTED */
+);
+
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, {
+    title: "Dashboard"
+  }, {
+    header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_1];
+    }),
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_2];
+    }),
+    _: 1
+    /* STABLE */
+
+  });
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=template&id=317d1a6e&scoped=true":
 /*!************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Welcome.vue?vue&type=template&id=317d1a6e&scoped=true ***!
@@ -28409,6 +28895,25 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNo
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Register ");
 
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    style: {
+      "background-color": "black",
+      "width": "100%",
+      "padding": "10px",
+      "bottom": "0",
+      "position": "absolute",
+      "color": "white"
+    }
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    style: {
+      "text-align": "center"
+    }
+  }, "whatsapp: +31 99887766 e-mail: email@mail.com ")], -1
+  /* HOISTED */
+  );
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
 
@@ -28458,7 +28963,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["href"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64
   /* STABLE_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_12])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -53733,6 +54238,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Pages/AdminFishpondSensor.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/Pages/AdminFishpondSensor.vue ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AdminFishpondSensor_vue_vue_type_template_id_3f222706__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminFishpondSensor.vue?vue&type=template&id=3f222706 */ "./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706");
+/* harmony import */ var _AdminFishpondSensor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminFishpondSensor.vue?vue&type=script&lang=js */ "./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js");
+/* harmony import */ var C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AdminFishpondSensor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AdminFishpondSensor_vue_vue_type_template_id_3f222706__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/AdminFishpondSensor.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/AdminPanel.vue":
 /*!*******************************************!*\
   !*** ./resources/js/Pages/AdminPanel.vue ***!
@@ -54461,6 +54994,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/Pages/Testing.vue":
+/*!****************************************!*\
+  !*** ./resources/js/Pages/Testing.vue ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Testing.vue?vue&type=template&id=3e5bfb12 */ "./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12");
+/* harmony import */ var _Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Testing.vue?vue&type=script&lang=js */ "./resources/js/Pages/Testing.vue?vue&type=script&lang=js");
+/* harmony import */ var C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,C_Users_johns_OneDrive_School_jaar_3_FishFarm_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/Testing.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/Pages/Welcome.vue":
 /*!****************************************!*\
   !*** ./resources/js/Pages/Welcome.vue ***!
@@ -54940,6 +55501,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminFishpondSensor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminFishpondSensor_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminFishpondSensor.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/Pages/AdminPanel.vue?vue&type=script&lang=js":
 /*!*******************************************************************!*\
   !*** ./resources/js/Pages/AdminPanel.vue?vue&type=script&lang=js ***!
@@ -55352,6 +55929,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TermsOfService.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/TermsOfService.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Testing.vue?vue&type=script&lang=js":
+/*!****************************************************************!*\
+  !*** ./resources/js/Pages/Testing.vue?vue&type=script&lang=js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Testing.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -55900,6 +56493,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706 ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminFishpondSensor_vue_vue_type_template_id_3f222706__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AdminFishpondSensor_vue_vue_type_template_id_3f222706__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AdminFishpondSensor.vue?vue&type=template&id=3f222706 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/AdminFishpondSensor.vue?vue&type=template&id=3f222706");
+
+
+/***/ }),
+
 /***/ "./resources/js/Pages/AdminPanel.vue?vue&type=template&id=632fd3de":
 /*!*************************************************************************!*\
   !*** ./resources/js/Pages/AdminPanel.vue?vue&type=template&id=632fd3de ***!
@@ -56312,6 +56921,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_template_id_63d45180__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TermsOfService_vue_vue_type_template_id_63d45180__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TermsOfService.vue?vue&type=template&id=63d45180 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/TermsOfService.vue?vue&type=template&id=63d45180");
+
+
+/***/ }),
+
+/***/ "./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12":
+/*!**********************************************************************!*\
+  !*** ./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12 ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_Testing_vue_vue_type_template_id_3e5bfb12__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./Testing.vue?vue&type=template&id=3e5bfb12 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/Pages/Testing.vue?vue&type=template&id=3e5bfb12");
 
 
 /***/ }),
@@ -57133,6 +57758,7 @@ var map = {
 	"./API/Partials/ApiTokenManager.vue": "./resources/js/Pages/API/Partials/ApiTokenManager.vue",
 	"./AdminDangerzoneForm.vue": "./resources/js/Pages/AdminDangerzoneForm.vue",
 	"./AdminFishpondForm.vue": "./resources/js/Pages/AdminFishpondForm.vue",
+	"./AdminFishpondSensor.vue": "./resources/js/Pages/AdminFishpondSensor.vue",
 	"./AdminPanel.vue": "./resources/js/Pages/AdminPanel.vue",
 	"./Auth/AdminOverview.vue": "./resources/js/Pages/Auth/AdminOverview.vue",
 	"./Auth/AdminRegister.vue": "./resources/js/Pages/Auth/AdminRegister.vue",
@@ -57159,6 +57785,7 @@ var map = {
 	"./Teams/Partials/UpdateTeamNameForm.vue": "./resources/js/Pages/Teams/Partials/UpdateTeamNameForm.vue",
 	"./Teams/Show.vue": "./resources/js/Pages/Teams/Show.vue",
 	"./TermsOfService.vue": "./resources/js/Pages/TermsOfService.vue",
+	"./Testing.vue": "./resources/js/Pages/Testing.vue",
 	"./Welcome.vue": "./resources/js/Pages/Welcome.vue"
 };
 

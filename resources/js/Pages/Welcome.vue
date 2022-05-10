@@ -20,10 +20,13 @@
                     Register
                 </Link>
             </template>
+        </div>     
+        <div style="background-color: black; width: 100%; padding: 10px; bottom: 0; position: absolute; color: white;">
+            <p style="text-align: center;">whatsapp: +31 99887766     e-mail: email@mail.com </p>
         </div>
 
-        
     </div>
+
 </template>
 
 <style scoped>

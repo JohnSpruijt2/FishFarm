@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         //
         DB::table('teams')->insert([
             'user_id' => 1,
-            'name' => 'admin',
+            'name' => "admin's team",
             'personal_team' => 1,
             'created_at' => now(),
             'updated_at' => now(),
@@ -37,6 +37,6 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(10)->create();
     }
 }
