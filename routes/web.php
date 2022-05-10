@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WalletController;
+
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -34,6 +36,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardCon
 Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphController::class, 'index']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
 
 
 /* Admin routing */
