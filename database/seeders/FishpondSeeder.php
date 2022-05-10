@@ -15,14 +15,16 @@ class FishpondSeeder extends Seeder
     {
         //
         $k = 1;
+        $fishTypes = ['makreel', 'goudvis', 'zalm', 'blob vis', 'among us vis', 'zwaard vis', 'orka'];
         for ($i=1; $i < 7; $i++) { 
             DB::table('fishponds')->insert([
                'name'=> 'Fishpond Number '.$i ,
+               'fish_id' => $i,
                'created_at' => now(),
                'updated_at' => now(),
             ]);
             DB::table('dangerzones')->insert([
-               'fishpond_id' => $i,
+               'fish_id' => $i,
                'data_type' => 'temperature',
                'min' => 5,
                'max' => 40,
@@ -30,7 +32,7 @@ class FishpondSeeder extends Seeder
                'updated_at' => now(),
             ]);
             DB::table('dangerzones')->insert([
-               'fishpond_id' => $i,
+               'fish_id' => $i,
                'data_type' => 'oxygen',
                'min' => 2,
                'max' => 10,
@@ -38,7 +40,7 @@ class FishpondSeeder extends Seeder
                'updated_at' => now(),
            ]);
            DB::table('dangerzones')->insert([
-               'fishpond_id' => $i,
+               'fish_id' => $i,
                'data_type' => 'turbidity',
                'min' => -0.5,
                'max' => 5,
@@ -46,13 +48,18 @@ class FishpondSeeder extends Seeder
                'updated_at' => now(),
            ]);
            DB::table('dangerzones')->insert([
-               'fishpond_id' => $i,
+               'fish_id' => $i,
                'data_type' => 'level',
                'min' => 55,
                'max' => 90,
                'created_at' => now(),
                'updated_at' => now(),
            ]);
+           DB::table('fish')->insert([
+           'name' => $fishTypes[$i],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
 
             date_default_timezone_set('Europe/Amsterdam');
