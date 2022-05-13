@@ -8,7 +8,7 @@
         
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="p-6 white overflow-hidden shadow-xl sm:rounded-lg">
+                <div style="min-height: 15rem;" class="bg-white p-6 overflow-hidden shadow-xl sm:rounded-lg">
                     <div  class="grid grid-cols-1 text-2xl">
                         <div v-for="(user) in userData" :key="user.id"  class="p-3 m-2 border border-grey rounded">
                             <a> {{ user.name }}</a> <br>

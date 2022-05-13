@@ -19659,7 +19659,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log(this.fishponds);
     this.fishponds.forEach(function (fishpond) {
       fishpond.sensors.forEach(function (sensor) {
         if (sensor != null) {
@@ -25289,7 +25288,10 @@ var _hoisted_3 = {
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 };
 var _hoisted_4 = {
-  "class": "p-6 white overflow-hidden shadow-xl sm:rounded-lg"
+  style: {
+    "min-height": "15rem"
+  },
+  "class": "bg-white p-6 overflow-hidden shadow-xl sm:rounded-lg"
 };
 var _hoisted_5 = {
   "class": "grid grid-cols-1 text-2xl"
