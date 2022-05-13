@@ -41,7 +41,7 @@ class FishpondSeeder extends Seeder
             DB::table('dangerzones')->insert([
                 'fish_id' => $i+1,
                 'data_type' => 'turbidity',
-                'min' => -0.5,
+                'min' => 0,
                 'max' => 5,
                 'created_at' => now(),
                 'updated_at' => now(),

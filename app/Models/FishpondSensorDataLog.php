@@ -13,7 +13,7 @@ class FishpondSensorDataLog extends Model
         return $this->hasMany(SensorDataLog::class, 'sensor_id', 'sensor_id');
     }
 
-    public function getUnassignedSensors() {
+    public static function getUnassignedSensors() {
         $unassignedSensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', null)->get();
         if ($unassignedSensors->first != null) {
             foreach ($unassignedSensors as $sensor) {
@@ -27,25 +27,25 @@ class FishpondSensorDataLog extends Model
         return $unassignedSensors;
     }
 
-    public function getSensorOneDataLog($id) {
+    public static function getSensorOneDataLog($id) {
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $id)->get();
        
     }
 
-    public function getSpecific($fishpondId, $sensorId) {
+    public static function getSpecific($fishpondId, $sensorId) {
         return DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpondId)->where('sensor_id', $sensorId)->first();
     }
 
-    public function updateSpecific($id, $sensorId, $fishpondId) {
+    public static function updateSpecific($id, $sensorId, $fishpondId) {
         DB::table('fishpond_sensor_data_log')->where('id', $id)->update(['fishpond_id' => null]);
         DB::table('fishpond_sensor_data_log')->where('sensor_id', $sensorId)->update(['fishpond_id' => $fishpondId]);
     } 
 
-    public function updateNull($id) {
+    public static function updateNull($id) {
         DB::table('fishpond_sensor_data_log')->where('id', $id)->update(['fishpond_id' => null]);
     }
 
-    public function updateFresh($sensorId, $fishpondId) {
+    public static function updateFresh($sensorId, $fishpondId) {
         DB::table('fishpond_sensor_data_log')->where('sensor_id', $sensorId)->update(['fishpond_id' => $fishpondId]);
     }
 }
