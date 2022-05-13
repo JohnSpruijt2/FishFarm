@@ -19659,6 +19659,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    console.log(this.fishponds);
     this.fishponds.forEach(function (fishpond) {
       fishpond.sensors.forEach(function (sensor) {
         if (sensor != null) {
@@ -19678,10 +19679,10 @@ __webpack_require__.r(__webpack_exports__);
               } else if (dangerzone.data_type == 'oxygen') {
                 oxygenMinDanger = dangerzone.min;
                 oxygenMaxDanger = dangerzone.max;
-              } else if (dangerzone.data_type == 'turbidty') {
+              } else if (dangerzone.data_type == 'turbidity') {
                 turbidityMinDanger = dangerzone.min;
                 turbidityMaxDanger = dangerzone.max;
-              } else if (dangerzone.data_type == 'waterLevel') {
+              } else if (dangerzone.data_type == 'level') {
                 waterLevelMinDanger = dangerzone.min;
                 waterLevelMaxDanger = dangerzone.max;
               }
@@ -24799,37 +24800,31 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 
 var _hoisted_10 = ["href"];
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
-
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
-/* HOISTED */
-);
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
   "class": "font-semibold text-xl text-gray-800 leading-tight"
 }, "Fish Type: ", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_12 = {
   "class": "mt-8"
 };
-var _hoisted_15 = ["action"];
-var _hoisted_16 = ["value"];
-var _hoisted_17 = {
+var _hoisted_13 = ["action"];
+var _hoisted_14 = ["value"];
+var _hoisted_15 = {
   name: "fishType",
   id: "fishType"
 };
-var _hoisted_18 = ["value"];
-var _hoisted_19 = ["value"];
+var _hoisted_16 = ["value"];
+var _hoisted_17 = ["value"];
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded",
   type: "submit",
   value: "Update Fish Type"
@@ -24871,7 +24866,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
       }, " edit Sensors ", 8
       /* PROPS */
-      , _hoisted_10), _hoisted_11, _hoisted_12, _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+      , _hoisted_10), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
         action: '/admin/updateFishType/' + _ctx.fishpondData.id,
         method: "post"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -24880,7 +24875,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: _ctx.csrf
       }, null, 8
       /* PROPS */
-      , _hoisted_16), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.fishes, function (fish) {
+      , _hoisted_14), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_15, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.fishes, function (fish) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           key: fish.id
         }, [_ctx.fishpondData.fish_id == fish.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
@@ -24889,19 +24884,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           selected: ""
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fish.name) + " (current)", 9
         /* TEXT, PROPS */
-        , _hoisted_18)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+        , _hoisted_16)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: 1,
           value: fish.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(fish.name), 9
         /* TEXT, PROPS */
-        , _hoisted_19))], 64
+        , _hoisted_17))], 64
         /* STABLE_FRAGMENT */
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))]), _hoisted_20, _hoisted_21, _hoisted_22], 8
+      ))]), _hoisted_18, _hoisted_19, _hoisted_20], 8
       /* PROPS */
-      , _hoisted_15)])])])])];
+      , _hoisted_13)])])])])];
     }),
     _: 1
     /* STABLE */
