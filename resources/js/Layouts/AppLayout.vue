@@ -23,6 +23,11 @@
                                     Dashboard
                                 </jet-nav-link>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('wallet')" :active="route().current('wallet')">
+                                    Wallet
+                                </jet-nav-link>
+                            </div>
                             <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('admin panel')" :active="route().current('admin panel')">
                                     Admin Panel

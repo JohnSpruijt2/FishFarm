@@ -6,6 +6,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WalletController;
+
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -35,6 +37,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [Gr
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphController::class, 'index']);
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
+
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
@@ -50,6 +54,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/admin/deletion/{id}', [Ad
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('admin edit fishponds');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/admin/updateFishType/{id}', [AdminController::class, 'confirmUpdateFishType']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
 

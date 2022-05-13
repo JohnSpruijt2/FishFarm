@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFishpondsTable extends Migration
+class CreateWalletsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateFishpondsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fishponds', function (Blueprint $table) {
+        Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('fish_id');
+            $table->integer('user_id');
+            $table->integer('credits')->default('0');
+            $table->integer('last_payment_amount')->nullable();
+            $table->date('last_payment_date')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateFishpondsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fishponds');
+        Schema::dropIfExists('wallets');
     }
 }

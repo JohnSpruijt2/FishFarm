@@ -15,7 +15,7 @@ class CreateDangerzonesTable extends Migration
     {
         Schema::create('dangerzones', function (Blueprint $table) {
             $table->id();
-            $table->integer('fishpond_id');
+            $table->integer('fish_id');
             $table->string('data_type');
             $table->integer('min');
             $table->integer('max');

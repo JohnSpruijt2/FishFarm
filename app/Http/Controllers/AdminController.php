@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Fishpond;
 use App\Models\Dangerzone;
+use App\Models\Fish;
 use App\Models\FishpondSensorDataLog;
 
 class AdminController extends Controller
@@ -76,7 +77,7 @@ class AdminController extends Controller
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
         }
-        $users = User::where('id', '!=', auth::user()->id)->get();
+        $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet');
         return Inertia::render('Auth/AdminOverview', [
             'users' => $users
         ]);
@@ -98,8 +99,10 @@ class AdminController extends Controller
             return redirect('/dashboard');
         }
         $fishpond = Fishpond::where('id', $request->id)->first();
+        $fishes = Fish::all();
         return Inertia::render('AdminFishpondForm', [
-            'fishpond' => $fishpond
+            'fishpond' => $fishpond,
+            'fishes' => $fishes
         ]);
     }
 
@@ -114,29 +117,13 @@ class AdminController extends Controller
         return redirect('/admin');
     }
 
-    // Renders the admin edit dangerzones page
-    function editDangerzones(Request $request) {
+    function confirmUpdateFishType(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
         }
-        $name = Fishpond::where('id', $request->id)->first()->name;
-        $data = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dataType)->first();
-        return Inertia::render('AdminDangerzoneForm', [
-            'name' => $name,
-            'data' => $data,
-        ]);
-    }
-    
-    // Edits dangerzones with data from post form
-    function confirmEditDangerzones(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
-        $dangerzone = Dangerzone::where('fishpond_id', $request->id)->where('data_type', $request->dataType)->first();
-        var_dump($dangerzone);
-        $dangerzone->min = $request->min;
-        $dangerzone->max = $request->max;
-        $dangerzone->save();
+        $fishpond = Fishpond::where('id', $request->id)->first();
+        $fishpond->fish_id = $request->fishType;
+        $fishpond->save();
         return redirect('/admin');
     }
 

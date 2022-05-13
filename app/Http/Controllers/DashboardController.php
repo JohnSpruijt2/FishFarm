@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     // Loads all the fishponds with dangerzones and latest data for each data type.
     function index(Request $request) {
-        $data = fishpond::allFishpondsLatestData()->load('dangerzones');
+        $data = fishpond::allFishpondLatestDataWithDangerzones();
         //$this->mailerLoop($data);
         return Inertia::render('Dashboard', [
             'data' => $data,
