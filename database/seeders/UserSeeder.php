@@ -44,13 +44,13 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        \App\Models\User::factory(10)->create();
-        for ($i=2; $i < 12; $i++) { 
+        //\App\Models\User::factory(10)->create();
+        /*for ($i=2; $i < 12; $i++) { 
             DB::table('wallets')->insert([
                 'user_id' => $i,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-        }
+        }*/
     }
 }

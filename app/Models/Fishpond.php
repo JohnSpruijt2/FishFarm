@@ -23,7 +23,7 @@ class Fishpond extends Model
         return $this->belongsToMany(SensorDataLog::class, 'fishpond_sensor_data_log', 'fishpond_id', 'sensor');
     }
 
-    public function allFishpondsLatestData() {
+    public static function allFishpondsLatestData() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {
             $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
@@ -52,7 +52,7 @@ class Fishpond extends Model
         return $fishponds;
     }
 
-    public function fishpondLatestData($id) {
+    public static function fishpondLatestData($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
         foreach ($sensors as $sensor) {
@@ -65,7 +65,7 @@ class Fishpond extends Model
         return $fishpond;
     }
 
-    public function fishpondLatestDataWithDangerzones($id) {
+    public static function fishpondLatestDataWithDangerzones($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
         foreach ($sensors as $sensor) {
@@ -79,7 +79,7 @@ class Fishpond extends Model
         return $fishpond;
     }
 
-    public function allFishpondsAllData() {
+    public static function allFishpondsAllData() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {
             $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
@@ -93,7 +93,7 @@ class Fishpond extends Model
         return $fishponds;
     }
 
-    public function fishpondAllData($id) {
+    public static function fishpondAllData($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
             foreach ($sensors as $sensor) {
@@ -104,7 +104,7 @@ class Fishpond extends Model
         
         return $fishpond;
     }
-    public function fishpondAllDataWithDangerzones($id) {
+    public static function fishpondAllDataWithDangerzones($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
             foreach ($sensors as $sensor) {
