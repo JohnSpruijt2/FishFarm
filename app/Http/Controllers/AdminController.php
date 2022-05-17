@@ -16,9 +16,6 @@ class AdminController extends Controller
 {
     // Renders the adminPanel.
     function index() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishponds = Fishpond::all();
         return Inertia::render('AdminPanel', [
             'fishponds' => $fishponds
@@ -27,9 +24,6 @@ class AdminController extends Controller
 
     // Renders admin register page.
     function register() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         return Inertia::render('Auth/AdminRegister', [
 
         ]);
@@ -37,9 +31,6 @@ class AdminController extends Controller
 
     // Creates new account recieved from Admin register page form through Post method.
     function createNewAccount(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $input = $request->all();
         
         if (filter_var( $input['email'], FILTER_VALIDATE_EMAIL ) == false) {
@@ -74,9 +65,6 @@ class AdminController extends Controller
 
     // renders Admin edit existing accounts page while excluding the current admin to avoid accidental deletal
     function editExistingAccounts() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet')->load('Subscription');
         return Inertia::render('Auth/AdminOverview', [
             'users' => $users
@@ -85,9 +73,6 @@ class AdminController extends Controller
 
     // Deletes account if admin 
     function deleteAccount(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $userId = $request->id;
         User::where('id', $userId)->delete();
         return redirect('/admin/editExistingAccounts');
@@ -95,9 +80,6 @@ class AdminController extends Controller
 
     // Renders edit fishpond overview
     function editFishpond(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishes = Fish::all();
         return Inertia::render('AdminFishpondForm', [
@@ -108,9 +90,6 @@ class AdminController extends Controller
 
     // Edits the fishpond with data from Post form
     function confirmEditFishpond(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishpond->name = $request->name;
         $fishpond->save();
@@ -118,9 +97,6 @@ class AdminController extends Controller
     }
 
     function confirmUpdateFishType(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishpond->fish_id = $request->fishType;
         $fishpond->save();
@@ -128,9 +104,6 @@ class AdminController extends Controller
     }
 
     function editSensors(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $currentFishpond = fishpond::fishpondLatestData($request->id);
         $UnassignedSensors = FishpondSensorDataLog::getUnassignedSensors();
         $UnassignedTemperatureSensors = [];
@@ -161,9 +134,6 @@ class AdminController extends Controller
     }
 
     function confirmEditSensors(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $currentFishpond = Fishpond::fishpondLatestData($request->id);
         //$sensors = FishpondSensorDataLog::where('fishpond_id', $request->id)->get();
         $temperature = false; $oxygen = false; $turbidity = false; $waterLevel = false;

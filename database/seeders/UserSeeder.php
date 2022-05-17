@@ -56,6 +56,7 @@ class UserSeeder extends Seeder
         for ($i=2; $i < 12; $i++) { 
             DB::table('wallets')->insert([
                 'user_id' => $i,
+                'credits' => 20,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

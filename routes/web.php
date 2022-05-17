@@ -31,37 +31,37 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphController::class, 'index']);
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/details/{id}', [GraphController::class, 'index']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
 /* Admin routing */
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/createNewAccount', [AdminController::class, 'register'])->name('admin register');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/createNewAccount', [AdminController::class, 'register'])->name('admin register');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/createNewAccount', [AdminController::class, 'createNewAccount']);
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/createNewAccount', [AdminController::class, 'createNewAccount']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editExistingAccounts', [AdminController::class, 'editExistingAccounts'])->name('admin account overview');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editExistingAccounts', [AdminController::class, 'editExistingAccounts'])->name('admin account overview');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/deletion/{id}', [AdminController::class, 'deleteAccount'])->name('admin deletion');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/deletion/{id}', [AdminController::class, 'deleteAccount'])->name('admin deletion');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('admin edit fishponds');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpond/{id}', [AdminController::class, 'editFishpond'])->name('admin edit fishponds');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/updateFishType/{id}', [AdminController::class, 'confirmUpdateFishType']);
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/updateFishType/{id}', [AdminController::class, 'confirmUpdateFishType']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'confirmEditDangerzones']);
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'confirmEditDangerzones']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpondSensors/{id}', [AdminController::class, 'editSensors'])->name('admin edit sensors');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpondSensors/{id}', [AdminController::class, 'editSensors'])->name('admin edit sensors');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/admin/editFishpondSensors/{id}', [AdminController::class, 'confirmEditSensors']);
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpondSensors/{id}', [AdminController::class, 'confirmEditSensors']);
