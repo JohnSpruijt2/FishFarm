@@ -31,6 +31,7 @@ class UserSeeder extends Seeder
             'user_id' => 1,
             'added_at'=> now(),
             'stops_at'=> now()->addHours(720),
+            'subscription_type' => 'monthly',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -63,6 +64,7 @@ class UserSeeder extends Seeder
                 'user_id' => $i,
                 'added_at'=> now(),
                 'stops_at'=> now()->addHours(720),
+                'subscription_type' => 'monthly',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
