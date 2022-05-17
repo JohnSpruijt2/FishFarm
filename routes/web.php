@@ -7,7 +7,7 @@ use App\Http\Controllers\GraphController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WalletController;
-
+use App\Http\Controllers\SubscriptionController;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -39,6 +39,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphCont
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');

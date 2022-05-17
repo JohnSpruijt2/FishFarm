@@ -77,7 +77,7 @@ class AdminController extends Controller
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
         }
-        $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet');
+        $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet')->load('Subscription');
         return Inertia::render('Auth/AdminOverview', [
             'users' => $users
         ]);

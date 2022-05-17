@@ -27,6 +27,13 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        DB::table('subscriptions')->insert([
+            'user_id' => 1,
+            'added_at'=> now(),
+            'stops_at'=> now()->addHours(720),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         DB::table('users')->insert([
             'name' => 'admin',
             'email' => 'admin@mail.com',
@@ -48,6 +55,14 @@ class UserSeeder extends Seeder
         for ($i=2; $i < 12; $i++) { 
             DB::table('wallets')->insert([
                 'user_id' => $i,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            DB::table('subscriptions')->insert([
+                'user_id' => $i,
+                'added_at'=> now(),
+                'stops_at'=> now()->addHours(720),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
