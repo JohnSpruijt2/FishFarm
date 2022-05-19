@@ -15,4 +15,11 @@ class SubscriptionController extends Controller
             'userInfo' => $userInfo,
         ]);
     }
+
+    function confirmUpdateSubscriptionType(Request $request) {
+        $subscription = Subscription::where('id', $request->id)->first();
+        $subscription->subscription_id = $request->subscriptionType;
+        $subscription->save();
+        return redirect('/dashboard');
+    }
 }
