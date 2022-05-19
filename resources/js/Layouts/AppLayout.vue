@@ -261,7 +261,8 @@
     export default defineComponent({
         setup() {
           const isAdmin = computed(() => usePage().props.value.isAdmin)
-          return { isAdmin }
+          const navCredits = computed(() => userPAge().props.value.navCredits)
+          return { isAdmin, navCredits }
         },
         props: {
             title: String,

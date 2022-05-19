@@ -20341,8 +20341,12 @@ __webpack_require__.r(__webpack_exports__);
     var isAdmin = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
       return (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_7__.usePage)().props.value.isAdmin;
     });
+    var navCredits = (0,vue__WEBPACK_IMPORTED_MODULE_0__.computed)(function () {
+      return userPAge().props.value.navCredits;
+    });
     return {
-      isAdmin: isAdmin
+      isAdmin: isAdmin,
+      navCredits: navCredits
     };
   },
   props: {

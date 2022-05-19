@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Wallet;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -40,13 +41,15 @@ class HandleInertiaRequests extends Middleware
             return array_merge(parent::share($request), [
                 //
                 'isAdmin' => Auth::user()->admin,
+                'navCredits' => Wallet::where('user_id', Auth::user()->id)->first()->credits,
             ]);  
         } else {
             return array_merge(parent::share($request), [
                 //
                 'isAdmin' => 0,
+                'navCredits' => 0,
             ]);  
         }
-       
+        
     }
 }
