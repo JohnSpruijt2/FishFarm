@@ -25,7 +25,7 @@
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('wallet')" :active="route().current('wallet')">
-                                    Wallet
+                                    Wallet : {{navCredits}}
                                 </jet-nav-link>
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -261,7 +261,7 @@
     export default defineComponent({
         setup() {
           const isAdmin = computed(() => usePage().props.value.isAdmin)
-          const navCredits = computed(() => userPAge().props.value.navCredits)
+          const navCredits = computed(() => usePage().props.value.navCredits)
           return { isAdmin, navCredits }
         },
         props: {
