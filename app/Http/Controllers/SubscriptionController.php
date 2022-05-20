@@ -20,7 +20,6 @@ class SubscriptionController extends Controller
     }
 
     function confirmUpdateSubscriptionType(Request $request) {
-        var_dump(Subscription::where('user_id', $request->id)->first()->subscription_type);
         if ($request->subscriptionType == 'monthly') {
             if (Subscription::where('user_id', $request->id)->first()->subscription_type == null || Subscription::where('user_id', $request->id)->first()->subscription_type == 'no subscription') {
                 $subscription = Subscription::where('user_id', $request->id)->first();
@@ -37,6 +36,6 @@ class SubscriptionController extends Controller
             $subscription->save();
         }
         
-        //return redirect('/dashboard');
+        return redirect('/dashboard');
     }
 }
