@@ -19,9 +19,9 @@ class HasCurrentSubscription
     public function handle(Request $request, Closure $next)
     {
         if(User::where('id', Auth::user()->id)->first()->load('subscription')->subscription != null) {
-            if (User::where('id', Auth::user()->id)->first()->load('subscription')->subscription->stops_at == null) {
+            if (User::where('id', Auth::user()->id)->first()->load('subscription')->subscription->stops_at == null && Auth::user()->admin == 0 ) {
                 return redirect('/subscription');
-            } else if (strtotime(User::where('id', Auth::user()->id)->first()->load('subscription')->subscription->stops_at) < strtotime(date("Y-m-d H:i:s")) ) {
+            } else if (strtotime(User::where('id', Auth::user()->id)->first()->load('subscription')->subscription->stops_at) < strtotime(date("Y-m-d H:i:s")) && Auth::user()->admin == 0 ) {
                 return redirect('/subscription');
             }
         }

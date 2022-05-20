@@ -25,12 +25,5 @@ class DatabaseSeeder extends Seeder
                 'fishpond_id' => $i+1,
             ]);
         }
-         /*for ($j=0; $j < 60; $j++) { 
-           DB::table('tempsensor')->insert([
-            'temperature' => rand(10, 50),
-           ]);
-         
-        }*/
-        
     }
 }
