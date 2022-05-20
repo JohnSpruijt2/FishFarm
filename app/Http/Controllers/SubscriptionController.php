@@ -11,20 +11,32 @@ class SubscriptionController extends Controller
 {
     //
     function index() {
-        $userInfo = User::where('id', Auth::user()->id)->first()->load('Subscription');
-        //$subscriptionInfo = Subscription::where('user_id', Auth::user()->id)->first()->load('Subscription');
+        $userInfo = User::where('id', Auth::user()->id)->first()->load('Subscription')->load('wallet');
         $subscriptions = ['no subscription', 'monthly'];
         return Inertia::render('Subscription', [
             'userInfo' => $userInfo,
-            //'subscriptionInfo' => $subscriptionInfo,
             'subscriptions' => $subscriptions,
         ]);
     }
 
     function confirmUpdateSubscriptionType(Request $request) {
-        $subscription = Subscription::where('id', $request->id)->first();
-        $subscription->subscription_type = $request->subscriptionType;
-        $subscription->save();
-        return redirect('/dashboard');
+        var_dump(Subscription::where('user_id', $request->id)->first()->subscription_type);
+        if ($request->subscriptionType == 'monthly') {
+            if (Subscription::where('user_id', $request->id)->first()->subscription_type == null || Subscription::where('user_id', $request->id)->first()->subscription_type == 'no subscription') {
+                $subscription = Subscription::where('user_id', $request->id)->first();
+                $subscription->subscription_type = $request->subscriptionType;
+                $subscription->added_at = now();
+                $subscription->stops_at = now()->addHours(720);
+                $subscription->updated_at = now();
+                $subscription->save();
+            }
+        } else if ($request->subscriptionType == 'no subscription') {
+            $subscription = Subscription::where('user_id', $request->id)->first();
+            $subscription->subscription_type = $request->subscriptionType;
+            $subscription->updated_at = now();
+            $subscription->save();
+        }
+        
+        //return redirect('/dashboard');
     }
 }

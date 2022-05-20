@@ -38,11 +38,20 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         if (Auth::user() != null) {
-            return array_merge(parent::share($request), [
-                //
-                'isAdmin' => Auth::user()->admin,
-                'navCredits' => Wallet::where('user_id', Auth::user()->id)->first()->credits,
-            ]);  
+            if (Wallet::where('user_id', Auth::user()->id)->first() != null) {
+                return array_merge(parent::share($request), [
+                    //
+                    'isAdmin' => Auth::user()->admin,
+                    'navCredits' => Wallet::where('user_id', Auth::user()->id)->first()->credits,
+                ]); 
+            } else {
+                return array_merge(parent::share($request), [
+                    //
+                    'isAdmin' => Auth::user()->admin,
+                    'navCredits' => 0,
+                ]); 
+            }
+             
         } else {
             return array_merge(parent::share($request), [
                 //
