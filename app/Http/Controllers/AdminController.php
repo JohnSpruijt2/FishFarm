@@ -107,6 +107,9 @@ class AdminController extends Controller
 
     // render transactions page for admin
     function showTransactions() {
-        
+        $transactions = Transaction::all()->load('user');
+        return Inertia::render('AdminTransactions', [
+            'transactions' => $transactions,
+        ]);
     }
 }
