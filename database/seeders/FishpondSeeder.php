@@ -21,7 +21,7 @@ class FishpondSeeder extends Seeder
                 'name' => $fishTypes[$i],
                  'created_at' => now(),
                  'updated_at' => now(),
-             ]);
+            ]);
             DB::table('dangerzones')->insert([
                 'fish_id' => $i+1,
                 'data_type' => 'temperature',
@@ -29,8 +29,8 @@ class FishpondSeeder extends Seeder
                 'max' => 40,
                 'created_at' => now(),
                 'updated_at' => now(),
-             ]);
-             DB::table('dangerzones')->insert([
+            ]);
+            DB::table('dangerzones')->insert([
                 'fish_id' => $i+1,
                 'data_type' => 'oxygen',
                 'min' => 2,

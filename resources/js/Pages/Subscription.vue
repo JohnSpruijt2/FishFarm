@@ -13,9 +13,9 @@
                     <form :action="'/updateSubscriptionType/'+userInfo.id" method="post">
                         <input name="_token" type="hidden" :value="csrf" />
                         <select name="subscriptionType" id="subscriptionType">
-                            <template>
-                                <option v-if="userInfo.subscription.subscription_type == 'no subscription'" :value="'no subscription'" selected>no subscription (current)</option>
-                                <option v-else :value="'monthly'">monthly</option>
+                            <template v-for="(subscription) in subscriptions" v-bind:key="subscription.id">
+                                <option v-if="userInfo.subscription.subscription_type == subscription" :value="'monthly'" selected>{{subscription}} (current)</option>
+                                <option v-else :value="'no subscription'">{{subscription}}</option>
                             </template>
                     
                         </select> <br>
@@ -37,10 +37,12 @@
         },
         props: {
             userInfo: Object,
+            subscriptions: Array, //all types of subscriptions
+            subscriptionInfo: Object, //the users subscription info
         },
         data() {
             return {
-                
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             }
         }, mounted() {
             console.log(this.userInfo)

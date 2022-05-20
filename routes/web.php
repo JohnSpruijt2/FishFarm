@@ -41,6 +41,8 @@ Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [Walle
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
+Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType/{id}', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
+
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
 
@@ -57,8 +59,6 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpo
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpond/{id}', [AdminController::class, 'confirmEditFishpond']);
 
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/updateFishType/{id}', [AdminController::class, 'confirmUpdateFishType']);
-
-Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType/{id}', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
 

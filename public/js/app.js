@@ -21818,10 +21818,16 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
-    userInfo: Object
+    userInfo: Object,
+    subscriptions: Array,
+    //all types of subscriptions
+    subscriptionInfo: Object //the users subscription info
+
   },
   data: function data() {
-    return {};
+    return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    };
   },
   mounted: function mounted() {
     console.log(this.userInfo);
@@ -27856,12 +27862,12 @@ var _hoisted_9 = {
 };
 var _hoisted_10 = {
   key: 0,
-  value: 'no subscription',
+  value: 'monthly',
   selected: ""
 };
 var _hoisted_11 = {
   key: 1,
-  value: 'monthly'
+  value: 'no subscription'
 };
 
 var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
@@ -27903,7 +27909,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: _ctx.csrf
       }, null, 8
       /* PROPS */
-      , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("template", null, [_ctx.userInfo.subscription.subscription_type == 'no subscription' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_10, "no subscription (current)")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_11, "monthly"))])]), _hoisted_12, _hoisted_13, _hoisted_14], 8
+      , _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.subscriptions, function (subscription) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+          key: subscription.id
+        }, [_ctx.userInfo.subscription.subscription_type == subscription ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription) + " (current)", 1
+        /* TEXT */
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription), 1
+        /* TEXT */
+        ))], 64
+        /* STABLE_FRAGMENT */
+        );
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))]), _hoisted_12, _hoisted_13, _hoisted_14], 8
       /* PROPS */
       , _hoisted_7)])])])];
     }),
