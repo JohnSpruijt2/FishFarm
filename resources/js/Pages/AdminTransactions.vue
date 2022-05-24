@@ -13,7 +13,7 @@
                         <template v-if="transactions[0] == null">
                             <h1>No recorded transactions</h1>
                         </template>
-                        <template v-else>
+                        <div  class="grid grid-cols-1 sm:grid-cols-2 text-2xl"  v-else>
                             <div v-for="(transaction) in transactions" :key="transaction.id"  class="p-3 m-2 border border-grey rounded">
                                 <a> {{ transaction.user.name }}</a> <br>
                                 <a> {{ transaction.user.email }}</a> <br>
@@ -21,7 +21,7 @@
                                 <a>Type: {{transaction.type}}</a> <br>
                                 <a>Date: {{transaction.created_at}}</a>
                             </div>
-                        </template>
+                        </div>
                     </div>
                 </div>
             </div>
