@@ -41,7 +41,7 @@ Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [Walle
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType/{id}', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
+Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');

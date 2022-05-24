@@ -59,13 +59,15 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    //wallet relation
     public function Wallet() {
         return $this->hasOne(Wallet::class);
     }
+    //subscription relation
     public function Subscription() {
         return $this->hasOne(Subscription::class);
     }
-
+    //transaction relation
     public function Transactions() {
         return $this->hasMany(Transaction::class);
     }

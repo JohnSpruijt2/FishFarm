@@ -15,7 +15,7 @@ use App\Models\Transaction;
 
 class AdminController extends Controller
 {
-    // Renders the adminPanel.
+    // Renders the adminPanel at url/admin.
     function index() {
         $fishponds = Fishpond::all();
         return Inertia::render('AdminPanel', [
@@ -23,14 +23,14 @@ class AdminController extends Controller
         ]);
     }
 
-    // Renders admin register page.
+    // Renders admin register page at url/admin/createNewAccount.
     function register() {
         return Inertia::render('Auth/AdminRegister', [
 
         ]);
     }
 
-    // Creates new account recieved from Admin register page form through Post method.
+    // Creates new account recieved from Admin register page form through Post method and creates neccesary teams, wallet and subscription data.
     function createNewAccount(Request $request) {
         $input = $request->all();
         
@@ -59,6 +59,19 @@ class AdminController extends Controller
             ]);
             $user->current_team_id = Team::max('id');
             $user->save();
+
+            $wallet = new Wallet;
+            $wallet->user_id = $userId;
+            $wallet->save();
+            DB::table('subscriptions')->insert([
+                'user_id' => $userId,
+                'added_at' => null,
+                'stops_at' => null,
+                'subscription_Type' => 'no subscription',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            
         }
         
         return redirect('/dashboard');

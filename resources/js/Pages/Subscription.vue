@@ -16,12 +16,12 @@
                         <h1 class="text-4xl">You don't have enough credits please contact an administrator</h1>
                     </template>
                     <template v-else>
-                    <form :action="'/updateSubscriptionType/'+userInfo.id" method="post">
+                    <form :action="'/updateSubscriptionType'" method="post">
                         <input name="_token" type="hidden" :value="csrf" />
                         <select name="subscriptionType" id="subscriptionType">
                             <template v-for="(subscription) in subscriptions" v-bind:key="subscription.id">
-                                <option v-if="userInfo.subscription.subscription_type == subscription" :value="'monthly'" selected>{{subscription}} (current)</option>
-                                <option v-else :value="'no subscription'">{{subscription}}</option>
+                                <option v-if="userInfo.subscription.subscription_type == subscription" :value="subscription" selected>{{subscription}} (current)</option>
+                                <option v-else :value="subscription">{{subscription}}</option>
                             </template>
                     
                         </select> <br>

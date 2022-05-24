@@ -37,6 +37,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // checks if user is logged in to send if user is admin and the credits amount as shared data else return variables as null
         if (Auth::user() != null) {
             if (Wallet::where('user_id', Auth::user()->id)->first() != null) {
                 return array_merge(parent::share($request), [
@@ -55,8 +56,8 @@ class HandleInertiaRequests extends Middleware
         } else {
             return array_merge(parent::share($request), [
                 //
-                'isAdmin' => 0,
-                'navCredits' => 0,
+                'isAdmin' => null,
+                'navCredits' => null,
             ]);  
         }
         

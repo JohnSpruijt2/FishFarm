@@ -11,18 +11,12 @@ class Fishpond extends Model
 {
     use HasFactory;
 
-    //dangerzone relations
-    /*public function dangerzones() {
-        return $this->hasMany(Dangerzone::class);
-    }*/
-
-
-
     //Sensor data Log relations
     public function sensorDataLogs() {
         return $this->belongsToMany(SensorDataLog::class, 'fishpond_sensor_data_log', 'fishpond_id', 'sensor');
     }
 
+    // function to request latest data of all fishponds
     public static function allFishpondsLatestData() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {
@@ -36,6 +30,7 @@ class Fishpond extends Model
         
         return $fishponds;
     }
+     // function to request latest data of all fishponds including the dangerzones
     public static function allFishpondLatestDataWithDangerzones() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {
@@ -52,6 +47,7 @@ class Fishpond extends Model
         return $fishponds;
     }
 
+    // function to request latest data of singular fishpond with {id}
     public static function fishpondLatestData($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
@@ -65,6 +61,7 @@ class Fishpond extends Model
         return $fishpond;
     }
 
+    // function to request latest data of singular fishpond with {id} including dangerzones
     public static function fishpondLatestDataWithDangerzones($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
@@ -79,6 +76,7 @@ class Fishpond extends Model
         return $fishpond;
     }
 
+    // function to request all data of all fishponds
     public static function allFishpondsAllData() {
         $fishponds = Fishpond::all();
         foreach ($fishponds as $fishpond) {
@@ -93,6 +91,7 @@ class Fishpond extends Model
         return $fishponds;
     }
 
+    // function to request all data of singular fishpond with {id}
     public static function fishpondAllData($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();
@@ -104,6 +103,8 @@ class Fishpond extends Model
         
         return $fishpond;
     }
+
+    // function to request all data of singular fishpond with {id} includes dangerzones
     public static function fishpondAllDataWithDangerzones($id) {
         $fishpond = Fishpond::where('id', $id)->first();
         $sensors = DB::table('fishpond_sensor_data_log')->where('fishpond_id', $fishpond->id)->get();

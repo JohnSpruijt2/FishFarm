@@ -28006,21 +28006,18 @@ var _hoisted_7 = {
   key: 1,
   "class": "text-4xl"
 };
-var _hoisted_8 = ["action"];
+var _hoisted_8 = {
+  key: 2,
+  action: '/updateSubscriptionType',
+  method: "post"
+};
 var _hoisted_9 = ["value"];
 var _hoisted_10 = {
   name: "subscriptionType",
   id: "subscriptionType"
 };
-var _hoisted_11 = {
-  key: 0,
-  value: 'monthly',
-  selected: ""
-};
-var _hoisted_12 = {
-  key: 1,
-  value: 'no subscription'
-};
+var _hoisted_11 = ["value"];
+var _hoisted_12 = ["value"];
 
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)();
 
@@ -28056,11 +28053,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )], 64
       /* STABLE_FRAGMENT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.userInfo.wallet.credits < 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_7, "You don't have enough credits please contact an administrator")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
-        key: 2,
-        action: '/updateSubscriptionType/' + _ctx.userInfo.id,
-        method: "post"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.userInfo.wallet.credits < 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("h1", _hoisted_7, "You don't have enough credits please contact an administrator")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         name: "_token",
         type: "hidden",
         value: _ctx.csrf
@@ -28069,18 +28062,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       , _hoisted_9), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.subscriptions, function (subscription) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
           key: subscription.id
-        }, [_ctx.userInfo.subscription.subscription_type == subscription ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription) + " (current)", 1
-        /* TEXT */
-        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription), 1
-        /* TEXT */
-        ))], 64
+        }, [_ctx.userInfo.subscription.subscription_type == subscription ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: 0,
+          value: subscription,
+          selected: ""
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription) + " (current)", 9
+        /* TEXT, PROPS */
+        , _hoisted_11)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: 1,
+          value: subscription
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(subscription), 9
+        /* TEXT, PROPS */
+        , _hoisted_12))], 64
         /* STABLE_FRAGMENT */
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))]), _hoisted_13, _hoisted_14, _hoisted_15], 8
-      /* PROPS */
-      , _hoisted_8))])])])];
+      ))]), _hoisted_13, _hoisted_14, _hoisted_15]))])])])];
     }),
     _: 1
     /* STABLE */

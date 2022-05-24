@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    // Loads all the fishponds with dangerzones and latest data for each data type.
+    // Loads all the fishponds with dangerzones and latest data for each data type and renders the dashboard at url/dashboard.
+    // Also creates wallet and subscription data in database and then refreshes incase a new account was created
     function index(Request $request) {
         $data = fishpond::allFishpondLatestDataWithDangerzones();
         if (Wallet::where('user_id', Auth::user()->id)->first() == null) {
