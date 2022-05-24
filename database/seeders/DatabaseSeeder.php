@@ -19,11 +19,5 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SensorDataLogSeeder::class,
         ]);
-        for ($i=0; $i < 6; $i++) {
-            DB::table('mailing_lists')->insert([
-                'user_id' => 1,
-                'fishpond_id' => $i+1,
-            ]);
-        }
     }
 }
