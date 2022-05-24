@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMailingListTable extends Migration
+class CreateSubscriptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateMailingListTable extends Migration
      */
     public function up()
     {
-        Schema::create('mailing_lists', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('fishpond_id');
+            $table->timestamp('added_at', $precision = 0)->nullable();
+            $table->timestamp('stops_at', $precision = 0)->nullable();
+            $table->string('subscription_type')->default('no subscription');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateMailingListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mailing_lists');
+        Schema::dropIfExists('subscriptions');
     }
 }

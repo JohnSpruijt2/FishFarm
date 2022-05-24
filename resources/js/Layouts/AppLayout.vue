@@ -25,12 +25,22 @@
                             </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('wallet')" :active="route().current('wallet')">
-                                    Wallet
+                                    Wallet : {{navCredits}}
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('subscription')" :active="route().current('subscription')">
+                                    Subscriptions
                                 </jet-nav-link>
                             </div>
                             <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('admin panel')" :active="route().current('admin panel')">
                                     Admin Panel
+                                </jet-nav-link>
+                            </div>
+                            <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('admin transactions')" :active="route().current('admin transactions')">
+                                    All Transactions
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -256,7 +266,8 @@
     export default defineComponent({
         setup() {
           const isAdmin = computed(() => usePage().props.value.isAdmin)
-          return { isAdmin }
+          const navCredits = computed(() => usePage().props.value.navCredits)
+          return { isAdmin, navCredits }
         },
         props: {
             title: String,

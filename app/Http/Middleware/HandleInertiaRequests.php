@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Wallet;
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -36,17 +37,29 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        // checks if user is logged in to send if user is admin and the credits amount as shared data else return variables as null
         if (Auth::user() != null) {
-            return array_merge(parent::share($request), [
-                //
-                'isAdmin' => Auth::user()->admin,
-            ]);  
+            if (Wallet::where('user_id', Auth::user()->id)->first() != null) {
+                return array_merge(parent::share($request), [
+                    //
+                    'isAdmin' => Auth::user()->admin,
+                    'navCredits' => Wallet::where('user_id', Auth::user()->id)->first()->credits,
+                ]); 
+            } else {
+                return array_merge(parent::share($request), [
+                    //
+                    'isAdmin' => Auth::user()->admin,
+                    'navCredits' => 0,
+                ]); 
+            }
+             
         } else {
             return array_merge(parent::share($request), [
                 //
-                'isAdmin' => 0,
+                'isAdmin' => null,
+                'navCredits' => null,
             ]);  
         }
-       
+        
     }
 }

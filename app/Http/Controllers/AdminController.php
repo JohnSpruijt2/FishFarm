@@ -11,35 +11,27 @@ use App\Models\Fishpond;
 use App\Models\Dangerzone;
 use App\Models\Fish;
 use App\Models\FishpondSensorDataLog;
+use App\Models\Transaction;
 
 class AdminController extends Controller
 {
-    // Renders the adminPanel.
+    // Renders the adminPanel at url/admin.
     function index() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishponds = Fishpond::all();
         return Inertia::render('AdminPanel', [
             'fishponds' => $fishponds
         ]);
     }
 
-    // Renders admin register page.
+    // Renders admin register page at url/admin/createNewAccount.
     function register() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         return Inertia::render('Auth/AdminRegister', [
 
         ]);
     }
 
-    // Creates new account recieved from Admin register page form through Post method.
+    // Creates new account recieved from Admin register page form through Post method and creates neccesary teams, wallet and subscription data.
     function createNewAccount(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $input = $request->all();
         
         if (filter_var( $input['email'], FILTER_VALIDATE_EMAIL ) == false) {
@@ -67,6 +59,19 @@ class AdminController extends Controller
             ]);
             $user->current_team_id = Team::max('id');
             $user->save();
+
+            $wallet = new Wallet;
+            $wallet->user_id = $userId;
+            $wallet->save();
+            DB::table('subscriptions')->insert([
+                'user_id' => $userId,
+                'added_at' => null,
+                'stops_at' => null,
+                'subscription_Type' => 'no subscription',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            
         }
         
         return redirect('/dashboard');
@@ -74,10 +79,7 @@ class AdminController extends Controller
 
     // renders Admin edit existing accounts page while excluding the current admin to avoid accidental deletal
     function editExistingAccounts() {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
-        $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet');
+        $users = User::where('id', '!=', auth::user()->id)->get()->load('Wallet')->load('Subscription');
         return Inertia::render('Auth/AdminOverview', [
             'users' => $users
         ]);
@@ -85,9 +87,6 @@ class AdminController extends Controller
 
     // Deletes account if admin 
     function deleteAccount(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $userId = $request->id;
         User::where('id', $userId)->delete();
         return redirect('/admin/editExistingAccounts');
@@ -95,9 +94,6 @@ class AdminController extends Controller
 
     // Renders edit fishpond overview
     function editFishpond(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishes = Fish::all();
         return Inertia::render('AdminFishpondForm', [
@@ -108,108 +104,25 @@ class AdminController extends Controller
 
     // Edits the fishpond with data from Post form
     function confirmEditFishpond(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishpond->name = $request->name;
         $fishpond->save();
         return redirect('/admin');
     }
 
+    // updates the fish type for a fishpond
     function confirmUpdateFishType(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
         $fishpond = Fishpond::where('id', $request->id)->first();
         $fishpond->fish_id = $request->fishType;
         $fishpond->save();
         return redirect('/admin');
     }
 
-    function editSensors(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
-        $currentFishpond = fishpond::fishpondLatestData($request->id);
-        $UnassignedSensors = FishpondSensorDataLog::getUnassignedSensors();
-        $UnassignedTemperatureSensors = [];
-        $UnassignedOxygenSensors = [];
-        $UnassignedTurbiditySensors = [];
-        $UnassignedWaterLevelSensors = [];
-        if ($UnassignedSensors->first != null) {
-            foreach ($UnassignedSensors as $sensor) {
-                if ($sensor->value->type == 'temperature') {
-                    array_push($UnassignedTemperatureSensors, $sensor);
-                } else if ($sensor->value->type == 'oxygen') {
-                    array_push($UnassignedOxygenSensors, $sensor);
-                } else if ($sensor->value->type == 'turbidity') {
-                    array_push($UnassignedTurbiditySensors, $sensor);
-                } else if ($sensor->value->type == 'waterLevel') {
-                    array_push($UnassignedWaterLevelSensors, $sensor);
-                }
-            }
-        }
-        return Inertia::render('AdminFishpondSensor', [
-            'fishpond' => $currentFishpond,
-            'UnassignedSensors' => $UnassignedSensors,
-            'UnassignedTemperatureSensors' => $UnassignedTemperatureSensors,
-            'UnassignedOxygenSensors' => $UnassignedOxygenSensors,
-            'UnassignedTurbiditySensors' => $UnassignedTurbiditySensors,
-            'UnassignedWaterLevelSensors' => $UnassignedWaterLevelSensors,
+    // render transactions page for admin
+    function showTransactions() {
+        $transactions = Transaction::all()->load('user');
+        return Inertia::render('AdminTransactions', [
+            'transactions' => $transactions,
         ]);
-    }
-
-    function confirmEditSensors(Request $request) {
-        if (auth::user()->admin != 1) {
-            return redirect('/dashboard');
-        }
-        $currentFishpond = Fishpond::fishpondLatestData($request->id);
-        //$sensors = FishpondSensorDataLog::where('fishpond_id', $request->id)->get();
-        $temperature = false; $oxygen = false; $turbidity = false; $waterLevel = false;
-        foreach ($currentFishpond->sensors as $sensor) {
-            if ($sensor->value->type == 'temperature') {
-                if ($request->temperature != null) {
-                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->temperature, $request->id);
-                } else {
-                    FishpondSensorDataLog::updateNull($sensor->id);
-                }
-                $temperature = true;
-            } else if ($sensor->value->type == 'oxygen') {
-                if ($request->oxygen != null) {
-                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->oxygen, $request->id);
-                } else {
-                    FishpondSensorDataLog::updateNull($sensor->id);
-                }
-                $oxygen = true;
-            } else if ($sensor->value->type == 'turbidity') {
-                if ($request->turbidity != null) {
-                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->turbidity, $request->id);
-                } else {
-                    FishpondSensorDataLog::updateNull($sensor->id);
-                }
-                $turbidity = true;
-            } else if ($sensor->value->type == 'waterLevel') {
-                if ($request->waterLevel != null) {
-                    FishpondSensorDataLog::updateSpecific($sensor->id, $request->waterLevel, $request->id);
-                } else {
-                    FishpondSensorDataLog::updateNull($sensor->id);
-                }
-                $waterLevel = true;
-            }
-        }
-        if ($temperature == false) {
-            FishpondSensorDataLog::updateFresh($request->temperature, $request->id);
-        }
-        if ($oxygen == false) {
-            FishpondSensorDataLog::updateFresh($request->oxygen, $request->id);
-        }
-        if ($turbidity == false) {
-            FishpondSensorDataLog::updateFresh($request->turbidity, $request->id);
-        } 
-        if ($waterLevel == false) {
-            FishpondSensorDataLog::updateFresh($request->waterLevel, $request->id);
-        }
-        return redirect('/admin');
     }
 }

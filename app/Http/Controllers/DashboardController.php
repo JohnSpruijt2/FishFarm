@@ -9,73 +9,35 @@ use App\Mail\DangerWarning;
 use App\Models\Fishpond;
 use App\Models\MailingList;
 use App\Models\User;
+use App\Models\Wallet;
+use App\Models\Subscription;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    // Loads all the fishponds with dangerzones and latest data for each data type.
+    // Loads all the fishponds with dangerzones and latest data for each data type and renders the dashboard at url/dashboard.
+    // Also creates wallet and subscription data in database and then refreshes incase a new account was created
     function index(Request $request) {
         $data = fishpond::allFishpondLatestDataWithDangerzones();
-        //$this->mailerLoop($data);
+        if (Wallet::where('user_id', Auth::user()->id)->first() == null) {
+            $wallet = new Wallet;
+            $wallet->user_id = Auth::user()->id;
+            $wallet->save();
+            return redirect('/dashboard');
+        }
+        if (Subscription::where('user_id', Auth::user()->id)->first() == null) {
+            DB::table('subscriptions')->insert([
+                'user_id' => Auth::user()->id,
+                'added_at' => null,
+                'stops_at' => null,
+                'subscription_Type' => 'no subscription',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            return redirect('/dashboard');
+        }
         return Inertia::render('Dashboard', [
             'data' => $data,
         ]);
-    }
-
-    protected function mailerLoop($data) {
-         foreach ($data as $key) {
-            foreach ($key->dangerzones as $dangerzone) {
-                if ($dangerzone->data_type == 'temperature') {
-                    if ($key->latestTemperature->value > $dangerzone->max) {
-                        $this->mailerSendout($key, 'temperature', 'çritical');
-                    } else if ($key->latestTemperature->value < $dangerzone->min){
-                        $this->mailerSendout($key, 'temperature', 'çritical');
-                    } else if ($key->latestTemperature->value > $dangerzone->max-5) {
-                        $this->mailerSendout($key, 'temperature');
-                    } else if ($key->latestTemperature->value < $dangerzone->min+5) {
-                        $this->mailerSendout($key, 'temperature');
-                    }
-                } else if ($dangerzone->data_type == 'oxygen') {
-                    if ($key->latestOxygenLevel->value > $dangerzone->max) {
-                        $this->mailerSendout($key, 'oxygen', 'çritical');
-                    } else if ($key->latestOxygenLevel->value < $dangerzone->min){
-                        $this->mailerSendout($key, 'oxygen', 'çritical');
-                    } else if ($key->latestOxygenLevel->value > $dangerzone->max-2){
-                        $this->mailerSendout($key, 'oxygen');
-                    } else if ($key->latestOxygenLevel->value < $dangerzone->min+2){
-                        $this->mailerSendout($key, 'oxygen');
-                    }
-                } else if ($dangerzone->data_type == 'turbidity') {
-                    if ($key->latestTurbidityLevel->value > $dangerzone->max) {
-                        $this->mailerSendout($key, 'turbidity', 'çritical');
-                    } else if ($key->latestTurbidityLevel->value < $dangerzone->min){
-                        $this->mailerSendout($key, 'turbidity', 'çritical');
-                    } else if ($key->latestTurbidityLevel->value > $dangerzone->max-0.5){
-                        $this->mailerSendout($key, 'turbidity');
-                    } else if ($key->latestTurbidityLevel->value < $dangerzone->min+0.5){
-                        $this->mailerSendout($key, 'turbidity');
-                    }
-                } else if ($dangerzone->data_type == 'level') {
-                    if ($key->latestWaterLevel->value > $dangerzone->max) {
-                        $this->mailerSendout($key, 'level', 'çritical');
-                    } else if ($key->latestWaterLevel->value < $dangerzone->min){
-                        $this->mailerSendout($key, 'level', 'çritical');
-                    } else if ($key->latestWaterLevel->value > $dangerzone->max-10){
-                        $this->mailerSendout($key, 'level');
-                    }
-                     else if ($key->latestWaterLevel->value < $dangerzone->min+10){
-                        $this->mailerSendout($key, 'level');
-                    }
-                }
-            }
-        }
-    }
-
-    protected function mailerSendout($key, $type, $crit=null) {
-        $mailingList = MailingList::all();
-        foreach ($mailingList as $mList) {
-            if ($mList->fishpond_id == $key->id) {
-                Mail::to(User::where('id', $mList->user_id)->first())->send(new DangerWarning ($key, $type, $crit));
-            }
-        }
     }
 }
