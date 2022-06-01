@@ -10,7 +10,7 @@ use App\Models\SensorDataLog;
 
 class GraphController extends Controller
 {
-    // determines which type of graph should be displayed, then requests data from show functions and renderes the page.
+    // determines which type of graph should be displayed, then requests data from show functions and renderes the page at url/details/{id}/{type}.
     function index(Request $request) {
         if (is_numeric($request->id) == false) {
             return redirect('/dashboard');

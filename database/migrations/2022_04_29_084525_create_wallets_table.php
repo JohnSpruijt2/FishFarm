@@ -17,8 +17,6 @@ class CreateWalletsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('credits')->default('0');
-            $table->integer('last_payment_amount')->nullable();
-            $table->date('last_payment_date')->nullable();
             $table->timestamps();
         });
     }

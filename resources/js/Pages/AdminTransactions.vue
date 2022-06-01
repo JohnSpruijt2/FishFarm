@@ -1,24 +1,28 @@
 <template>
-    <app-layout title="Wallet">
+    <app-layout title="details">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Wallet for {{userInfo.name}}
+                All transaction history
             </h2>
         </template>
+        
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4" style="min-height: 30rem;">
-                    <h1 class="text-4xl m-2">Your remaining credits are : {{userInfo.wallet.credits}}</h1>
-                    <template v-if="userInfo.transactions[0] != null">
-                        <h1 class="text-2xl">Past Transactions:</h1>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 text-2xl">
-                            <div v-for="(transaction) in userInfo.transactions" v-bind:key="transaction.id" class="p-3 m-2 border border-grey rounded">
+                <div style="min-height: 15rem;" class="bg-white p-6 overflow-hidden shadow-xl sm:rounded-lg">
+                    <div  class="grid grid-cols-1 text-2xl">
+                        <template v-if="transactions[0] == null">
+                            <h1>No recorded transactions</h1>
+                        </template>
+                        <div  class="grid grid-cols-1 sm:grid-cols-2 text-2xl"  v-else>
+                            <div v-for="(transaction) in transactions" :key="transaction.id"  class="p-3 m-2 border border-grey rounded">
+                                <a> {{ transaction.user.name }}</a> <br>
+                                <a> {{ transaction.user.email }}</a> <br>
                                 <a>Amount: {{transaction.amount}} credits</a> <br>
                                 <a>Type: {{transaction.type}}</a> <br>
                                 <a>Date: {{transaction.created_at}}</a>
                             </div>
                         </div>
-                    </template>
+                    </div>
                 </div>
             </div>
         </div>
@@ -28,20 +32,19 @@
 <script>
     import { defineComponent } from 'vue'
     import AppLayout from '@/Layouts/AppLayout.vue'
-
+    
     export default defineComponent({
         components: {
             AppLayout,
         },
         props: {
-            userInfo: Object,
+            transactions: Array,
         },
         data() {
             return {
                 
             }
-        }, mounted() {
-            console.log(this.userInfo)
-        }
-    })
+        }, 
+
+});
 </script>

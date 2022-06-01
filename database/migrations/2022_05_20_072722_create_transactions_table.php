@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMailingListTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateMailingListTable extends Migration
      */
     public function up()
     {
-        Schema::create('mailing_lists', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('fishpond_id');
-            $table->timestamps();
+            $table->integer('amount');
+            $table->string('type');
+            $table->timestamp('created_at', $precision = 0)->nullable();
         });
     }
 
@@ -28,6 +29,6 @@ class CreateMailingListTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mailing_lists');
+        Schema::dropIfExists('transactions');
     }
 }

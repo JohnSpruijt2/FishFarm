@@ -43,6 +43,11 @@
                                     Admin Panel
                                 </jet-nav-link>
                             </div>
+                            <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('admin transactions')" :active="route().current('admin transactions')">
+                                    All Transactions
+                                </jet-nav-link>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">

@@ -5,6 +5,7 @@ import time
 from mysql.connector import Error
 
 def payment():
+    monthlyCost = 2
     try:
         connection = mysql.connector.connect(host='localhost',
                                              database='fishfarm',
@@ -27,8 +28,8 @@ def payment():
                     credits = cursor.fetchone()
                     print(credits[2])
                     if x[4] == 'monthly':
-                        if int(credits[2]) >= 2:
-                            newCredits = int(credits[2])-2
+                        if int(credits[2]) >= monthlyCost:
+                            newCredits = int(credits[2])-monthlyCost
                             print(past)
                             cursor.execute("UPDATE `wallets` SET `credits`="+str(newCredits)+" WHERE user_id = "+str(x[1]))
                             connection.commit()
@@ -47,7 +48,9 @@ def payment():
                             split[6] = splitNewMonth[1]
                             newDate = ''.join(split)
                             print(newDate)
-                            cursor.execute("UPDATE `subscriptions` set stops_at = '"+str(newDate)+"' WHERE user_id = "+str(x[1]))
+                            cursor.execute("UPDATE `subscriptions` set stops_at = '"+str(newDate)+"', updated_at ='"+str(newDate)+"' WHERE user_id = "+str(x[1]))
+                            connection.commit()
+                            cursor.execute("INSERT INTO `transactions`( `user_id`, `amount`, `type`, `created_at`) VALUES ("+str(x[1])+","+str(monthlyCost)+",'monthly','"+str(newDate)+"')")
                             connection.commit()
                         else:
                             cursor.execute("UPDATE `subscriptions` set subscription_type = 'no subscription' WHERE user_id = "+str(x[1]))

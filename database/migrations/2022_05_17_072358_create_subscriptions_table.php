@@ -18,7 +18,7 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('user_id');
             $table->timestamp('added_at', $precision = 0)->nullable();
             $table->timestamp('stops_at', $precision = 0)->nullable();
-            $table->string('subscription_type');
+            $table->string('subscription_type')->default('no subscription');
             $table->timestamps();
         });
     }

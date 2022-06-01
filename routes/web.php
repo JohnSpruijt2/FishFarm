@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [Walle
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
-Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType/{id}', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
+Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
 
@@ -72,3 +72,5 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishp
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpondSensors/{id}', [AdminController::class, 'editSensors'])->name('admin edit sensors');
 
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpondSensors/{id}', [AdminController::class, 'confirmEditSensors']);
+
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/transactions', [AdminController::class, 'showTransactions'])->name('admin transactions');
