@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\uploadImageController;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -42,6 +43,10 @@ Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [Walle
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType/{id}', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
+
+Route::middleware(['auth:sanctum', 'verified'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
