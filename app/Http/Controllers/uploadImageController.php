@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Image;
 
 class uploadImageController extends Controller
 {
     //
     function index() {
-        
+        $userInfo = User::where('id', Auth::user()->id)->first();
         return Inertia::render('UploadImage', [
-            
+            'userInfo' => $userInfo,
         ]);
     }
 
@@ -21,7 +22,6 @@ class uploadImageController extends Controller
         $request->validate([
             'image' => 'mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
          ]);
-         var_dump($request->file('image'));
            
     
            $name = $request->file('image')->getClientOriginalName();
@@ -37,6 +37,6 @@ class uploadImageController extends Controller
     
            $save->save();
     
-           //return redirect('/dashboard');
+           return redirect('/dashboard');
     }
 }

@@ -35,7 +35,7 @@
             AppLayout,
         },
         props: {
-           
+            userInfo: Object,
         },
         data() {
             return {
