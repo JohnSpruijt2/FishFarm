@@ -4,75 +4,92 @@ from object_detector import *
 import numpy as np
 from ast import For
 import mysql.connector
+import time
 from mysql.connector import Error
-try:
-    connection = mysql.connector.connect(host='localhost',
-                                         database='fishfarm',
-                                         user='root',
-                                         password='mysql')
-    if connection.is_connected():
-        db_Info = connection.get_server_info()
-        print("Connected to MySQL Server version ", db_Info)
-        cursor = connection.cursor()
-        cursor.execute("select * from images;")
-        imgs = cursor.fetchall()
-        for img in imgs:
-            # Load Aruco detector
-            parameters = cv2.aruco.DetectorParameters_create()
-            aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
+def measure():
+    try:
+        connection = mysql.connector.connect(host='localhost',
+                                             database='fishfarm',
+                                             user='root',
+                                             password='mysql')
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            print("Connected to MySQL Server version ", db_Info)
+            cursor = connection.cursor()
+            cursor.execute("select * from images;")
+            imgs = cursor.fetchall()
+            for img in imgs:
+                # Load Aruco detector
+                parameters = cv2.aruco.DetectorParameters_create()
+                aruco_dict = cv2.aruco.Dictionary_get(cv2.aruco.DICT_5X5_50)
 
 
-            # Load Object Detector
-            detector = HomogeneousBgDetector()
+                # Load Object Detector
+                detector = HomogeneousBgDetector()
 
-            # Load Image
-            img = cv2.imread("storage/app/"+img[3])
+                # Load Image
+                imgage = cv2.imread("../storage/app/"+img[3])
 
-            # Get Aruco marker
-            corners, _, _ = cv2.aruco.detectMarkers(img, aruco_dict, parameters=parameters)
+                # Get Aruco marker
+                corners, _, _ = cv2.aruco.detectMarkers(imgage, aruco_dict, parameters=parameters)
 
-            # Draw polygon around the marker
-            int_corners = np.int0(corners)
-            cv2.polylines(img, int_corners, True, (0, 255, 0), 5)
+                # Draw polygon around the marker
+                int_corners = np.int0(corners)
+                cv2.polylines(imgage, int_corners, True, (0, 255, 0), 5)
 
-            # Aruco Perimeter
-            aruco_perimeter = cv2.arcLength(corners[0], True)
+                # Aruco Perimeter
+                aruco_perimeter = cv2.arcLength(corners[0], True)
 
-            # Pixel to cm ratio
-            pixel_cm_ratio = aruco_perimeter / 20
+                # Pixel to cm ratio
+                pixel_cm_ratio = aruco_perimeter / 20
 
-            contours = detector.detect_objects(img)
+                contours = detector.detect_objects(imgage)
 
-            # Draw objects boundaries
-            for cnt in contours:
-                # Get rect
-                rect = cv2.minAreaRect(cnt)
-                (x, y), (w, h), angle = rect
+                # Draw objects boundaries
+                for cnt in contours:
+                    # Get rect
+                    rect = cv2.minAreaRect(cnt)
+                    (x, y), (w, h), angle = rect
 
-                # Get Width and Height of the Objects by applying the Ratio pixel to cm
-                object_width = w / pixel_cm_ratio
-                object_height = h / pixel_cm_ratio
+                    # Get Width and Height of the Objects by applying the Ratio pixel to cm
+                    object_width = w / pixel_cm_ratio
+                    object_height = h / pixel_cm_ratio
 
-                # Display rectangle
-                box = cv2.boxPoints(rect)
-                box = np.int0(box)
+                    #format(round(object_width, 1))
+                    #format(round(object_height, 1))
+                    if (format(round(object_width, 1)) != format(round(object_height, 1))):
+                        if format(round(object_width, 1)) < format(round(object_height, 1)):
+                            fish_length = format(round(object_height, 1))
+                            fish_width = format(round(object_width, 1))
+                        else:
+                            fish_length = format(round(object_width, 1))
+                            fish_width = format(round(object_height, 1))
+                        fish_weight = 1*float(fish_length)**float(fish_width)
+                        name = str(img[2])
+                        fish_l = str(fish_length)
+                        fish_w = str(fish_width)
+                        fish_s = str(format(round(fish_weight, 1)))
+                        created = str(img[4])
+                        print(fish_l)
+                        print(fish_w)
+                        print(fish_weight)
+                        cursor.execute("INSERT INTO `fish_measurements`(`name`, `length`, `width`, `weight`, `created_at`, `updated_at`) VALUES ('"+name+"','"+fish_l+"','" +fish_w+"','"+fish_s+"', '"+created+"', '"+created+"')")
+                        connection.commit()
+                id = int(img[0])
+                cursor.execute("DELETE FROM `images` WHERE `images`.`id` = '"+str(id)+"'")
+                connection.commit()
+                os.remove("../storage/app/"+img[3])
 
-                cv2.circle(img, (int(x), int(y)), 5, (0, 0, 255), -1)
-                cv2.polylines(img, [box], True, (255, 0, 0), 2)
-                cv2.putText(img, "Width {} cm".format(round(object_width, 1)), (int(x - 100), int(y - 20)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
-                cv2.putText(img, "Height {} cm".format(round(object_height, 1)), (int(x - 100), int(y + 15)), cv2.FONT_HERSHEY_PLAIN, 2, (100, 200, 0), 2)
+    except Error as e:
+        print("Error while connecting to MySQL", e)
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+            print("MySQL connection is closed")
+    time.sleep(60)
+    measure()
 
-
-
-            cv2.imshow("Image", img)
-            cv2.waitKey(0)
-                    
-except Error as e:
-    print("Error while connecting to MySQL", e)
-finally:
-    if connection.is_connected():
-        cursor.close()
-        connection.close()
-        print("MySQL connection is closed")
+measure()
 
 
