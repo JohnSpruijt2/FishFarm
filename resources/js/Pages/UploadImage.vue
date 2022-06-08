@@ -12,9 +12,9 @@
                     <input name="_token" type="hidden" :value="csrf" />
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="file" name="image" class="form-control" id="image">
+                                <input type="file" name="image" class="form-control" id="image" required><br>
                                 <label for="fish_type">fish type:</label>
-                                <input type="text" name="fish_type" id="fish_type"><br>
+                                <input type="text" name="fish_type" id="fish_type" required><br>
                             </div>
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-success">Upload</button>
