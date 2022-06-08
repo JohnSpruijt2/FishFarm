@@ -23,7 +23,8 @@ class uploadImageController extends Controller
             'image' => 'mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
          ]);
            
-    
+           $fish_type = $request->fish_type;
+
            $name = $request->file('image')->getClientOriginalName();
     
            $path = $request->file('image')->store('public/images');
@@ -32,6 +33,7 @@ class uploadImageController extends Controller
            $save = new Image;
 
            $save->user_id = Auth::user()->id;
+           $save->fish_type = $fish_type;
            $save->name = $name;
            $save->path = $path;
     

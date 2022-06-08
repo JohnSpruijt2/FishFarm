@@ -16,6 +16,9 @@ class CreateFishTable extends Migration
         Schema::create('fish', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->longText('description');
+            $table->integer('length');
+            $table->integer('width');
             $table->timestamps();
         });
     }
