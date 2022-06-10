@@ -28,14 +28,14 @@ def measure():
                 detector = HomogeneousBgDetector()
 
                 # Load Image
-                imgage = cv2.imread("../storage/app/"+img[3])
+                image = cv2.imread("../storage/app/"+img[4])
 
                 # Get Aruco marker
-                corners, _, _ = cv2.aruco.detectMarkers(imgage, aruco_dict, parameters=parameters)
+                corners, _, _ = cv2.aruco.detectMarkers(image, aruco_dict, parameters=parameters)
 
                 # Draw polygon around the marker
                 int_corners = np.int0(corners)
-                cv2.polylines(imgage, int_corners, True, (0, 255, 0), 5)
+                cv2.polylines(image, int_corners, True, (0, 255, 0), 5)
 
                 # Aruco Perimeter
                 aruco_perimeter = cv2.arcLength(corners[0], True)
@@ -43,7 +43,7 @@ def measure():
                 # Pixel to cm ratio
                 pixel_cm_ratio = aruco_perimeter / 20
 
-                contours = detector.detect_objects(imgage)
+                contours = detector.detect_objects(image)
 
                 # Draw objects boundaries
                 for cnt in contours:
@@ -69,7 +69,7 @@ def measure():
                         fish_l = str(fish_length)
                         fish_w = str(fish_width)
                         fish_s = str(format(round(fish_weight, 1)))
-                        created = str(img[4])
+                        created = str(img[5])
                         print(fish_l)
                         print(fish_w)
                         print(fish_weight)
@@ -78,7 +78,7 @@ def measure():
                 id = int(img[0])
                 cursor.execute("DELETE FROM `images` WHERE `images`.`id` = '"+str(id)+"'")
                 connection.commit()
-                os.remove("../storage/app/"+img[3])
+                os.remove("../storage/app/"+img[4])
 
     except Error as e:
         print("Error while connecting to MySQL", e)
