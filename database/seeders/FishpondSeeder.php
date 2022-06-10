@@ -20,8 +20,6 @@ class FishpondSeeder extends Seeder
             DB::table('fish')->insert([
                 'name' => $fishTypes[$i],
                 'description' => 'very very nice fishie!',
-                'length' => 10,
-                'width' => 10,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

@@ -17,8 +17,6 @@ class CreateFishTable extends Migration
             $table->id();
             $table->string('name');
             $table->longText('description');
-            $table->integer('length');
-            $table->integer('width');
             $table->timestamps();
         });
     }
