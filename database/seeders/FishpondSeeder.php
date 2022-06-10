@@ -19,8 +19,9 @@ class FishpondSeeder extends Seeder
         for ($i=0; $i < 2 ; $i++) { 
             DB::table('fish')->insert([
                 'name' => $fishTypes[$i],
-                 'created_at' => now(),
-                 'updated_at' => now(),
+                'description' => 'very very nice fishie!',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
             DB::table('dangerzones')->insert([
                 'fish_id' => $i+1,

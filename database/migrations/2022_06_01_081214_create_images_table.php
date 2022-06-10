@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFishTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreateFishTable extends Migration
      */
     public function up()
     {
-        Schema::create('fish', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('fish_type');
             $table->string('name');
-            $table->longText('description');
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreateFishTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fish');
+        Schema::dropIfExists('images');
     }
 }
