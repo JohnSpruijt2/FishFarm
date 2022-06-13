@@ -1,5 +1,4 @@
 import cv2
-import os
 from object_detector import *
 import numpy as np
 from ast import For
@@ -65,20 +64,14 @@ def measure():
                             fish_length = format(round(object_width, 1))
                             fish_width = format(round(object_height, 1))
                         fish_weight = 1*float(fish_length)**float(fish_width)
-                        name = str(img[2])
                         fish_l = str(fish_length)
                         fish_w = str(fish_width)
                         fish_s = str(format(round(fish_weight, 1)))
-                        created = str(img[5])
-                        print(fish_l)
-                        print(fish_w)
-                        print(fish_weight)
-                        cursor.execute("INSERT INTO `fish_measurements`(`name`, `length`, `width`, `weight`, `created_at`, `updated_at`) VALUES ('"+name+"','"+fish_l+"','" +fish_w+"','"+fish_s+"', '"+created+"', '"+created+"')")
+                        cursor.execute("INSERT INTO `fish_measurements`(`user_id`, `fish_type`, `name`, `description`, `path`, `length`, `width`, `weight`, `created_at`, `updated_at`) VALUES ('"+str(img[1])+"','"+str(img[2])+"','"+str(img[3])+"','"+str(img[6])+"','"+str(img[4])+"','"+fish_l+"','" +fish_w+"','"+fish_s+"','"+str(img[7])+"','"+str(img[8])+"')")
                         connection.commit()
                 id = int(img[0])
                 cursor.execute("DELETE FROM `images` WHERE `images`.`id` = '"+str(id)+"'")
                 connection.commit()
-                os.remove("../storage/app/"+img[4])
 
     except Error as e:
         print("Error while connecting to MySQL", e)

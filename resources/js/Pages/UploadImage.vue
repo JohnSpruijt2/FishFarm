@@ -13,8 +13,15 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <input type="file" name="image" class="form-control" id="image" required><br>
-                                <label for="fish_type">fish type:</label>
-                                <input type="text" name="fish_type" id="fish_type" required><br>
+                                <label for="fish_type">fish type:</label><br>
+                                <select name="fish_type" id="fish_type">
+                                    <template v-for="(fish) in fishTypes" v-bind:key="fish.id">
+                                        <option :value="fish.id">{{fish.name}}</option>
+                                    </template>
+                                </select>
+                                <br>
+                                <label for="description">description:</label> <br>
+                                <textarea id="description" name="description" rows="4" cols="50" placeholder="Short optional description of the photo"></textarea>
                             </div>
                             <div class="col-md-6">
                                 <button type="submit" class="btn btn-success">Upload</button>
@@ -37,6 +44,7 @@
         },
         props: {
             userInfo: Object,
+            fishTypes: Array,
         },
         data() {
             return {
