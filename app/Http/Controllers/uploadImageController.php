@@ -30,7 +30,7 @@ class uploadImageController extends Controller
 
            $name = $request->file('image')->getClientOriginalName();
     
-           $path = $request->file('image')->store('public/images');
+           $path = $request->file('image')->store('storage/images');
     
     
            $save = new Image;

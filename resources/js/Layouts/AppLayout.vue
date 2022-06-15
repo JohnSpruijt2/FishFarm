@@ -39,13 +39,13 @@
                                 </jet-nav-link>
                             </div>
                             <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('admin panel')" :active="route().current('admin panel')">
-                                    Admin Panel
+                                <jet-nav-link :href="route('recent measurements')" :active="route().current('recent measurements') || route().current('all measurements') || route().current('picture measurement')">
+                                    Measurements
                                 </jet-nav-link>
                             </div>
                             <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <jet-nav-link :href="route('admin transactions')" :active="route().current('admin transactions')">
-                                    All Transactions
+                                <jet-nav-link :href="route('admin panel')" :active="route().current('admin panel')">
+                                    Admin Panel
                                 </jet-nav-link>
                             </div>
                         </div>

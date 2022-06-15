@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\uploadImageController;
+use App\Http\Controllers\MeasurementController;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
@@ -47,6 +48,12 @@ Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType',
 Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
 
 Route::middleware(['auth:sanctum', 'verified', 'subbed'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/recentMeasurements', [MeasurementController::class, 'showRecent'])->name('recent measurements');
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/allMeasurements', [MeasurementController::class, 'showAll'])->name('all measurements');
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/measurement/{id}', [MeasurementController::class, 'showPicture'])->name('picture measurement');
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
