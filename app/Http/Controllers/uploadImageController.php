@@ -24,25 +24,22 @@ class uploadImageController extends Controller
     function uploadImages(Request $request) {
         $request->validate([
             'image' => 'mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
-         ]);
+            ]);
            
-           $fish_type = $request->fish_type;
+            $fish_type = $request->fish_type;   
+            $name = $request->file('image')->getClientOriginalName();
 
-           $name = $request->file('image')->getClientOriginalName();
-    
-           $path = $request->file('image')->store('storage/images');
-    
-    
-           $save = new Image;
+            $path = $request->file('image')->store('public/images');
 
-           $save->user_id = Auth::user()->id;
-           $save->fish_type = $fish_type;
-           $save->name = $name;
-           $save->path = $path;
-           $save->description = $request->description;
-    
-           $save->save();
-    
-           return redirect('/dashboard');
+            $save = new Image;  
+            $save->user_id = Auth::user()->id;
+            $save->fish_type = $fish_type;
+            $save->name = $name;
+            $save->path = $path;
+            $save->description = $request->description;
+
+            $save->save();
+
+            return redirect('/dashboard');
     }
 }
