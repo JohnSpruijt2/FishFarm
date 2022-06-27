@@ -126,6 +126,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // renders the edit sensors page
     function editSensors(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');
@@ -159,6 +160,7 @@ class AdminController extends Controller
         ]);
     }
 
+    // updates the database according to the form requests from the edit sensor page
     function confirmEditSensors(Request $request) {
         if (auth::user()->admin != 1) {
             return redirect('/dashboard');

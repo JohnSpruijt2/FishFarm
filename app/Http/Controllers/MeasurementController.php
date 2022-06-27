@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class MeasurementController extends Controller
 {
-    //
+    // shows measurements added in the last 24 hours created by the current user unless logged in as admin then all measurements
     public function showRecent() {
         $measurements = FishMeasurement::last24HoursWithFishType();
         return Inertia::render('Measurement', [
@@ -17,6 +17,7 @@ class MeasurementController extends Controller
         ]);
     }
 
+    // shows all measurements created by the current user unless logged in as admin then all measurements
     public function showAll() {
         $measurements = FishMeasurement::allWithFishType();
         return Inertia::render('Measurement', [
@@ -25,6 +26,7 @@ class MeasurementController extends Controller
         ]);
     }
 
+    // shows picture of measurement
     public function showPicture(Request $request) {
         $measurement = FishMeasurement::oneWithFishType($request->id);
         $image = asset($measurement->path);

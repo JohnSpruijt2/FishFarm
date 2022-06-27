@@ -11,7 +11,7 @@ use App\Models\Fish;
 
 class uploadImageController extends Controller
 {
-    //
+    // shows the upload image page
     function index() {
         $userInfo = User::where('id', Auth::user()->id)->first();
         $fishTypes = Fish::all();
@@ -21,6 +21,8 @@ class uploadImageController extends Controller
         ]);
     }
 
+    // uploads the image recieved by the upload image page and redirects to dashboard
+    // recieves File, Fish type and a description
     function uploadImages(Request $request) {
         $request->validate([
             'image' => 'mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
