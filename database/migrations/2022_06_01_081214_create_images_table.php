@@ -19,6 +19,8 @@ class CreateImagesTable extends Migration
             $table->string('fish_type');
             $table->string('name');
             $table->string('path');
+            $table->string('measurement_type')->default('weight');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

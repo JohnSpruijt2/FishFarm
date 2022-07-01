@@ -52,23 +52,6 @@ class UserSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
-        /*\App\Models\User::factory(10)->create();
-        for ($i=2; $i < 12; $i++) { 
-            DB::table('wallets')->insert([
-                'user_id' => $i,
-                'credits' => 20,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-            DB::table('subscriptions')->insert([
-                'user_id' => $i,
-                'added_at'=> now(),
-                'stops_at'=> now()->addHours(720),
-                'subscription_type' => 'monthly',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-        }*/
+        
     }
 }

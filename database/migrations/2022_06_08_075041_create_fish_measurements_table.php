@@ -15,7 +15,11 @@ class CreateFishMeasurementsTable extends Migration
     {
         Schema::create('fish_measurements', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('fish_type');
             $table->string('name');
+            $table->text('description');
+            $table->string('path');
             $table->float('length');
             $table->float('width');
             $table->string('weight');

@@ -19,6 +19,9 @@
                             </div>
                         </div>
                     </template>
+                    <template v-else>
+                        <h1 class="text-2xl">No recorded transaction</h1>
+                    </template>
                 </div>
             </div>
         </div>
@@ -35,11 +38,6 @@
         },
         props: {
             userInfo: Object,
-        },
-        data() {
-            return {
-                
-            }
         },
     })
 </script>

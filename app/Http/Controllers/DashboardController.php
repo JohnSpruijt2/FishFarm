@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DangerWarning;
 use App\Models\Fishpond;
-use App\Models\MailingList;
 use App\Models\User;
 use App\Models\Wallet;
 use App\Models\Subscription;

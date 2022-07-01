@@ -9,9 +9,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\uploadImageController;
+use App\Http\Controllers\MeasurementController;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +45,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [Subscript
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/recentMeasurements', [MeasurementController::class, 'showRecent'])->name('recent measurements');
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/allMeasurements', [MeasurementController::class, 'showAll'])->name('all measurements');
+
+Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/measurement/{id}', [MeasurementController::class, 'showPicture'])->name('picture measurement');
+
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
 
@@ -62,7 +72,7 @@ Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishp
 
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/updateFishType/{id}', [AdminController::class, 'confirmUpdateFishType']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
+Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'editDangerzones'])->name('admin edit dangerzone');
 
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->post('/admin/editFishpond/{id}/{dataType}', [AdminController::class, 'confirmEditDangerzones']);
 
