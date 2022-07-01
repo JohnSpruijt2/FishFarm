@@ -10,6 +10,7 @@ use App\Http\Controllers\WalletController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\uploadImageController;
 use App\Http\Controllers\MeasurementController;
+use App\Http\Middleware\isAdmin;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
