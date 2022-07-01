@@ -44,10 +44,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [Subscript
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
-
-Route::middleware(['auth:sanctum', 'verified'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
-
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
 
