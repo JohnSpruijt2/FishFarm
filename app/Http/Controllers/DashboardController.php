@@ -29,7 +29,7 @@ class DashboardController extends Controller
                 'user_id' => Auth::user()->id,
                 'added_at' => null,
                 'stops_at' => null,
-                'subscription_Type' => 'no subscription',
+                'subscription_type' => 'no subscription',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
