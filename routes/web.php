@@ -12,6 +12,7 @@ use App\Http\Controllers\uploadImageController;
 
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
