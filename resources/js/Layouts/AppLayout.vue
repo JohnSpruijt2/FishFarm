@@ -38,7 +38,7 @@
                                     Upload Images
                                 </jet-nav-link>
                             </div>
-                            <div v-if="isAdmin == 1" class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <jet-nav-link :href="route('recent measurements')" :active="route().current('recent measurements') || route().current('all measurements') || route().current('picture measurement')">
                                     Measurements
                                 </jet-nav-link>
