@@ -40,8 +40,6 @@
             return {
                 
             }
-        }, mounted() {
-            console.log(this.userInfo)
-        }
+        },
     })
 </script>
