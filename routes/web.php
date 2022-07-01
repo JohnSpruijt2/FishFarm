@@ -34,27 +34,27 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
+Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}/{type}', [GraphController::class, 'index'])->name('graph');
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/details/{id}', [GraphController::class, 'index']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/details/{id}', [GraphController::class, 'index']);
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
+Route::middleware(['auth:sanctum', 'verified'])->get('/wallet', [WalletController::Class, 'index'])->name('wallet');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/subscription', [SubscriptionController::Class, 'index'])->name('subscription');
 
 Route::middleware(['auth:sanctum', 'verified'])->post('/updateSubscriptionType', [SubscriptionController::class, 'confirmUpdateSubscriptionType']);
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
+Route::middleware(['auth:sanctum', 'verified'])->get('/uploadImage', [uploadImageController::class, 'index'])->name('uploadImage');
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
+Route::middleware(['auth:sanctum', 'verified'])->post('/uploadImages/{id}', [uploadImageController::class, 'uploadImages']);
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/recentMeasurements', [MeasurementController::class, 'showRecent'])->name('recent measurements');
+Route::middleware(['auth:sanctum', 'verified'])->get('/recentMeasurements', [MeasurementController::class, 'showRecent'])->name('recent measurements');
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/allMeasurements', [MeasurementController::class, 'showAll'])->name('all measurements');
+Route::middleware(['auth:sanctum', 'verified'])->get('/allMeasurements', [MeasurementController::class, 'showAll'])->name('all measurements');
 
-Route::middleware(['auth:sanctum', 'verified', 'subbed'])->get('/measurement/{id}', [MeasurementController::class, 'showPicture'])->name('picture measurement');
+Route::middleware(['auth:sanctum', 'verified'])->get('/measurement/{id}', [MeasurementController::class, 'showPicture'])->name('picture measurement');
 
 /* Admin routing */
 Route::middleware(['auth:sanctum', 'verified'])->get('/admin', [AdminController::class, 'index'])->name('admin panel');
