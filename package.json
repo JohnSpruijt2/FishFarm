@@ -26,6 +26,7 @@
         "vue-loader": "^16.1.2"
     },
     "dependencies": {
+        "@react-navigation/bottom-tabs": "^6.4.0",
         "apexcharts": "^3.33.0",
         "vue3-apexcharts": "^1.4.1"
     }
