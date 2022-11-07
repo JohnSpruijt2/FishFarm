@@ -1,5 +1,14 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    StyleSheet, 
+    ScrollView,
+    KeyboardAvoidingView,
+    Keyboard,
+    TouchableOpacity, 
+} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +19,17 @@ const USERNAME_REGEX = /^[A-Za-z0-9 ]+$/;
 const PASSWORD_REGEX = /^[A-Za-z0-9 ]+$/;
 
 const SignUpScreen = () => {
+    const [userName, setUserName] = useState('');
+    const [userEmail, setUserEmail] = useState('');
+    const [userAge, setUserAge] = useState('');
+    const [userAddress, setUserAddress] = useState('');
+    const [userPassword, setUserPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [errortext, setErrortext] = useState('');
+    const [
+        isRegistraionSuccess,
+        setIsRegistraionSuccess,
+    ] = useState(false);
 
     const {control, handleSubmit, watch } = useForm();
 

@@ -7,6 +7,6 @@ const pool = createPool({
     connectionLimit: 10,
 })
 
-pool.query(`select name from fishfarm.fish`, (err, res)=>{
+pool.query(`select * from fishfarm.users where id = 1`, (err, res)=>{
     return console.log(res)
 })

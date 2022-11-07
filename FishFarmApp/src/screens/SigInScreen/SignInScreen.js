@@ -28,6 +28,9 @@ const SignInScreen = () => {
         navigation.navigate('SignUp');
 
     };
+    const dashboard = () => {
+        navigation.navigate('dashboard');
+    };
 
     return (
         <ScrollView style={styles.backgroundcolor}>
@@ -60,7 +63,7 @@ const SignInScreen = () => {
 
             <CustomButton text="Sign In" onPress={handleSubmit(onSignInPressed)}/>
             <CustomButton text="Forgot password?" onPress={onForgotPasswordPressed} type="TERTIARY"/>
-
+            
             <Text style={styles.text}>Don't have an account? {' '}
             <Text style={styles.link} onPress={onSignUpPressed}>Create one</Text>
             </Text>
