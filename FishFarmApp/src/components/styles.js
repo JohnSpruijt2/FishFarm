@@ -1,56 +1,101 @@
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+
+export const stylesDashboard = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#0C98EE',
+  },
+
+  scrollView: {
+    marginHorizontal: 20,
+  },
+
+  name: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginTop: 50,
+    marginBottom: 15,
+    color: '#FFFF',
+  },
+
+  gauge: {
+    alignItems: 'flex-end',
+  },
+
+  circle: {
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    backgroundColor: "red",
+  },
+
+  circleText: {
+    marginLeft: 2,
+  },
+
+  circle1: {
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    backgroundColor: "yellow",
+  },
+
+  circleText1: {
+    marginLeft: 11,
+  },
+
+  circle2: {
+    width: 50,
+    height: 50,
+    borderRadius: 100 / 2,
+    backgroundColor: "green",
+  },
+
+  circleText2: {
+    marginLeft: 11,
+  },
+
+});
+
+  export const stylesFishpondName = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#7393B3',
+      paddingTop: 20,
+      paddingBottom: 20,
       alignItems: 'center',
-      justifyContent: 'center',
     },
 
-    logo: {
-        width: '60%',
-        maxWidth: '300%',
-        maxHeight: '100%', 
+    titleText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+
     },
 
   });
 
-  export const stylesDashboard = StyleSheet.create({
+  export const stylesCharts = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#7393B3',
+      paddingLeft: 20,
     },
-
-    scrollView: {
-      marginHorizontal: 20,
-    },
-
-    gauge: {
-      alignItems: 'flex-end',
-    },
-
-
 
   });
 
-  export const stylesMenu = StyleSheet.create({
+  export const stylesAlign = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#7393B3',
-      justifyContent: 'center',
-    },
-
-    buttons: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginVertical: 25,
-    },
-
-    separator: {
-      marginVertical: 8,
+      flexDirection: "row",
+      justifyContent: 'space-between',
+      paddingRight: 20,
     },
 
   });
-    
-    
+
+  export const stylesFishPondBorder = StyleSheet.create({
+    container: {
+      borderRadius: 5,
+      marginBottom: 10,
+      backgroundColor: '#FFFF',
+      marginLeft: 10,
+      marginRight: 10,
+    },
+
+  });
