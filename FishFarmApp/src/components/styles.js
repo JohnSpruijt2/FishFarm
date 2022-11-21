@@ -99,3 +99,52 @@ export const stylesDashboard = StyleSheet.create({
     },
 
   });
+
+  export const stylesNavigationBar = StyleSheet.create({
+    container: {
+      borderRadius: 0,
+      backgroundColor: '#F0E7E7',
+      borderTopColor: '#000000',
+      padding: 10,
+      flexDirection: "row",
+      justifyContent: 'space-between',
+      paddingLeft: 40,
+      paddingRight: 50,
+    },
+
+  });
+
+  export const stylesIcon = StyleSheet.create({
+    container: {
+      paddingLeft: 23,
+      color: '#000000',
+      fontSize: 24,
+    },
+
+  });
+
+  export const stylesIcon1 = StyleSheet.create({
+    container: {
+      paddingLeft: 2,
+      color: '#000000',
+      fontSize: 24,
+    },
+
+  });
+
+  export const stylesNavbarText = StyleSheet.create({
+    container: {
+      paddingRight: 20,
+    },
+
+  });
+
+
+  export const stylesIcon2 = StyleSheet.create({
+    container: {
+      paddingLeft: 5,
+      color: '#000000',
+      fontSize: 24,
+    },
+
+  });

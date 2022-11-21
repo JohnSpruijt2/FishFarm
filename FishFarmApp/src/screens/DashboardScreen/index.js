@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text, SafeAreaView, ScrollView, Dimensions, TouchableHighlight, StyleSheet} from 'react-native';
-import { stylesDashboard, stylesFishpondName, stylesCharts, stylesAlign, stylesFishPondBorder } from 'C:/Program Files/Ampps/www/FishFarm/FishFarm/FishFarmApp/src/components/styles.js';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { View, Text, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { stylesDashboard, stylesFishpondName, stylesCharts, stylesAlign, stylesFishPondBorder, stylesNavigationBar, stylesIcon, stylesIcon1, stylesIcon2, stylesNavbarText } from '../../components/styles.js';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-
-//bottom navigation menu
-const Tab = createBottomTabNavigator();
+import { FontAwesome } from '@expo/vector-icons'; 
+import { SimpleLineIcons } from '@expo/vector-icons';
+import CustomButton from '../../components/CustomButton';
 
 const Circle = () => {
   return <View style={stylesDashboard.circle} />;
@@ -16,6 +15,23 @@ const Circle1 = () => {
 const Circle2 = () => {
   return <View style={stylesDashboard.circle2} />;
 };
+
+/* Alerts that pop up when you click on a circle*/
+
+const showTemp = () =>
+  Alert.alert(
+    "Temparature",
+);
+
+const showO2= () =>
+  Alert.alert(
+    "O2",
+);
+
+const showPH = () =>
+  Alert.alert(
+    "PH",
+);
 
 const Index = () => {
     return (
@@ -48,15 +64,15 @@ const Index = () => {
                 </View>
               <View>
                 <Circle1 />
-                <Text style={stylesDashboard.circleText}> TEMP </Text>
+                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
               </View>
             </View>
           </View>
@@ -83,15 +99,15 @@ const Index = () => {
                 </View>
               <View>
                 <Circle1 />
-                <Text style={stylesDashboard.circleText}> TEMP </Text>
+                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
               </View>
           </View>
         </View>
@@ -118,15 +134,15 @@ const Index = () => {
                 </View>
               <View>
                 <Circle1 />
-                <Text style={stylesDashboard.circleText}> TEMP </Text>
+                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
               </View>
           </View>
         </View>
@@ -153,19 +169,33 @@ const Index = () => {
                 </View>
               <View>
                 <Circle1 />
-                <Text style={stylesDashboard.circleText}> TEMP </Text>
+                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
               </View>
           </View>
         </View>
         </ScrollView>
+        <View style={stylesNavigationBar.container}>
+          <View>
+          <FontAwesome style={stylesIcon.container} name="dashboard" />
+            <Text>Dashboard</Text>
+          </View>
+          <View>
+            <FontAwesome style={stylesIcon1.container} name="user-circle-o"/>
+            <Text style={stylesNavbarText.container}>User</Text>
+          </View>
+          <View>
+            <SimpleLineIcons style={stylesIcon2.container} name="menu" />
+            <Text>Menu</Text>
+          </View>
+        </View>
       </SafeAreaView>
     );
   };
