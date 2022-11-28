@@ -4,7 +4,7 @@ import { stylesDashboard, stylesFishpondName, stylesCharts, stylesAlign, stylesF
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { SimpleLineIcons } from '@expo/vector-icons';
-import CustomButton from '../../components/CustomButton';
+import { useNavigation } from '@react-navigation/native';
 
 const Circle = () => {
   return <View style={stylesDashboard.circle} />;
@@ -34,6 +34,20 @@ const showPH = () =>
 );
 
 const Index = () => {
+
+const navigation = useNavigation();
+
+const onUserPressed = () => {
+    navigation.navigate('User');
+};
+const onMenuPressed = () => {
+    navigation.navigate('Menu');
+};
+
+const onDashboardPressed = () => {
+    navigation.navigate('Dashboard');
+};
+
     return (
 
       <SafeAreaView style={stylesDashboard.container}>
@@ -184,16 +198,16 @@ const Index = () => {
         </ScrollView>
         <View style={stylesNavigationBar.container}>
           <View>
-          <FontAwesome style={stylesIcon.container} name="dashboard" />
-            <Text>Dashboard</Text>
+          <FontAwesome onPress={onDashboardPressed} style={stylesIcon.container} name="dashboard" />
+            <Text onPress={onDashboardPressed}>Dashboard</Text>
           </View>
           <View>
-            <FontAwesome style={stylesIcon1.container} name="user-circle-o"/>
-            <Text style={stylesNavbarText.container}>User</Text>
+            <FontAwesome onPress={onUserPressed} style={stylesIcon1.container} name="user-circle-o"/>
+            <Text style={stylesNavbarText.container} onPress={onUserPressed}>User</Text>
           </View>
           <View>
-            <SimpleLineIcons style={stylesIcon2.container} name="menu" />
-            <Text>Menu</Text>
+            <SimpleLineIcons onPress={onMenuPressed} style={stylesIcon2.container} name="menu" />
+            <Text onPress={onMenuPressed}>Menu</Text>
           </View>
         </View>
       </SafeAreaView>
