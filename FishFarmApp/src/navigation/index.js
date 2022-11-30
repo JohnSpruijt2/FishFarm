@@ -13,7 +13,6 @@ import MenuScreen from '../screens/MenuScreen';
 import FishpondScreen from '../screens/FishpondScreen';
 
 const Stack = createNativeStackNavigator();
-
 function Navigation(){
     return (
         <NavigationContainer independent={true}>

@@ -18,21 +18,6 @@ const Circle2 = () => {
 
 /* Alerts that pop up when you click on a circle*/
 
-const showTemp = () =>
-  Alert.alert(
-    "Temparature",
-);
-
-const showO2= () =>
-  Alert.alert(
-    "O2",
-);
-
-const showPH = () =>
-  Alert.alert(
-    "PH",
-);
-
 const Index = () => {
 
 const navigation = useNavigation();
@@ -55,6 +40,18 @@ const onDashboardPressed = () => {
 //navigates to the fishpond page
 const onFishpondPressed = () => {
   navigation.navigate('Fishpond');
+};
+
+const onO2Pressed = () => {
+  navigation.navigate('O2');
+};
+
+const onPHPressed = () => {
+  navigation.navigate('PH');
+};
+
+const onTEMPressed = () => {
+  navigation.navigate('Temp');
 };
 
     return (
@@ -87,15 +84,15 @@ const onFishpondPressed = () => {
                 </View>
               <View>
                 <Circle1 />
-                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
+                <Text style={stylesDashboard.circleText} onPress={onTEMPressed}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={onO2Pressed}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={onPHPressed}> PH </Text>
               </View>
             </View>
           </View>
@@ -121,16 +118,16 @@ const onFishpondPressed = () => {
                     backgroundColor="#3d5875" />
                 </View>
               <View>
-                <Circle1 />
-                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
+              <Circle1 />
+                <Text style={stylesDashboard.circleText} onPress={onTEMPressed}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={onO2Pressed}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={onPHPressed}> PH </Text>
               </View>
           </View>
         </View>
@@ -156,16 +153,16 @@ const onFishpondPressed = () => {
                     backgroundColor="#3d5875" />
                 </View>
               <View>
-                <Circle1 />
-                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
+              <Circle1 />
+                <Text style={stylesDashboard.circleText} onPress={onTEMPressed}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={onO2Pressed}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={onPHPressed}> PH </Text>
               </View>
           </View>
         </View>
@@ -191,16 +188,16 @@ const onFishpondPressed = () => {
                     backgroundColor="#3d5875" />
                 </View>
               <View>
-                <Circle1 />
-                <Text style={stylesDashboard.circleText} onPress={showTemp}> TEMP </Text>
+              <Circle1 />
+                <Text style={stylesDashboard.circleText} onPress={onTEMPressed}> TEMP </Text>
               </View>
               <View>
               <Circle2 />
-                <Text style={stylesDashboard.circleText1} onPress={showO2}> O2 </Text>
+                <Text style={stylesDashboard.circleText1} onPress={onO2Pressed}> O2 </Text>
               </View>
                <View>
               <Circle />
-                <Text style={stylesDashboard.circleText2} onPress={showPH}> PH </Text>
+                <Text style={stylesDashboard.circleText2} onPress={onPHPressed}> PH </Text>
               </View>
           </View>
         </View>
