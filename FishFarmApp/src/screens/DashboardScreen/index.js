@@ -37,15 +37,24 @@ const Index = () => {
 
 const navigation = useNavigation();
 
+//navigates to the user page
 const onUserPressed = () => {
     navigation.navigate('User');
 };
+
+//navigates to the menu page
 const onMenuPressed = () => {
     navigation.navigate('Menu');
 };
 
+//navigates to the dashboard page
 const onDashboardPressed = () => {
     navigation.navigate('Dashboard');
+};
+
+//navigates to the fishpond page
+const onFishpondPressed = () => {
+  navigation.navigate('Fishpond');
 };
 
     return (
@@ -60,7 +69,7 @@ const onDashboardPressed = () => {
           {/* Fishpond 1 */}
           <View style={stylesFishPondBorder.container}>
               <View style={stylesFishpondName.container}>
-                <Text style={stylesFishpondName.titleText} > Fishpond 1 </Text>
+                <Text style={stylesFishpondName.titleText} onPress={onFishpondPressed}> Fishpond 1 </Text>
               </View>
         
               <View style={stylesAlign.container}>

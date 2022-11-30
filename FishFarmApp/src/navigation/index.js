@@ -10,6 +10,7 @@ import NewPasswordScreen from '../screens/NewPasswordScreen';
 import DashboardScreen from '../screens/DashboardScreen';
 import UserScreen from '../screens/UserScreen';
 import MenuScreen from '../screens/MenuScreen';
+import FishpondScreen from '../screens/FishpondScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,7 +25,8 @@ function Navigation(){
                 <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
                 <Stack.Screen name="Dashboard" component={DashboardScreen} /> 
                 <Stack.Screen name="User" component={UserScreen} />
-                <Stack.Screen name="Menu" component={MenuScreen} />                  
+                <Stack.Screen name="Menu" component={MenuScreen} />   
+                <Stack.Screen name="Fishpond" component={FishpondScreen} />                  
             </Stack.Navigator>
         </NavigationContainer>
     );
