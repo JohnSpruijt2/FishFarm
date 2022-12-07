@@ -11,23 +11,25 @@ import DashboardScreen from '../screens/DashboardScreen';
 import UserScreen from '../screens/UserScreen';
 import MenuScreen from '../screens/MenuScreen';
 import FishpondScreen from '../screens/FishpondScreen';
-import O2Screen from 'C:/xampp/htdocs/FishFarm/FishFarmApp/src/screens/measurements/O2Screen.js';
-import PHScreen from 'C:/xampp/htdocs/FishFarm/FishFarmApp/src/screens/measurements/PHScreen.js';
-import TempScreen from 'C:/xampp/htdocs/FishFarm/FishFarmApp/src/screens/measurements/TempScreen.js';
+import O2Screen from '../screens/measurements/O2Screen';
+import PHScreen from '../screens/measurements/PHScreen';
+import TempScreen from '../screens/measurements/TempScreen';
+import NotificationScreen from '../screens/NotificationScreen';
+
 const Stack = createNativeStackNavigator();
 function Navigation(){
     return (
         <NavigationContainer independent={true}>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name="SignIn" component={SignInScreen} />
-                <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-                <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
-                <Stack.Screen name="Dashboard" component={DashboardScreen} /> 
+            <Stack.Navigator screenOptions={{headerBackVisible: false}}>
+                <Stack.Screen name="SignIn" component={SignInScreen} options={{headerStyle: {backgroundColor: '#0C98EE'}, headerTintColor: '#0C98EE'}}/>
+                <Stack.Screen name="SignUp" component={SignUpScreen} options={{headerStyle: {backgroundColor: '#0C98EE'}, headerTintColor: '#0C98EE'}}/>
+                <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} options={{headerStyle: {backgroundColor: '#0C98EE'}, headerTintColor: '#0C98EE'}}/>
+                <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{headerStyle: {backgroundColor: '#0C98EE'}, headerTintColor: '#0C98EE'}}/>
+                <Stack.Screen name="NewPassword" component={NewPasswordScreen} options={{headerStyle: {backgroundColor: '#0C98EE'}, headerTintColor: '#0C98EE'}}/>
+                <Stack.Screen name="Dashboard" component={DashboardScreen} options={{gestureEnabled: false}} /> 
                 <Stack.Screen name="User" component={UserScreen} />
-                <Stack.Screen name="Menu" component={MenuScreen} />   
-                <Stack.Screen name="Fishpond" component={FishpondScreen} />   
+                <Stack.Screen name="Menu" component={MenuScreen} />
+                <Stack.Screen name="Fishpond" component={FishpondScreen} />
                 <Stack.Screen name="O2" component={O2Screen} /> 
                 <Stack.Screen name="PH" component={PHScreen} /> 
                 <Stack.Screen name="Temp" component={TempScreen} />
