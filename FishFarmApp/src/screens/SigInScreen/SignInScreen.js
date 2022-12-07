@@ -26,10 +26,6 @@ const SignInScreen = () => {
     };
     const onSignUpPressed = () => {
         navigation.navigate('SignUp');
-
-    };
-    const dashboard = () => {
-        navigation.navigate('dashboard');
     };
 
     return (

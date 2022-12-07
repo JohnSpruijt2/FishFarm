@@ -92,7 +92,8 @@ export const stylesDashboard = StyleSheet.create({
   export const stylesFishPondBorder = StyleSheet.create({
     container: {
       borderRadius: 5,
-      marginBottom: 10,
+      marginBottom: 5,
+      marginTop: 10,
       backgroundColor: '#FFFF',
       marginLeft: 10,
       marginRight: 10,
@@ -147,4 +148,41 @@ export const stylesDashboard = StyleSheet.create({
       fontSize: 24,
     },
 
+  });
+
+  export const stylesUser = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#0C98EE',
+    },
+  
+    scrollView: {
+      marginHorizontal: 20,
+    },
+  
+    cardText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginTop: 15,
+      marginLeft: 20,
+      marginBottom: 15,
+      color: '#0C98EE',
+    },
+
+    name: {
+      fontSize: 30,
+      fontWeight: 'bold',
+      marginTop: 50,
+      color: '#FFFF',
+    },
+
+    card: {
+      borderRadius: 5,
+      marginBottom: 5,
+      marginTop: 50,
+      backgroundColor: '#FFFF',
+      marginLeft: 10,
+      marginRight: 10,
+    },
+  
   });

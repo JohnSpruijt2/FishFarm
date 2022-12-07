@@ -1,12 +1,12 @@
-import { React, useState} from 'react';
+import React from 'react';
 import { View, Text, SafeAreaView, ScrollView } from 'react-native';
-import { stylesDashboard, stylesNavigationBar, stylesIcon, stylesIcon1, stylesIcon2, stylesNavbarText } from '../../components/styles.js';
+import { stylesUser, stylesNavigationBar, stylesIcon, stylesIcon1, stylesIcon2, stylesNavbarText } from '../../components/styles.js';
 import { FontAwesome } from '@expo/vector-icons'; 
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import {VictoryChart, VictoryGroup, VictoryScatter} from 'victory-native';
 
 const Index = () => {
+
   const navigation = useNavigation();
 
   const onUserPressed = () => {
@@ -18,31 +18,18 @@ const Index = () => {
   
   const onDashboardPressed = () => {
       navigation.navigate('Dashboard');
-  };
+  } 
 
     return (
-      <SafeAreaView style={stylesDashboard.container}>
-        <ScrollView>
- 
-            <View>
-                <VictoryChart>
-                    <VictoryGroup>
-                        <VictoryScatter 
-                        style={{ data: { fill: "#ffffff" } }}
-                        size={7}
-                        data={[
-                          { x: 1, y: 2 },
-                          { x: 2, y: 3 },
-                          { x: 3, y: 5 },
-                          { x: 4, y: 4 },
-                          { x: 5, y: 7 }
-                        ]}
-                        />
-                    </VictoryGroup>
-                </VictoryChart>
-            </View>
 
+      <SafeAreaView style={stylesUser.container}>
+        <ScrollView>
+          <View>
+            <Text style={stylesUser.name} > Notifcations </Text>
+          </View>
         </ScrollView>
+
+
 
         <View style={stylesNavigationBar.container}>
           <View>
@@ -60,6 +47,6 @@ const Index = () => {
         </View>
       </SafeAreaView>
     );
-    };
+  };
 
 export default Index;

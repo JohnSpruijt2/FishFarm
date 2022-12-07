@@ -59,10 +59,6 @@ const onTEMPressed = () => {
       <SafeAreaView style={stylesDashboard.container}>
         <ScrollView>
 
-          <View>
-            <Text style={stylesDashboard.name} > Dashboard </Text>
-          </View>
-
           {/* Fishpond 1 */}
           <View style={stylesFishPondBorder.container}>
               <View style={stylesFishpondName.container}>
