@@ -22,37 +22,44 @@ const Index = () => {
 
 const navigation = useNavigation();
 
-//navigates to the user page
-const onUserPressed = () => {
-    navigation.navigate('User');
-};
+  //navigates to the user page
+  const onUserPressed = () => {
+      navigation.navigate('User');
+  };
 
-//navigates to the menu page
-const onMenuPressed = () => {
-    navigation.navigate('Menu');
-};
+  //navigates to the menu page
+  const onMenuPressed = () => {
+      navigation.navigate('Menu');
+  };
 
-//navigates to the dashboard page
-const onDashboardPressed = () => {
-    navigation.navigate('Dashboard');
-};
+  //navigates to the dashboard page
+  const onDashboardPressed = () => {
+      navigation.navigate('Dashboard');
+  };
 
-//navigates to the fishpond page
-const onFishpondPressed = () => {
-  navigation.navigate('Fishpond');
-};
+  //navigates to the fishpond page
+  const onFishpondPressed = () => {
+    navigation.navigate('Fishpond');
+  };
 
-const onO2Pressed = () => {
-  navigation.navigate('O2');
-};
+  const onO2Pressed = () => {
+    navigation.navigate('O2');
+  };
 
-const onPHPressed = () => {
-  navigation.navigate('PH');
-};
+  const onPHPressed = () => {
+    navigation.navigate('PH');
+  };
 
-const onTEMPressed = () => {
-  navigation.navigate('Temp');
-};
+  const onTEMPressed = () => {
+    navigation.navigate('Temp');
+  };
+
+  //gets all the users from the database
+  const test = () => {
+    fetch('http://10.102.32.148:3000/users')
+      .then(response => response.json())
+      .then(users => console.warn(users))
+  }
 
     return (
 
@@ -63,6 +70,7 @@ const onTEMPressed = () => {
           <View style={stylesFishPondBorder.container}>
               <View style={stylesFishpondName.container}>
                 <Text style={stylesFishpondName.titleText} onPress={onFishpondPressed}> Fishpond 1 </Text>
+                <Text onPress={test}>test</Text>
               </View>
         
               <View style={stylesAlign.container}>
