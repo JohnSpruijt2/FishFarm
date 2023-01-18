@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {AsyncStorage} from 'react-native';
 import {
     View,
     Text,
@@ -13,6 +14,9 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
+import {createUserWithEmailAndPassword} from "firebase/auth"
+
+import { auth } from '../../../firebaseConfig.js'
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const USERNAME_REGEX = /^[A-Za-z0-9 ]+$/;
@@ -30,6 +34,19 @@ const SignUpScreen = () => {
         isRegistraionSuccess,
         setIsRegistraionSuccess,
     ] = useState(false);
+
+    const register = async () => {
+        try {
+        const user = await createUserWithEmailAndPassword(auth, userEmail, userPassword)
+        console.log(user)
+        } catch(error){
+            console.log(error.message);
+        }
+    };
+
+    // const handleSignUp = () => {
+    //     auth.createUserWithEmailAndPassword(userEmail, userPassword)
+    // }
 
     const {control, handleSubmit, watch } = useForm();
 
@@ -54,7 +71,7 @@ const SignUpScreen = () => {
         <View style={styles.root}>
             <Text style={styles.title}>Create an account</Text>
             
-            <CustomInput 
+            {/* <CustomInput 
             name="username"
             control={control}
             placeholder="Username"
@@ -73,11 +90,14 @@ const SignUpScreen = () => {
                     message: 'Do not use special characters',
                 },
             }}
-            />
+            /> */}
             <CustomInput
             name="email"
             control={control}
             placeholder="Email"
+            onChange={(event) => {
+                setUserEmail(event.target.value)
+            }}
             rules={{
                 required: 'Email is required', 
                 pattern: {
@@ -89,7 +109,10 @@ const SignUpScreen = () => {
             <CustomInput
             name="password"
             control={control}
-            placeholder="Password" 
+            placeholder="Password"
+            onChange={(event) => {
+                setUserPassword(event.target.value)
+            }}
             secureTextEntry={true}
             rules={{
                 required: 'Password is required', 
@@ -103,7 +126,7 @@ const SignUpScreen = () => {
                 },
             }}
             />
-            <CustomInput 
+            {/* <CustomInput 
             name="password-confirm"
             control={control}
             placeholder="Confirm Password" 
@@ -112,9 +135,9 @@ const SignUpScreen = () => {
                 required: 'Confirmed password is required',
                 validate: value => value === pwd || 'Password do not match',
             }}
-            />
+            /> */}
 
-            <CustomButton text="Register" onPress={handleSubmit(onRegisterPressed)}/>
+            <CustomButton text="Register" onPress={register}/>
             
             <Text style={styles.text}>By registering, you confirm that you accept our {' '}
             <Text style={styles.link} onPress={onTermsOfUsePressed}>Terms of Use</Text> and{' '}
