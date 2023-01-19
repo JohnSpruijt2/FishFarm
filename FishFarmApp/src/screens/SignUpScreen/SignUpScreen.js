@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import {AsyncStorage} from 'react-native';
 import {
     View,
     Text,
-    TextInput,
+    onChangeText,
     StyleSheet, 
     ScrollView,
-    KeyboardAvoidingView,
-    Keyboard,
-    TouchableOpacity, 
 } from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -23,13 +19,11 @@ const USERNAME_REGEX = /^[A-Za-z0-9 ]+$/;
 const PASSWORD_REGEX = /^[A-Za-z0-9 ]+$/;
 
 const SignUpScreen = () => {
-    const [userName, setUserName] = useState('');
-    const [userEmail, setUserEmail] = useState('');
-    const [userAge, setUserAge] = useState('');
-    const [userAddress, setUserAddress] = useState('');
-    const [userPassword, setUserPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [errortext, setErrortext] = useState('');
+    const [userName, setUserName] = useState();
+    const [userEmail, setUserEmail] = useState();
+
+    const [userPassword, setUserPassword] = useState();
+
     const [
         isRegistraionSuccess,
         setIsRegistraionSuccess,
@@ -65,6 +59,7 @@ const SignUpScreen = () => {
     const onPrivacyPolicyPressed = () => {
         console.warn("Privacy Policy in progress");
     };
+    
 
     return (
         <ScrollView style={styles.backgroundcolor}>
@@ -92,38 +87,38 @@ const SignUpScreen = () => {
             }}
             /> */}
             <CustomInput
-            name="email"
-            control={control}
-            placeholder="Email"
-            onChange={(event) => {
-                setUserEmail(event.target.value)
-            }}
-            rules={{
-                required: 'Email is required', 
-                pattern: {
-                    value: EMAIL_REGEX, 
-                    message: 'Email is invalid'
-                },
-            }} 
+                name="email"
+                control={control}
+                placeholder="Email"
+                onChange={(event) => {
+                    setUserEmail(event.target.value)
+                }}
+                rules={{
+                    required: 'Email is required', 
+                    pattern: {
+                        value: EMAIL_REGEX, 
+                        message: 'Email is invalid'
+                    },
+                }} 
             />
             <CustomInput
-            name="password"
-            control={control}
-            placeholder="Password"
-            onChange={(event) => {
-                setUserPassword(event.target.value)
-            }}
-            secureTextEntry={true}
-            rules={{
-                required: 'Password is required', 
-                pattern: {
-                    value: PASSWORD_REGEX,
-                    message: 'Do not use special characters',
-                },
-                minLength: {
-                    value: 8, 
-                    message: 'Password should be at least 8 characters long',
-                },
+                name="password"
+                control={control}
+                placeholder="Password"
+                onChange={(event) => {
+                    setUserPassword(event.target.value)
+                }}
+                secureTextEntry={true}
+                rules={{
+                    required: 'Password is required', 
+                    pattern: {
+                        value: PASSWORD_REGEX,
+                        message: 'Do not use special characters',
+                    },
+                    minLength: {
+                        value: 8, 
+                        message: 'Password should be at least 8 characters long',
+                    },
             }}
             />
             {/* <CustomInput 
