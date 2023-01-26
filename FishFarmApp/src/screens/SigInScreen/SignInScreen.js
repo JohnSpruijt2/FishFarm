@@ -5,10 +5,31 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, Controller } from 'react-hook-form';
+import {signInWithEmailAndPassword} from "firebase/auth";
+import { auth } from '../../../firebaseConfig.js'
+
+
 
 const SignInScreen = () => {
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
+
+    var [email, setEmail] = useState('');
+    var [password, setPassword] = useState('');
+
+    const PASSWORD_REGEX = /^[A-Za-z0-9 ]+$/;
+
+    const login = async () => {
+        try {
+        const user = await signInWithEmailAndPassword(auth, email, password)
+        navigation.navigate('Dashboard');
+        console.log(user)
+        } catch(error){
+            console.log(error.code);
+            console.log(error.message);
+            
+        }
+    };
 
     const {
         control, 
@@ -33,31 +54,22 @@ const SignInScreen = () => {
         <View style={styles.root}>
             <Image source={Logo} style={[styles.logo, {height: height * 0.3}]} resizeMode="contain" />
 
-            <CustomInput
-            name="username"
-            placeholder="Username" 
-            control={control}
-            rules={{required: '*Username is required'}}
-
+            <TextInput
+                style={styles.TextInput}
+                placeholder="email"
+                onChangeText={newText => setEmail(newText)}
+                defaultValue={email}
             />
-            <CustomInput 
-            name="password"
-            placeholder="Password" 
-            secureTextEntry 
-            control={control}
-            rules={{
-                required: '*Password is required', 
-                minLength: {
-                    value: 8, 
-                    message: '*Password should be minium 8 characters long'
-                },
-                }}
+            <TextInput
+                style={styles.TextInput}
+                placeholder="password"
+                onChangeText={newText => setPassword(newText)}
+                defaultValue={password}
+                secureTextEntry={true}
+                
             />
 
-
-
-
-            <CustomButton text="Sign In" onPress={handleSubmit(onSignInPressed)}/>
+            <CustomButton text="Sign In" onPress={login}/>
             <CustomButton text="Forgot password?" onPress={onForgotPasswordPressed} type="TERTIARY"/>
             
             <Text style={styles.text}>Don't have an account? {' '}
@@ -94,6 +106,18 @@ const styles = StyleSheet.create({
         color: '#006CFF',
         fontWeight: 'bold',      
     },
+    TextInput: {
+        backgroundColor: 'white',
+        width: '150%',
+
+        borderColor: '#0065A3',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginVertical: 10,
+    }
 });
 
 export default SignInScreen;

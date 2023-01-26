@@ -1,46 +1,43 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
     onChangeText,
     StyleSheet, 
     ScrollView,
+    TextInput,
 } from 'react-native';
-import CustomInput from '../../components/CustomInput';
+
 import CustomButton from '../../components/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
-import {createUserWithEmailAndPassword} from "firebase/auth"
+import {createUserWithEmailAndPassword, getAuth} from "firebase/auth"
 
-import { auth } from '../../../firebaseConfig.js'
+import { auth, provider, signInAndRetrieveDataWithCredential } from '../../../firebaseConfig.js'
+import SignInScreen from '../SigInScreen/SignInScreen';
 
 const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 const USERNAME_REGEX = /^[A-Za-z0-9 ]+$/;
 const PASSWORD_REGEX = /^[A-Za-z0-9 ]+$/;
 
+
 const SignUpScreen = () => {
     const [userName, setUserName] = useState();
-    const [userEmail, setUserEmail] = useState();
-
-    const [userPassword, setUserPassword] = useState();
-
-    const [
-        isRegistraionSuccess,
-        setIsRegistraionSuccess,
-    ] = useState(false);
-
+    var [email, setEmail] = useState('');
+    var [password, setPassword] = useState('');
+    
+    //creates an account
     const register = async () => {
         try {
-        const user = await createUserWithEmailAndPassword(auth, userEmail, userPassword)
+        const user = await createUserWithEmailAndPassword(auth, email, password)
+        navigation.navigate('SignIn');
         console.log(user)
         } catch(error){
+            console.log(error.code);
             console.log(error.message);
+            
         }
     };
-
-    // const handleSignUp = () => {
-    //     auth.createUserWithEmailAndPassword(userEmail, userPassword)
-    // }
 
     const {control, handleSubmit, watch } = useForm();
 
@@ -66,48 +63,17 @@ const SignUpScreen = () => {
         <View style={styles.root}>
             <Text style={styles.title}>Create an account</Text>
             
-            {/* <CustomInput 
-            name="username"
-            control={control}
-            placeholder="Username"
-            rules={{
-                required: 'Username is required', 
-                minLength: {
-                    value: 3, 
-                    message: 'Username should be at least 3 characters long',
-                },
-                maxLength: {
-                    value: 24,
-                    message: 'Username should be max 24 characters long'
-                },
-                pattern: {
-                    value: USERNAME_REGEX,
-                    message: 'Do not use special characters',
-                },
-            }}
-            /> */}
-            <CustomInput
-                name="email"
-                control={control}
-                placeholder="Email"
-                onChange={(event) => {
-                    setUserEmail(event.target.value)
-                }}
-                rules={{
-                    required: 'Email is required', 
-                    pattern: {
-                        value: EMAIL_REGEX, 
-                        message: 'Email is invalid'
-                    },
-                }} 
+            <TextInput
+                style={styles.TextInput}
+                placeholder="email"
+                onChangeText={newText => setEmail(newText)}
+                defaultValue={email}
             />
-            <CustomInput
-                name="password"
-                control={control}
-                placeholder="Password"
-                onChange={(event) => {
-                    setUserPassword(event.target.value)
-                }}
+            <TextInput
+                style={styles.TextInput}
+                placeholder="password"
+                onChangeText={newText => setPassword(newText)}
+                defaultValue={password}
                 secureTextEntry={true}
                 rules={{
                     required: 'Password is required', 
@@ -119,18 +85,8 @@ const SignUpScreen = () => {
                         value: 8, 
                         message: 'Password should be at least 8 characters long',
                     },
-            }}
-            />
-            {/* <CustomInput 
-            name="password-confirm"
-            control={control}
-            placeholder="Confirm Password" 
-            secureTextEntry={true}
-            rules={{
-                required: 'Confirmed password is required',
-                validate: value => value === pwd || 'Password do not match',
-            }}
-            /> */}
+                }}
+                />
 
             <CustomButton text="Register" onPress={register}/>
             
@@ -182,6 +138,18 @@ const styles = StyleSheet.create({
         color: '#006CFF',
         fontWeight: 'bold',      
     },
+    TextInput: {
+        backgroundColor: 'white',
+        width: '150%',
+
+        borderColor: '#0065A3',
+        borderWidth: 1,
+        borderRadius: 5,
+
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginVertical: 10,
+    }
 });
 
 export default SignUpScreen;
